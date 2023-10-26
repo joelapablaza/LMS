@@ -13,7 +13,12 @@ import {
 } from "../utils/jwt";
 import { redis } from "../utils/redis";
 import cloudinary from "cloudinary";
-import { getUserById } from "../services/user.service";
+import {
+  getAllUsersService,
+  getUserById,
+  updateUserRoleService,
+} from "../services/user.service";
+import { UserRole } from "../models/user.model";
 
 // register user
 interface IRegistrationBody {
@@ -408,6 +413,63 @@ export const updateProfilePicture = CatchAsyncError(
       res.status(201).json({
         success: true,
         user,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// get all users --- only admin
+export const getAllUsers = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllUsersService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// update user role --- admin only
+export const updateUserRole = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id, role } = req.body;
+
+      if (!Object.values(UserRole).includes(role)) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid role specified",
+        });
+      }
+
+      updateUserRoleService(res, id, role);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// delete user --- admin only
+export const deleteUser = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      const user = await userModel.findById(id);
+
+      if (!user) {
+        return next(new ErrorHandler("User not found", 400));
+      }
+
+      await user.deleteOne({ id });
+
+      await redis.del(id);
+
+      res.status(204).json({
+        success: true,
+        message: "User deleted successfully",
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));

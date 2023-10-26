@@ -13,12 +13,18 @@ export interface IUser extends Document {
     public_id: string;
     url: string;
   };
-  role: string;
+  role: UserRole;
   isVerified: boolean;
   courses: Array<{ courseId: string }>;
   comparePassword: (password: string) => Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
+}
+
+export enum UserRole {
+  User = "user",
+  Moderator = "moderator",
+  Admin = "admin",
 }
 
 const userSchema: Schema<IUser> = new mongoose.Schema(
@@ -50,7 +56,8 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "user",
+      default: UserRole.User,
+      enum: Object.values(UserRole),
     },
     isVerified: {
       type: Boolean,
