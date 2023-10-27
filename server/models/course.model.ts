@@ -82,56 +82,59 @@ const courseDataSchema = new Schema<ICourseData>({
   questions: [commentSchema],
 });
 
-const courseSchema = new Schema<ICourse>({
-  name: {
-    type: String,
-    requried: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    requried: true,
-  },
-  estimatedPrice: Number,
-  thumbnail: {
-    public_id: {
+const courseSchema = new Schema<ICourse>(
+  {
+    name: {
       type: String,
-      // required: false,
+      requried: true,
     },
-    url: {
+    description: {
       type: String,
-      // required: true,
+      required: true,
+    },
+    price: {
+      type: Number,
+      requried: true,
+    },
+    estimatedPrice: Number,
+    thumbnail: {
+      public_id: {
+        type: String,
+        // required: false,
+      },
+      url: {
+        type: String,
+        // required: true,
+      },
+    },
+    tags: {
+      type: String,
+      required: true,
+    },
+    level: {
+      type: String,
+      required: true,
+      enum: ["beginner", "intermediate", "advanced"],
+    },
+    demoUrl: {
+      type: String,
+      required: true,
+    },
+    benefits: [{ title: String }],
+    prerequisites: [{ title: String }],
+    reviews: [reviewSchema],
+    courseData: [courseDataSchema],
+    ratings: {
+      type: Number,
+      default: 0,
+    },
+    purchased: {
+      type: Number,
+      default: 0,
     },
   },
-  tags: {
-    type: String,
-    required: true,
-  },
-  level: {
-    type: String,
-    required: true,
-    enum: ["beginner", "intermediate", "advanced"],
-  },
-  demoUrl: {
-    type: String,
-    required: true,
-  },
-  benefits: [{ title: String }],
-  prerequisites: [{ title: String }],
-  reviews: [reviewSchema],
-  courseData: [courseDataSchema],
-  ratings: {
-    type: Number,
-    default: 0,
-  },
-  purchased: {
-    type: Number,
-    default: 0,
-  },
-});
+  { timestamps: true }
+);
 
 const courseModel: Model<ICourse> = mongoose.model("course", courseSchema);
 
