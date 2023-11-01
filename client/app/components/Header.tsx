@@ -10,10 +10,12 @@ import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import avatar from "../../public/assets/avatar.png";
+import avatarDefault from "../../public/assets/avatar.png";
 import { useSession } from "next-auth/react";
-import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
-import toast from "react-hot-toast";
+import {
+  useLogOutQuery,
+  useSocialAuthMutation,
+} from "@/redux/features/auth/authApi";
 
 type Props = {
   open: boolean;
@@ -30,6 +32,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const { data } = useSession();
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
+  const [logout, setLogout] = useState(false);
+
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
   useEffect(() => {
     if (!user) {
       if (data) {
@@ -38,13 +46,13 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
           name: data?.user?.name,
           avatar: data?.user?.image,
         });
+        // if (isSuccess) {
+        //   toast.success("Login successfull");
+        // }
       }
     }
-    if (isSuccess) {
-      toast.success("Login successfull");
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, user]);
+  }, [user, data]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -92,7 +100,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
               {user ? (
                 <Link href={"/profile"}>
                   <Image
-                    src={user.avatar ? user.avatar : avatar}
+                    src={user.avatar?.url ? user.avatar.url : avatarDefault}
                     alt=""
                     className="w-[30px] h-[30px] rounded-full cursor-pointer"
                     width={30}

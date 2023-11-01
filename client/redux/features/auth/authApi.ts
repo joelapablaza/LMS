@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { userLoggedIn, userRegistration } from "./authSlice";
+import { userLoggedIn, userLoggedOut, userRegistration } from "./authSlice";
 
 type RegistrationResponse = {
   message: string;
@@ -81,10 +81,24 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
           dispatch(
             userLoggedIn({
-              accessToken: result.data.accessToken,
+              // accessToken: result.data.accessToken,
               user: result.data.user,
             })
           );
+        } catch (error: any) {
+          console.log(error);
+        }
+      },
+    }),
+    logOut: builder.query({
+      query: () => ({
+        url: "logout",
+        method: "GET",
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          dispatch(userLoggedOut());
         } catch (error: any) {
           console.log(error);
         }
@@ -98,4 +112,5 @@ export const {
   useActivationMutation,
   useLoginMutation,
   useSocialAuthMutation,
+  useLogOutQuery,
 } = authApi;

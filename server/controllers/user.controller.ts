@@ -278,11 +278,14 @@ export const socialAuth = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, name, avatar } = req.body as ISocialAuthBody;
-      const user = await userModel.findOne({ email });
+      let user = await userModel.findOne({ email });
       if (!user) {
-        const newUser = await userModel.create({ email, name, avatar });
+        user = await userModel.create({ email, name, avatar });
       } else {
-        sendToken(user, 200, res);
+        res.status(200).json({
+          success: true,
+          user,
+        });
       }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
@@ -379,7 +382,7 @@ interface IUpdateProfilePicture {
 export const updateProfilePicture = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { avatar } = req.body;
+      const { avatar } = req.body as IUpdateProfilePicture;
 
       const userId = req.user?._id;
 
@@ -419,6 +422,7 @@ export const updateProfilePicture = CatchAsyncError(
         user,
       });
     } catch (error: any) {
+      console.log("Error desde el back", error.message);
       return next(new ErrorHandler(error.message, 400));
     }
   }

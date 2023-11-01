@@ -17,6 +17,11 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log("PETICION REALIZADA");
+  next();
+});
+
 // cors
 app.use(
   cors({
