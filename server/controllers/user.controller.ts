@@ -182,11 +182,11 @@ export const loginUser = CatchAsyncError(
 export const logoutUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const userId = req.user?._id || "";
+      redis.del(userId);
       res.cookie("access_token", "", { maxAge: 1 });
       res.cookie("refresh_token", "", { maxAge: 1 });
 
-      const userId = req.user?._id || "";
-      redis.del(userId);
       res.status(200).json({
         success: true,
         message: "Logged out successfully",
@@ -282,10 +282,7 @@ export const socialAuth = CatchAsyncError(
       if (!user) {
         user = await userModel.create({ email, name, avatar });
       } else {
-        res.status(200).json({
-          success: true,
-          user,
-        });
+        sendToken(user, 200, res);
       }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));

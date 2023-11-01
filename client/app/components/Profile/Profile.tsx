@@ -18,17 +18,13 @@ const Profile: FC<Props> = ({ user }) => {
   const [logout, setLogout] = useState(false);
 
   const {} = useLogOutQuery(undefined, {
-    skip: !logout ? true : false,
+    skip: !logout,
   });
 
   const logOutHandler = async () => {
-    if (session) {
-      await signOut();
-      redirect("/");
-    } else {
-      setLogout(true);
-      redirect("/");
-    }
+    setLogout(true);
+    await signOut();
+    redirect("/");
   };
 
   if (typeof window !== "undefined") {

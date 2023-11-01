@@ -10,6 +10,7 @@ import orderRouter from "./routes/order.route";
 import notificationRoute from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
+import morgan from "morgan";
 
 // body parser
 app.use(express.json({ limit: "50mb" }));
@@ -17,10 +18,7 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log("PETICION REALIZADA");
-  next();
-});
+app.use(morgan("dev"));
 
 // cors
 app.use(

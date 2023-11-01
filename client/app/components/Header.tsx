@@ -2,6 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import NavItems from "../utils/NavItems";
+import toast from "react-hot-toast";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 import CustomModal from "../utils/CustomModal";
@@ -35,7 +36,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [logout, setLogout] = useState(false);
 
   const {} = useLogOutQuery(undefined, {
-    skip: !logout ? true : false,
+    skip: !logout,
   });
 
   useEffect(() => {
@@ -46,10 +47,15 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
           name: data?.user?.name,
           avatar: data?.user?.image,
         });
-        // if (isSuccess) {
-        //   toast.success("Login successfull");
-        // }
       }
+    }
+    if (data === null) {
+      if (isSuccess) {
+        toast.success("Login successfull");
+      }
+    }
+    if (data === null) {
+      setLogout(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, data]);
