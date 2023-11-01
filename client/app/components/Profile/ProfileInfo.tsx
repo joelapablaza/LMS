@@ -37,6 +37,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     if (error) {
       console.log(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const handleSubmit = async (e: any) => {
