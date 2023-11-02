@@ -23,6 +23,25 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1771c6;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #32ae7e;
+}
+
+/* Firefox */
+::-webkit-scrollbar-thumb:hover {
+  background: #32ae7e;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
 }
