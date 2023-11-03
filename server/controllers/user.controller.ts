@@ -245,10 +245,7 @@ export const updateAccessToken = CatchAsyncError(
 
       await redis.set(user._id, JSON.stringify(user), "EX", 604800);
 
-      res.status(200).json({
-        status: "success",
-        accesToken,
-      });
+      next();
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -309,7 +306,7 @@ export const updateUserInfo = CatchAsyncError(
 
       await user?.save();
       await redis.set(userId, JSON.stringify(user));
-      console.log(user);
+
       res.status(201).json({
         success: true,
         user,

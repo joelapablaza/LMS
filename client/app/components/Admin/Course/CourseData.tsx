@@ -24,6 +24,7 @@ const CourseData: FC<Props> = ({
     const updatedBenefits = [...benefits];
     updatedBenefits[index].title = value;
     setBenefits(updatedBenefits);
+    console.log(benefits);
   };
 
   const handleAddBenefit = () => {
@@ -34,6 +35,7 @@ const CourseData: FC<Props> = ({
     const updatedPrerequisites = [...prerequisites];
     updatedPrerequisites[index].title = value;
     setPrerequisites(updatedPrerequisites);
+    console.log(prerequisites);
   };
 
   const handleAddPrerequisite = () => {
@@ -68,7 +70,7 @@ const CourseData: FC<Props> = ({
           <input
             type="text"
             key={index}
-            name="Benefit"
+            name="benefit"
             placeholder="You will be able to build a full stack LMS Platform"
             required
             className={`${styles.input} my-2`}

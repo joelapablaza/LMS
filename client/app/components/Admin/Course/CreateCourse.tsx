@@ -1,12 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseInformation from "./CourseInformation";
 import CourseOptions from "./CourseOptions";
 import CourseData from "./CourseData";
+import CourseContent from "./CourseContent";
+import CoursePreview from "./CoursePreview";
+import { useCreateCourseMutation } from "../../../../redux/features/courses/coursesApi";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 type Props = {};
 
 const CreateCourse = (props: Props) => {
+  const [createCourse, { isLoading, isSuccess, error }] =
+    useCreateCourseMutation();
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
@@ -20,20 +27,83 @@ const CreateCourse = (props: Props) => {
   });
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
-  const [courseContentData, setCourseContentData] = useState({
-    videoUrl: "",
-    title: "",
-    description: "",
-    videoSection: "Untitled Section",
-    links: [
-      {
-        title: "",
-        url: "",
-      },
-    ],
-    suggestion: "",
-  });
+  const [courseContentData, setCourseContentData] = useState([
+    {
+      videoUrl: "",
+      title: "",
+      description: "",
+      videoSection: "Untitled Section",
+      links: [
+        {
+          title: "",
+          url: "",
+        },
+      ],
+      suggestion: "",
+    },
+  ]);
   const [courseData, setCourseData] = useState({});
+
+  const handleSubmit = async () => {
+    // format benefits array
+    const formattedBenefits = benefits.map((benefit) => ({
+      title: benefit.title,
+    }));
+    // format prerequisites array
+    const formattedPrerequisites = prerequisites.map((prerequisite) => ({
+      tile: prerequisite.title,
+    }));
+    // format course content array
+    const formattedCourseContent = courseContentData.map((content) => {
+      return {
+        videoUrl: content.videoUrl,
+        title: content.title,
+        description: content.description,
+        videoSection: content.videoSection,
+        links: content.links.map((link: any) => ({
+          title: link.title,
+          url: link.url,
+        })),
+        suggestion: content.suggestion,
+      };
+    });
+    // prepare our data object
+    const data = {
+      name: courseInfo.name,
+      description: courseInfo.description,
+      price: courseInfo.price,
+      estimatedPrice: courseInfo.estimatedPrice,
+      tags: courseInfo.tags,
+      level: courseInfo.level,
+      demoUrl: courseInfo.demoUrl,
+      thumbnail: courseInfo.thumbnail,
+      benefits: formattedBenefits,
+      prerequisites: formattedPrerequisites,
+      courseContent: formattedCourseContent,
+      totalVideos: courseContentData.length,
+    };
+
+    setCourseData(data);
+  };
+
+  const handleCrourseCreate = async (e: any) => {
+    const data = courseData;
+
+    if (!isLoading) {
+      await createCourse(data);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Course created successfully");
+      redirect("/admin/all-courses");
+    }
+    if (error && "data" in error) {
+      const errorMessage = error as any;
+      toast.error(errorMessage.data.message);
+    }
+  }, [isLoading, isSuccess, error]);
 
   return (
     <div className="w-full flex min-h-screen">
@@ -55,6 +125,25 @@ const CreateCourse = (props: Props) => {
             setPrerequisites={setPrerequisites}
             active={active}
             setActive={setActive}
+          />
+        )}
+
+        {active === 2 && (
+          <CourseContent
+            active={active}
+            setActive={setActive}
+            courseContentData={courseContentData}
+            setCourseContentData={setCourseContentData}
+            handleSubmit={handleSubmit}
+          />
+        )}
+
+        {active === 3 && (
+          <CoursePreview
+            active={active}
+            setActive={setActive}
+            courseData={courseData}
+            handleCrourseCreate={handleCrourseCreate}
           />
         )}
       </div>

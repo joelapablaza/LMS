@@ -27,8 +27,6 @@ const ChangePassword: FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    console.log("is editable", isEditable);
-    console.log("data", data);
     if (data) {
       setIsEditable(false);
     } else {
