@@ -429,7 +429,7 @@ export const getAllUsers = CatchAsyncError(
 export const updateUserRole = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id, role } = req.body;
+      const { email, role } = req.body;
 
       if (!Object.values(UserRole).includes(role)) {
         return res.status(400).json({
@@ -437,8 +437,7 @@ export const updateUserRole = CatchAsyncError(
           error: "Invalid role specified",
         });
       }
-
-      updateUserRoleService(res, id, role);
+      updateUserRoleService(res, email, role);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
