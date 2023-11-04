@@ -9,20 +9,20 @@ import toast from "react-hot-toast";
 type Props = {
   active: number;
   setActive: (active: number) => void;
-  courseContentData: any;
-  setCourseContentData: (courseContentData: any) => void;
+  courseContent: any;
+  setCourseContent: (courseContentData: any) => void;
   handleSubmit: any;
 };
 
 const CourseContent: FC<Props> = ({
   active,
   setActive,
-  courseContentData,
-  setCourseContentData,
+  courseContent,
+  setCourseContent,
   handleSubmit: handleCourseSubmit,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(
-    Array(courseContentData.length).fill(false)
+    Array(setCourseContent.length).fill(false)
   );
 
   const [activeSection, setActiveSection] = useState(1);
@@ -38,15 +38,15 @@ const CourseContent: FC<Props> = ({
   };
 
   const handleRemoveLink = (index: number, linkIndex: number) => {
-    const updatedData = [...courseContentData];
+    const updatedData = [...courseContent];
     updatedData[index].links.splice(linkIndex, 1);
-    setCourseContentData(updatedData);
+    setCourseContent(updatedData);
   };
 
   const handleAddLink = (index: number) => {
-    const updatedData = [...courseContentData];
+    const updatedData = [...courseContent];
     updatedData[index].links.push({ title: "", url: "" });
-    setCourseContentData(updatedData);
+    setCourseContent(updatedData);
   };
 
   const newContentHandler = (item: any) => {
@@ -54,9 +54,9 @@ const CourseContent: FC<Props> = ({
       toast.error("Please fill all the fields first");
     } else {
       let newVideoSection = "";
-      if (courseContentData.length > 0) {
+      if (courseContent.length > 0) {
         const lastVideoSection =
-          courseContentData[courseContentData.length - 1].videoSection;
+          courseContent[courseContent.length - 1].videoSection;
 
         //  use the last videoSection if avalible, else use user input
         if (lastVideoSection) {
@@ -72,7 +72,7 @@ const CourseContent: FC<Props> = ({
         links: [{ title: "", url: "" }],
       };
 
-      setCourseContentData([...courseContentData, newContent]);
+      setCourseContent([...courseContent, newContent]);
     }
   };
 
@@ -102,7 +102,7 @@ const CourseContent: FC<Props> = ({
   };
 
   const addNewSection = () => {
-    const lastContent = courseContentData[courseContentData.length - 1];
+    const lastContent = courseContent[courseContent.length - 1];
 
     if (checkCommonFields(lastContent)) {
       toast.error("Please fill all the fields first");
@@ -115,12 +115,12 @@ const CourseContent: FC<Props> = ({
         videoSection: `Untitled Section ${activeSection}`,
         links: [{ title: "", url: "" }],
       };
-      setCourseContentData([...courseContentData, newContent]);
+      setCourseContent([...courseContent, newContent]);
     }
   };
 
   const handleOptions = () => {
-    const lastContent = courseContentData[courseContentData.length - 1];
+    const lastContent = courseContent[courseContent.length - 1];
 
     if (checkCommonFields(lastContent)) {
       toast.error("Section can't be empty");
@@ -137,10 +137,10 @@ const CourseContent: FC<Props> = ({
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
-        {courseContentData?.map((item: any, index: number) => {
+        {courseContent?.map((item: any, index: number) => {
           const showSectionInput =
             index === 0 ||
-            item.videoSection !== courseContentData[index - 1].videoSection;
+            item.videoSection !== courseContent[index - 1].videoSection;
 
           return (
             <>
@@ -161,9 +161,9 @@ const CourseContent: FC<Props> = ({
                         } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none`}
                         value={item.videoSection}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
+                          const updatedData = [...courseContent];
                           updatedData[index].videoSection = e.target.value;
-                          setCourseContentData(updatedData);
+                          setCourseContent(updatedData);
                         }}
                       />
                       <BiPencil className="cursor-pointer dark:text-white text-black" />
@@ -194,9 +194,9 @@ const CourseContent: FC<Props> = ({
                       }`}
                       onClick={() => {
                         if (index > 0) {
-                          const updateData = [...courseContentData];
+                          const updateData = [...courseContent];
                           updateData.splice(index, 1);
-                          setCourseContentData(updateData);
+                          setCourseContent(updateData);
                         }
                       }}
                     />
@@ -227,9 +227,9 @@ const CourseContent: FC<Props> = ({
                         className={styles.input}
                         value={item.title}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
+                          const updatedData = [...courseContent];
                           updatedData[index].title = e.target.value;
-                          setCourseContentData(updatedData);
+                          setCourseContent(updatedData);
                         }}
                       />
                     </div>
@@ -241,9 +241,9 @@ const CourseContent: FC<Props> = ({
                         className={styles.input}
                         value={item.videoUrl}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
+                          const updatedData = [...courseContent];
                           updatedData[index].videoUrl = e.target.value;
-                          setCourseContentData(updatedData);
+                          setCourseContent(updatedData);
                         }}
                       />
                     </div>
@@ -256,9 +256,9 @@ const CourseContent: FC<Props> = ({
                         className={`${styles.input} !h-min -y2`}
                         value={item.description}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
+                          const updatedData = [...courseContent];
                           updatedData[index].description = e.target.value;
-                          setCourseContentData(updatedData);
+                          setCourseContent(updatedData);
                         }}
                       />
                       <br />
@@ -290,10 +290,10 @@ const CourseContent: FC<Props> = ({
                           className={styles.input}
                           value={link.title}
                           onChange={(e) => {
-                            const updatedData = [...courseContentData];
+                            const updatedData = [...courseContent];
                             updatedData[index].links[linkIndex].title =
                               e.target.value;
-                            setCourseContentData(updatedData);
+                            setCourseContent(updatedData);
                           }}
                         />
 
@@ -303,10 +303,10 @@ const CourseContent: FC<Props> = ({
                           className={`${styles.input} mt-6`}
                           value={link.url}
                           onChange={(e) => {
-                            const updatedData = [...courseContentData];
+                            const updatedData = [...courseContent];
                             updatedData[index].links[linkIndex].url =
                               e.target.value;
-                            setCourseContentData(updatedData);
+                            setCourseContent(updatedData);
                           }}
                         />
                       </div>
@@ -325,7 +325,7 @@ const CourseContent: FC<Props> = ({
                 )}
                 <br />
                 {/* {Add new content} */}
-                {index === courseContentData.length - 1 && (
+                {index === courseContent.length - 1 && (
                   <div>
                     <p
                       className="flex items-center text-[18px] dark:text-white text-black cursor-pointer"

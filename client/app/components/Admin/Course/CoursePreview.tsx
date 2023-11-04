@@ -9,6 +9,7 @@ type Props = {
   setActive: (active: number) => void;
   courseData: any;
   handleCrourseCreate: any;
+  isEdit: boolean;
 };
 
 const CoursePreview: FC<Props> = ({
