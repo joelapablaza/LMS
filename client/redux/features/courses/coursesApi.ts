@@ -17,13 +17,22 @@ export const courseApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
-    updateCourse: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `update-course/${id}`,
-        method: "PUT",
-        body: data,
+    getAdminAllCourses: builder.query({
+      query: () => ({
+        url: "/get-admin-courses",
+        method: "GET",
         credentials: "include" as const,
       }),
+    }),
+    updateCourse: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `edit-course/${id}`,
+          method: "PUT",
+          body: data,
+          credentials: "include" as const,
+        };
+      },
     }),
     deleteCourse: builder.mutation({
       query: (id) => ({
@@ -40,4 +49,5 @@ export const {
   useGetAllCoursesQuery,
   useDeleteCourseMutation,
   useUpdateCourseMutation,
+  useGetAdminAllCoursesQuery,
 } = courseApi;

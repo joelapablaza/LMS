@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/style";
 import { LargeNumberLike } from "crypto";
+import Image from "next/image";
 import React, { FC, useState } from "react";
 
 type Props = {
@@ -208,7 +209,13 @@ const CourseInformation: FC<Props> = ({
             onDragLeave={handleDragLeave}
             onDrop={handlreDrop}
           >
-            {courseInfo.thumbnail ? (
+            {courseInfo.thumbnail?.url ? (
+              <img
+                src={courseInfo.thumbnail.url}
+                alt=""
+                className="max-h-full w-full object-cover"
+              />
+            ) : Object.keys(courseInfo.thumbnail).length !== 0 ? (
               <img
                 src={courseInfo.thumbnail}
                 alt=""
@@ -216,7 +223,7 @@ const CourseInformation: FC<Props> = ({
               />
             ) : (
               <span className="text-black dark:text-white">
-                Drag and drop your thumbnail here or clik to browse
+                Drag and drop your thumbnail here or click to browse
               </span>
             )}
           </label>

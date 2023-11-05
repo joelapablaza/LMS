@@ -7,7 +7,7 @@ import CourseOptions from "./CourseOptions";
 import CourseContent from "./CourseContent";
 import CoursePreview from "./CoursePreview";
 import {
-  useGetAllCoursesQuery,
+  useGetAdminAllCoursesQuery,
   useUpdateCourseMutation,
 } from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
@@ -19,7 +19,8 @@ type Props = {
 
 const EditCourse: FC<Props> = ({ id }) => {
   const [updateCourse, { isSuccess, error }] = useUpdateCourseMutation({});
-  const { data, refetch } = useGetAllCoursesQuery(
+  const [active, setActive] = useState(0);
+  const { data, refetch } = useGetAdminAllCoursesQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
@@ -29,7 +30,7 @@ const EditCourse: FC<Props> = ({ id }) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Course Updated successfully");
-      redirect("/dashboard/courses");
+      redirect("/admin/courses");
     }
     if (error) {
       if ("data" in error) {
@@ -38,8 +39,6 @@ const EditCourse: FC<Props> = ({ id }) => {
       }
     }
   }, [isSuccess, error]);
-
-  const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (course) {
@@ -55,7 +54,7 @@ const EditCourse: FC<Props> = ({ id }) => {
       });
       setBenefits(course.benefits);
       setPrerequisites(course.prerequisites);
-      setCourseContent(course.courseData);
+      setCourseContentData(course.courseData);
     }
   }, [course]);
 
@@ -71,10 +70,10 @@ const EditCourse: FC<Props> = ({ id }) => {
     tags: "",
     level: "",
     demoUrl: "",
-    thumbnail: "",
+    thumbnail: {},
   });
 
-  const [courseContent, setCourseContent] = useState([
+  const [courseContentData, setCourseContentData] = useState([
     {
       title: "",
       description: "",
@@ -102,7 +101,7 @@ const EditCourse: FC<Props> = ({ id }) => {
     }));
 
     // Formatting course contents
-    const formattedCourseContent = courseContent.map((content) => ({
+    const formattedCourseContent = courseContentData.map((content) => ({
       videoUrl: content.videoUrl,
       title: content.title,
       description: content.description,
@@ -124,7 +123,7 @@ const EditCourse: FC<Props> = ({ id }) => {
       level: courseInfo.level,
       demoUrl: courseInfo.demoUrl,
       thumbnail: courseInfo.thumbnail,
-      totalVideos: courseContent.length,
+      totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
       courseData: formattedCourseContent,
@@ -165,8 +164,8 @@ const EditCourse: FC<Props> = ({ id }) => {
           <CourseContent
             active={active}
             setActive={setActive}
-            courseContent={courseContent}
-            setCourseContent={setCourseContent}
+            courseContentData={courseContentData}
+            setCourseContentData={setCourseContentData}
             handleSubmit={handleSubmit}
           />
         )}

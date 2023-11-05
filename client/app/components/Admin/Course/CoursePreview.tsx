@@ -17,6 +17,7 @@ const CoursePreview: FC<Props> = ({
   setActive,
   courseData,
   handleCrourseCreate,
+  isEdit,
 }) => {
   const discountPercentenge =
     ((courseData?.estimatedPrice - courseData.price) /
@@ -57,7 +58,7 @@ const CoursePreview: FC<Props> = ({
 
         <div className="flex items-center">
           <div
-            className={`${styles.button} w-[180px] my-3 font-Poppins !bg-[crimson] cursor-not-allowed`}
+            className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson] cursor-not-allowed`}
           >
             But Now ${courseData?.price}
           </div>
@@ -149,7 +150,7 @@ const CoursePreview: FC<Props> = ({
           className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a391] text-center dark:text-white text-black rounded mt-8 cursor-pointer"
           onClick={() => createCourse()}
         >
-          Create
+          {isEdit ? "Update" : "Create"}
         </div>
       </div>
     </div>

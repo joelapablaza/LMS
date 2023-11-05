@@ -9,20 +9,33 @@ import toast from "react-hot-toast";
 type Props = {
   active: number;
   setActive: (active: number) => void;
-  courseContent: any;
-  setCourseContent: (courseContentData: any) => void;
+  courseContentData: any;
+  setCourseContentData: (courseContentData: any) => void;
   handleSubmit: any;
 };
 
 const CourseContent: FC<Props> = ({
   active,
   setActive,
-  courseContent,
-  setCourseContent,
+  courseContentData,
+  setCourseContentData,
   handleSubmit: handleCourseSubmit,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(
-    Array(setCourseContent.length).fill(false)
+    Array(courseContentData?.length).fill(false)
+  );
+
+  type ContentType = {
+    videoUrl: string;
+    title: string;
+    description: string;
+    videoSection: string;
+    links: { title: string; url: string }[];
+    suggestion: string;
+  };
+
+  const dataForUpdate: ContentType[] = courseContentData.map(
+    (item: ContentType) => ({ ...item })
   );
 
   const [activeSection, setActiveSection] = useState(1);
@@ -38,15 +51,15 @@ const CourseContent: FC<Props> = ({
   };
 
   const handleRemoveLink = (index: number, linkIndex: number) => {
-    const updatedData = [...courseContent];
+    const updatedData = [...dataForUpdate];
     updatedData[index].links.splice(linkIndex, 1);
-    setCourseContent(updatedData);
+    setCourseContentData(updatedData);
   };
 
   const handleAddLink = (index: number) => {
-    const updatedData = [...courseContent];
+    const updatedData = [...dataForUpdate];
     updatedData[index].links.push({ title: "", url: "" });
-    setCourseContent(updatedData);
+    setCourseContentData(updatedData);
   };
 
   const newContentHandler = (item: any) => {
@@ -54,9 +67,9 @@ const CourseContent: FC<Props> = ({
       toast.error("Please fill all the fields first");
     } else {
       let newVideoSection = "";
-      if (courseContent.length > 0) {
+      if (dataForUpdate.length > 0) {
         const lastVideoSection =
-          courseContent[courseContent.length - 1].videoSection;
+          dataForUpdate[dataForUpdate.length - 1].videoSection;
 
         //  use the last videoSection if avalible, else use user input
         if (lastVideoSection) {
@@ -72,7 +85,7 @@ const CourseContent: FC<Props> = ({
         links: [{ title: "", url: "" }],
       };
 
-      setCourseContent([...courseContent, newContent]);
+      setCourseContentData([...dataForUpdate, newContent]);
     }
   };
 
@@ -102,7 +115,7 @@ const CourseContent: FC<Props> = ({
   };
 
   const addNewSection = () => {
-    const lastContent = courseContent[courseContent.length - 1];
+    const lastContent = dataForUpdate[dataForUpdate.length - 1];
 
     if (checkCommonFields(lastContent)) {
       toast.error("Please fill all the fields first");
@@ -115,12 +128,12 @@ const CourseContent: FC<Props> = ({
         videoSection: `Untitled Section ${activeSection}`,
         links: [{ title: "", url: "" }],
       };
-      setCourseContent([...courseContent, newContent]);
+      setCourseContentData([...dataForUpdate, newContent]);
     }
   };
 
   const handleOptions = () => {
-    const lastContent = courseContent[courseContent.length - 1];
+    const lastContent = dataForUpdate[dataForUpdate.length - 1];
 
     if (checkCommonFields(lastContent)) {
       toast.error("Section can't be empty");
@@ -137,14 +150,15 @@ const CourseContent: FC<Props> = ({
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
-        {courseContent?.map((item: any, index: number) => {
+        {dataForUpdate?.map((item: any, index: number) => {
           const showSectionInput =
             index === 0 ||
-            item.videoSection !== courseContent[index - 1].videoSection;
+            item.videoSection !== dataForUpdate[index - 1].videoSection;
 
           return (
             <>
               <div
+                key={index}
                 className={`w-full bg-[#cdc8c817] p-4 ${
                   showSectionInput ? "mt-10" : "mb-0"
                 }`}
@@ -161,9 +175,9 @@ const CourseContent: FC<Props> = ({
                         } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none`}
                         value={item.videoSection}
                         onChange={(e) => {
-                          const updatedData = [...courseContent];
+                          const updatedData = [...dataForUpdate];
                           updatedData[index].videoSection = e.target.value;
-                          setCourseContent(updatedData);
+                          setCourseContentData(updatedData);
                         }}
                       />
                       <BiPencil className="cursor-pointer dark:text-white text-black" />
@@ -176,7 +190,8 @@ const CourseContent: FC<Props> = ({
                     <>
                       {item.title ? (
                         <p className="font-Poppins dark:text-white text-black">
-                          {item.title + 1}. {item.title}
+                          {/* {item.title + 1}. {item.title} */}
+                          {index + 1}. {item.title}
                         </p>
                       ) : (
                         <></>
@@ -194,9 +209,9 @@ const CourseContent: FC<Props> = ({
                       }`}
                       onClick={() => {
                         if (index > 0) {
-                          const updateData = [...courseContent];
+                          const updateData = [...dataForUpdate];
                           updateData.splice(index, 1);
-                          setCourseContent(updateData);
+                          setCourseContentData(updateData);
                         }
                       }}
                     />
@@ -227,9 +242,9 @@ const CourseContent: FC<Props> = ({
                         className={styles.input}
                         value={item.title}
                         onChange={(e) => {
-                          const updatedData = [...courseContent];
+                          const updatedData = [...dataForUpdate];
                           updatedData[index].title = e.target.value;
-                          setCourseContent(updatedData);
+                          setCourseContentData(updatedData);
                         }}
                       />
                     </div>
@@ -241,9 +256,9 @@ const CourseContent: FC<Props> = ({
                         className={styles.input}
                         value={item.videoUrl}
                         onChange={(e) => {
-                          const updatedData = [...courseContent];
+                          const updatedData = [...dataForUpdate];
                           updatedData[index].videoUrl = e.target.value;
-                          setCourseContent(updatedData);
+                          setCourseContentData(updatedData);
                         }}
                       />
                     </div>
@@ -256,16 +271,16 @@ const CourseContent: FC<Props> = ({
                         className={`${styles.input} !h-min -y2`}
                         value={item.description}
                         onChange={(e) => {
-                          const updatedData = [...courseContent];
+                          const updatedData = [...dataForUpdate];
                           updatedData[index].description = e.target.value;
-                          setCourseContent(updatedData);
+                          setCourseContentData(updatedData);
                         }}
                       />
                       <br />
                       <br />
                     </div>
                     {item?.links.map((link: any, linkIndex: number) => (
-                      <div className="mb-3 block">
+                      <div className="mb-3 block" key={linkIndex}>
                         <div className="w-full flex items-center justify-between">
                           <label className={styles.label}>
                             Link {linkIndex + 1}
@@ -290,10 +305,9 @@ const CourseContent: FC<Props> = ({
                           className={styles.input}
                           value={link.title}
                           onChange={(e) => {
-                            const updatedData = [...courseContent];
-                            updatedData[index].links[linkIndex].title =
-                              e.target.value;
-                            setCourseContent(updatedData);
+                            const updatedData = [...dataForUpdate];
+                            updatedData[index].links[0].title = e.target.value;
+                            setCourseContentData(updatedData);
                           }}
                         />
 
@@ -303,10 +317,9 @@ const CourseContent: FC<Props> = ({
                           className={`${styles.input} mt-6`}
                           value={link.url}
                           onChange={(e) => {
-                            const updatedData = [...courseContent];
-                            updatedData[index].links[linkIndex].url =
-                              e.target.value;
-                            setCourseContent(updatedData);
+                            const updatedData = [...dataForUpdate];
+                            updatedData[index].links[0].url = e.target.value;
+                            setCourseContentData(updatedData);
                           }}
                         />
                       </div>
@@ -325,7 +338,7 @@ const CourseContent: FC<Props> = ({
                 )}
                 <br />
                 {/* {Add new content} */}
-                {index === courseContent.length - 1 && (
+                {index === dataForUpdate.length - 1 && (
                   <div>
                     <p
                       className="flex items-center text-[18px] dark:text-white text-black cursor-pointer"

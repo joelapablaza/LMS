@@ -44,8 +44,9 @@ export const editCourse = CatchAsyncError(
     try {
       const data = req.body;
       const thumbnail = data.thumbnail;
+      console.log(thumbnail);
 
-      if (thumbnail) {
+      if (thumbnail.url && !thumbnail.url.startsWith("https")) {
         await cloudinary.v2.uploader.destroy(thumbnail.public_id);
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
           folder: "courses",
@@ -429,7 +430,7 @@ export const addReplayToReview = CatchAsyncError(
 );
 
 // get all courses --- admin only
-export const getAllCoursesAdmin = CatchAsyncError(
+export const getAdminAllCourses = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllCoursesService(res);

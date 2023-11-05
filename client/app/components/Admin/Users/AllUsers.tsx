@@ -121,7 +121,10 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
   if (isTeam) {
     const newTeam =
-      data && data.users.filter((user: any) => user.role === "admin");
+      data &&
+      data.users.filter(
+        (user: any) => user.role === "admin" || user.role === "moderator"
+      );
     newTeam &&
       newTeam.forEach((user: any) => {
         rows.push({

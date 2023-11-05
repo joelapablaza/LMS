@@ -160,7 +160,7 @@ const Sidebar = () => {
               <Box textAlign="center">
                 <Typography
                   variant="h4"
-                  className="!text-[20x] dark:text-[#d8d8d8] text-black"
+                  className="!text-[20px] dark:text-[#d8d8d8] text-black"
                   sx={{ m: "10px 0 0 0" }}
                 >
                   {user?.name}

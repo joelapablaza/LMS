@@ -23,7 +23,7 @@ const CreateCourse = (props: Props) => {
     tags: "",
     level: "",
     demoUrl: "",
-    thumbnail: "",
+    thumbnail: {},
   });
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
@@ -51,7 +51,7 @@ const CreateCourse = (props: Props) => {
     }));
     // format prerequisites array
     const formattedPrerequisites = prerequisites.map((prerequisite) => ({
-      tile: prerequisite.title,
+      title: prerequisite.title,
     }));
     // format course content array
     const formattedCourseContent = courseContentData.map((content) => {
@@ -79,7 +79,7 @@ const CreateCourse = (props: Props) => {
       thumbnail: courseInfo.thumbnail,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
-      courseContent: formattedCourseContent,
+      courseData: formattedCourseContent,
       totalVideos: courseContentData.length,
     };
 
@@ -97,7 +97,7 @@ const CreateCourse = (props: Props) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Course created successfully");
-      redirect("/admin/all-courses");
+      redirect("/admin/courses");
     }
     if (error && "data" in error) {
       const errorMessage = error as any;
@@ -144,6 +144,7 @@ const CreateCourse = (props: Props) => {
             setActive={setActive}
             courseData={courseData}
             handleCrourseCreate={handleCrourseCreate}
+            isEdit={false}
           />
         )}
       </div>
