@@ -58,8 +58,8 @@ const OrdersAnalytics: FC<Props> = ({ isDashboard }) => {
         <div
           className={`${
             !isDashboard
-              ? "mt-[50px]"
-              : "mt-[50px] dark:bg-[#111c43] shadow-sm pb-5 rounded-sm"
+              ? "mt-[5px]"
+              : "mt-[5px] dark:bg-[#111c43] shadow-sm pb-5 rounded-sm"
           }`}
         >
           <div className={`${isDashboard ? "!ml-8 mb-5" : ""}`}>
@@ -71,7 +71,7 @@ const OrdersAnalytics: FC<Props> = ({ isDashboard }) => {
               Orders Analytics
             </h1>
             {!isDashboard && (
-              <p className={`${styles.label} px-5`}>
+              <p className={`${styles.label} !px-5`}>
                 Last 12 months analytics data{" "}
               </p>
             )}

@@ -3,6 +3,8 @@ import UsersAnalytics from "../Analytics/UsersAnalytics";
 import { BiBorderLeft } from "react-icons/bi";
 import { PiUsersFourLight } from "react-icons/pi";
 import { Box, CircularProgress } from "@mui/material";
+import OrdersAnalytics from "../Analytics/OrdersAnalytics";
+import AllInvoices from "../Orders/AllInvoices";
 
 type Props = {
   open?: boolean;
@@ -17,7 +19,7 @@ const CircularProgressWithLabel: FC<Props> = ({ open, value }) => {
         value={value}
         size={45}
         color={value && value > 99 ? "info" : "error"}
-        thickness={4}
+        thickness={6}
         style={{ zIndex: open ? -1 : 1 }}
       />
       <Box
@@ -31,11 +33,7 @@ const CircularProgressWithLabel: FC<Props> = ({ open, value }) => {
           alignItems: "center",
           justifyContent: "center",
         }}
-      >
-        {/* <h1 className="text-[20px] font-Poppins dark:text-white text-black font-[400]">
-          {open ? value : ""}%
-        </h1> */}
-      </Box>
+      ></Box>
     </Box>
   );
 };
@@ -84,6 +82,18 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-[65%,35%] mt-[-20px]">
+        <div className="dark:bg-[#111C43] w-[94%] mt-[30px] h-[40vh] shadow-sm m-auto">
+          <OrdersAnalytics isDashboard={true} />
+        </div>
+        <div className="p-5">
+          <h5 className="dark:text-white text-black text-[20px] font-[400] font-Poppins pb-3">
+            Recent Transactions
+          </h5>
+          <AllInvoices isDashboard={true} />
         </div>
       </div>
     </div>
