@@ -1,9 +1,10 @@
 "use client";
+import DashboardHero from "../../components/Admin/DashboardHero";
+import AdminProtected from "../../hooks/adminProtected";
+import Heading from "../../utils/Heading";
+import AdminSidebar from "../../components/Admin/sidebar/AdminSidebar";
 import React from "react";
-import Heading from "../utils/Heading";
-import AdminSidebar from "../components/Admin/sidebar/AdminSidebar";
-import AdminProtected from "../hooks/adminProtected";
-import DashboardHero from "../components/Admin/DashboardHero";
+import UsersAnalytics from "../../components/Admin/Analytics/UsersAnalytics";
 
 type Props = {};
 
@@ -17,11 +18,12 @@ const page = (props: Props) => {
           keywords="Programming, MERN, Redux, Machine learning"
         />
         <div className="flex h-screen">
-          <div className="1500px:w-[16%] w-1/5">
+          <div className="1500px:w-[15%] w-1/5">
             <AdminSidebar />
           </div>
           <div className="w-[85%]">
-            <DashboardHero isDashboard={true} />
+            <DashboardHero />
+            <UsersAnalytics />
           </div>
         </div>
       </AdminProtected>
