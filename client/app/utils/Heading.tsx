@@ -10,6 +10,16 @@ const Heading: FC<HeadProps> = ({ title, description, keywords }) => {
   return (
     <>
       <title>{title}</title>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      />
+
+      {/* Agrega el enlace a la hoja de estilos de Google Fonts para Josefin Sans */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap"
+      />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
