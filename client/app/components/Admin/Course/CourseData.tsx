@@ -1,5 +1,5 @@
 import { styles } from "@/app/styles/style";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import toast from "react-hot-toast";
 
@@ -20,26 +20,36 @@ const CourseData: FC<Props> = ({
   active,
   setActive,
 }) => {
+  interface Benefit {
+    title: string;
+  }
+  interface Prerequisites {
+    title: string;
+  }
+
+  const [benefitsData, setBenefitsData] = useState<Benefit[]>([]);
+  const [prerequisitesData, setPrerequisitesData] = useState<Prerequisites[]>(
+    []
+  );
+
   const handleBenefitChange = (index: number, value: any) => {
-    const updatedBenefits = [...benefits];
+    const updatedBenefits = [...benefitsData];
     updatedBenefits[index].title = value;
     setBenefits(updatedBenefits);
-    console.log(benefits);
   };
 
   const handleAddBenefit = () => {
-    setBenefits([...benefits, { title: "" }]);
+    setBenefits([...benefitsData, { title: "" }]);
   };
 
   const handlePrerequisitesChange = (index: number, value: any) => {
-    const updatedPrerequisites = [...prerequisites];
+    const updatedPrerequisites = [...prerequisitesData];
     updatedPrerequisites[index].title = value;
     setPrerequisites(updatedPrerequisites);
-    console.log(prerequisites);
   };
 
   const handleAddPrerequisite = () => {
-    setPrerequisites([...prerequisites, { title: "" }]);
+    setPrerequisites([...prerequisitesData, { title: "" }]);
   };
 
   const prevButton = () => {
@@ -47,31 +57,49 @@ const CourseData: FC<Props> = ({
   };
 
   const handleOptions = () => {
-    const beneficiosCompletos = benefits.every((b) => b.title.trim() !== "");
-    const requisitosCompletos = prerequisites.every(
+    const beneficiosCompletos = benefitsData.every(
+      (b) => b.title.trim() !== ""
+    );
+    const requisitosCompletos = prerequisitesData.every(
       (r) => r.title.trim() !== ""
     );
 
     if (beneficiosCompletos && requisitosCompletos) {
+      setBenefits(benefitsData);
+      setPrerequisites(prerequisitesData);
       setActive(active + 1);
     } else {
       toast.error("Please fill out all the fields to proceed");
     }
   };
 
+  // Map benefits and prerequisites to local state
+  useEffect(() => {
+    const benefitsMapped = benefits.map((ben) => ({
+      title: ben.title,
+    }));
+    const prerequisitesMapped = prerequisites.map((pre) => ({
+      title: pre.title,
+    }));
+    setBenefitsData(benefitsMapped);
+    setPrerequisitesData(prerequisitesMapped);
+  }, [benefits, prerequisites]);
+
   return (
     <div className="w-[80%] m-auto mt-24 block">
       <div>
+        {/* Benefit Section */}
+
         <label className={`${styles.label} text-[20px]`} htmlFor="email">
           What are the benefits of this course?
         </label>
         <br />
-        {benefits.map((benefit: any, index: number) => (
+        {benefitsData.map((benefit: any, index: number) => (
           <input
             type="text"
             key={index}
-            name="benefit"
-            placeholder="You will be able to build a full stack LMS Platform"
+            name="Benefit"
+            placeholder="You will be able to build a full stack LMS Platform..."
             required
             className={`${styles.input} my-2`}
             value={benefit.title}
@@ -84,6 +112,8 @@ const CourseData: FC<Props> = ({
         />
       </div>
 
+      {/* Prerequisites Section */}
+
       <div>
         <label className={`${styles.label} text-[20px]`} htmlFor="email">
           What are the prerequisites for taking course?
@@ -93,7 +123,7 @@ const CourseData: FC<Props> = ({
           <input
             type="text"
             key={index}
-            name="Prerequisite"
+            name="prerequisite"
             placeholder="You need basic MERN stack knowledge"
             required
             className={`${styles.input} my-2`}
@@ -108,6 +138,8 @@ const CourseData: FC<Props> = ({
           onClick={handleAddPrerequisite}
         />
       </div>
+
+      {/* Buttons Section  */}
 
       <div className="w-full flex items-center justify-between">
         <div

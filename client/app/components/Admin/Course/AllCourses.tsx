@@ -48,7 +48,7 @@ const AllCourses = (props: Props) => {
         return (
           <>
             <Link href={`/admin/edit-course/${params.row.id}`}>
-              <BiPencil className=" text-green-600" size={20} />
+              <BiPencil className=" text-green-600" size={25} />
             </Link>
           </>
         );
@@ -67,7 +67,7 @@ const AllCourses = (props: Props) => {
                 setCourseId(params.row.id);
               }}
             >
-              <AiOutlineDelete className=" text-red-500" size={20} />
+              <AiOutlineDelete className=" text-red-500" size={25} />
             </Button>
           </>
         );

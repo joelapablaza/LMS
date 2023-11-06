@@ -1,5 +1,4 @@
 "use client";
-
 import React, { FC, useEffect, useState } from "react";
 import CourseInfo from "./CourseInformation";
 import CourseData from "./CourseData";
@@ -20,17 +19,49 @@ type Props = {
 const EditCourse: FC<Props> = ({ id }) => {
   const [updateCourse, { isSuccess, error }] = useUpdateCourseMutation({});
   const [active, setActive] = useState(0);
-  const { data, refetch } = useGetAdminAllCoursesQuery(
+  const { data } = useGetAdminAllCoursesQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
+  const [courseData, setCourseData] = useState({});
+  const [benefits, setBenefits] = useState([{ title: "" }]);
+  const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
 
-  const course = data && data.courses.find((course: any) => course._id === id);
+  type CourseContentData = {
+    title: string;
+    description: string;
+    videoUrl: string;
+    videoSection: string;
+    videoLength: string;
+    links: { title?: string; url?: string }[];
+    suggestion: string;
+  };
+
+  const [courseInfo, setCourseInfo] = useState({
+    name: "",
+    description: "",
+    categories: "",
+    price: 0,
+    estimatedPrice: 0,
+    tags: "",
+    level: "",
+    demoUrl: "",
+    thumbnail: {},
+  });
+
+  const [courseContentData, setCourseContentData] = useState<
+    CourseContentData[]
+  >([]);
+
+  const editCourseData =
+    data && data.courses.find((course: any) => course._id === id);
 
   useEffect(() => {
     if (isSuccess) {
+      const random = Math.random().toString(36);
       toast.success("Course Updated successfully");
-      redirect("/admin/courses");
+      // redirect("/admin/courses");
+      redirect(`/admin/courses?reload=${random}`);
     }
     if (error) {
       if ("data" in error) {
@@ -41,53 +72,23 @@ const EditCourse: FC<Props> = ({ id }) => {
   }, [isSuccess, error]);
 
   useEffect(() => {
-    if (course) {
+    if (editCourseData) {
       setCourseInfo({
-        name: course.name,
-        description: course.description,
-        price: course.price,
-        estimatedPrice: course?.estimatedPrice,
-        tags: course.tags,
-        level: course.level,
-        demoUrl: course.demoUrl,
-        thumbnail: course?.thumbnail,
+        name: editCourseData.name,
+        description: editCourseData.description,
+        categories: editCourseData?.categories,
+        price: editCourseData.price,
+        estimatedPrice: editCourseData?.estimatedPrice,
+        tags: editCourseData.tags,
+        level: editCourseData.level,
+        demoUrl: editCourseData.demoUrl,
+        thumbnail: editCourseData?.thumbnail,
       });
-      setBenefits(course.benefits);
-      setPrerequisites(course.prerequisites);
-      setCourseContentData(course.courseData);
+      setBenefits(editCourseData.benefits);
+      setPrerequisites(editCourseData.prerequisites);
+      setCourseContentData(editCourseData.courseData);
     }
-  }, [course]);
-
-  const [courseData, setCourseData] = useState({});
-  const [benefits, setBenefits] = useState([{ title: "" }]);
-  const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
-
-  const [courseInfo, setCourseInfo] = useState({
-    name: "",
-    description: "",
-    price: "",
-    estimatedPrice: "",
-    tags: "",
-    level: "",
-    demoUrl: "",
-    thumbnail: {},
-  });
-
-  const [courseContentData, setCourseContentData] = useState([
-    {
-      title: "",
-      description: "",
-      videoUrl: "",
-      videoSection: "Add a title to this section",
-      links: [
-        {
-          title: "",
-          url: "",
-        },
-      ],
-      suggestion: "",
-    },
-  ]);
+  }, [editCourseData]);
 
   const handleSubmit = () => {
     // Formatting benefits
@@ -106,6 +107,7 @@ const EditCourse: FC<Props> = ({ id }) => {
       title: content.title,
       description: content.description,
       videoSection: content.videoSection,
+      videoLength: content?.videoLength,
       links: content.links.map((link) => ({
         title: link.title,
         url: link.url,
@@ -134,7 +136,8 @@ const EditCourse: FC<Props> = ({ id }) => {
 
   const handleCrourseCreate = async (e: any) => {
     const data = courseData;
-    await updateCourse({ id: course._id, data });
+    console.log(typeof courseData);
+    await updateCourse({ id: editCourseData._id, data });
   };
 
   return (
@@ -176,6 +179,7 @@ const EditCourse: FC<Props> = ({ id }) => {
             setActive={setActive}
             courseData={courseData}
             handleCrourseCreate={handleCrourseCreate}
+            courseContentData={courseContentData}
             isEdit={true}
           />
         )}

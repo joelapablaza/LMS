@@ -44,7 +44,7 @@ export const editCourse = CatchAsyncError(
     try {
       const data = req.body;
       const thumbnail = data.thumbnail;
-      console.log(thumbnail);
+      console.log(data);
 
       if (thumbnail.url && !thumbnail.url.startsWith("https")) {
         await cloudinary.v2.uploader.destroy(thumbnail.public_id);

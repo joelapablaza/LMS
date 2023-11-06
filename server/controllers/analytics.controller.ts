@@ -7,49 +7,81 @@ import courseModel from "../models/course.model";
 import OrderModel from "../models/order.model";
 
 // get users analytics --- admin only
-// export const getUsersAnalytics = CatchAsyncError(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const users = await generateLast12MonthsData(userModel);
-
-//       res.status(200).json({
-//         success: true,
-//         users,
-//       });
-//     } catch (error: any) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   }
-// );
-
-// get analytics --- admin only
-export const getAnalytics = CatchAsyncError(
+export const getUsersAnalytics = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const model = req.params.model;
-      let data;
-
-      // switch case
-      switch (model) {
-        case "users":
-          data = await generateLast12MonthsData(userModel);
-          break;
-        case "courses":
-          data = await generateLast12MonthsData(courseModel);
-          break;
-        case "orders":
-          data = await generateLast12MonthsData(OrderModel);
-          break;
-        default:
-          return next(new ErrorHandler("Invalid Model", 400));
-      }
+      const users = await generateLast12MonthsData(userModel);
 
       res.status(200).json({
         success: true,
-        data,
+        users,
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
   }
 );
+
+// get courses analytics --- admin only
+export const getCoursesAnalytics = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const courses = await generateLast12MonthsData(courseModel);
+
+      res.status(200).json({
+        success: true,
+        courses,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+// get courses analytics --- admin only
+export const getOrdersAnalytics = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const orders = await generateLast12MonthsData(OrderModel);
+
+      res.status(200).json({
+        success: true,
+        orders,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+// get analytics --- admin only
+// export const getAnalytics = CatchAsyncError(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const model = req.params.model;
+//       let data;
+
+//       // switch case
+//       switch (model) {
+//         case "users":
+//           data = await generateLast12MonthsData(userModel);
+//           break;
+//         case "courses":
+//           data = await generateLast12MonthsData(courseModel);
+//           break;
+//         case "orders":
+//           data = await generateLast12MonthsData(OrderModel);
+//           break;
+//         default:
+//           return next(new ErrorHandler("Invalid Model", 400));
+//       }
+
+//       res.status(200).json({
+//         success: true,
+//         data,
+//       });
+//     } catch (error: any) {
+//       return next(new ErrorHandler(error.message, 500));
+//     }
+//   }
+// );

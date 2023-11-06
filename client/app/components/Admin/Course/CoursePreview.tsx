@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import CoursePlayer from "../../../utils/CoursePlayer";
 import { styles } from "../../../../app/styles/style";
 import Ratings from "../../../utils/Ratings";
@@ -10,6 +10,7 @@ type Props = {
   courseData: any;
   handleCrourseCreate: any;
   isEdit: boolean;
+  courseContentData: any;
 };
 
 const CoursePreview: FC<Props> = ({
@@ -18,6 +19,7 @@ const CoursePreview: FC<Props> = ({
   courseData,
   handleCrourseCreate,
   isEdit,
+  courseContentData,
 }) => {
   const discountPercentenge =
     ((courseData?.estimatedPrice - courseData.price) /
@@ -33,6 +35,10 @@ const CoursePreview: FC<Props> = ({
   const createCourse = () => {
     handleCrourseCreate();
   };
+
+  useEffect(() => {
+    console.log("Desde Preview", courseContentData);
+  });
 
   return (
     <div className="w-[90%] m-auto py-5 mb-5">
@@ -91,7 +97,9 @@ const CoursePreview: FC<Props> = ({
           </h1>
           <div className="flex-items-center justify-between pt-3">
             <div className="flex items-center">
-              <Ratings rating={0} />
+              <Ratings
+                rating={courseData?.ratings ? courseData?.ratings : 4.5}
+              />
               <h5>0 Reviews</h5>
             </div>
             <h5>0 Students</h5>

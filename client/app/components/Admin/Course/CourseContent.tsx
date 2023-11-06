@@ -1,5 +1,5 @@
 import { styles } from "@/app/styles/style";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import { BiPencil } from "react-icons/bi";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
@@ -14,6 +14,16 @@ type Props = {
   handleSubmit: any;
 };
 
+type CourseContentData = {
+  title: string;
+  description: string;
+  videoUrl: string;
+  videoSection: string;
+  videoLength: number;
+  links: { title?: string; url?: string }[];
+  suggestion: string;
+};
+
 const CourseContent: FC<Props> = ({
   active,
   setActive,
@@ -21,24 +31,10 @@ const CourseContent: FC<Props> = ({
   setCourseContentData,
   handleSubmit: handleCourseSubmit,
 }) => {
+  const [editableData, setEditableData] = useState<CourseContentData[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(
-    Array(courseContentData?.length).fill(false)
+    Array(editableData?.length).fill(false)
   );
-
-  type ContentType = {
-    videoUrl: string;
-    title: string;
-    description: string;
-    videoSection: string;
-    videoLength: number;
-    links: { title: string; url: string }[];
-    suggestion: string;
-  };
-
-  const dataForUpdate: ContentType[] = courseContentData.map(
-    (item: ContentType) => ({ ...item })
-  );
-
   const [activeSection, setActiveSection] = useState(1);
 
   const handleSubmit = (e: any) => {
@@ -52,25 +48,51 @@ const CourseContent: FC<Props> = ({
   };
 
   const handleRemoveLink = (index: number, linkIndex: number) => {
-    const updatedData = [...dataForUpdate];
+    const updatedData = [...editableData];
     updatedData[index].links.splice(linkIndex, 1);
-    setCourseContentData(updatedData);
+    setEditableData(updatedData);
   };
 
   const handleAddLink = (index: number) => {
-    const updatedData = [...dataForUpdate];
+    const updatedData = [...editableData];
     updatedData[index].links.push({ title: "", url: "" });
-    setCourseContentData(updatedData);
+    setEditableData(updatedData);
   };
 
+  useEffect(() => {
+    const editablecourseContentData = courseContentData.map((item: any) => {
+      return {
+        title: item.title,
+        description: item.description,
+        videoUrl: item.videoUrl,
+        videoSection: item.videoSection,
+        videoLength: item.videoLength,
+        links: item.links.map((obj: any) => {
+          return {
+            url: obj.url,
+            title: obj.title,
+          };
+        }),
+        suggestion: item.suggestion,
+      };
+    });
+    setEditableData(editablecourseContentData);
+  }, [courseContentData]);
+
   const newContentHandler = (item: any) => {
-    if (isItemIncomplete(item)) {
+    if (
+      item.title === "" ||
+      item.description === "" ||
+      item.videoUrl === "" ||
+      item.links[0].title === "" ||
+      item.links[0].url === ""
+    ) {
       toast.error("Please fill all the fields first");
     } else {
       let newVideoSection = "";
-      if (dataForUpdate.length > 0) {
+      if (editableData.length > 0) {
         const lastVideoSection =
-          dataForUpdate[dataForUpdate.length - 1].videoSection;
+          editableData[editableData.length - 1].videoSection;
 
         //  use the last videoSection if avalible, else use user input
         if (lastVideoSection) {
@@ -82,43 +104,24 @@ const CourseContent: FC<Props> = ({
         videoUrl: "",
         title: "",
         description: "",
+        videoLength: 0,
         videoSection: newVideoSection,
         links: [{ title: "", url: "" }],
+        suggestion: "",
       };
 
-      setCourseContentData([...dataForUpdate, newContent]);
+      setEditableData([...editableData, newContent]);
     }
   };
 
-  const isItemIncomplete = (item: any) => {
-    const { title, description, videoUrl, links } = item;
-    return (
-      title === "" ||
-      description === "" ||
-      videoUrl === "" ||
-      links[0].url === "" ||
-      links[0].title === ""
-    );
-  };
-
-  const isEmpty = (value: string) => {
-    return value === "";
-  };
-
-  const checkCommonFields = (lastContent: any) => {
-    return (
-      isEmpty(lastContent.title) ||
-      isEmpty(lastContent.description) ||
-      isEmpty(lastContent.videoUrl) ||
-      isEmpty(lastContent.links[0].url) ||
-      isEmpty(lastContent.links[0].title)
-    );
-  };
-
   const addNewSection = () => {
-    const lastContent = dataForUpdate[dataForUpdate.length - 1];
-
-    if (checkCommonFields(lastContent)) {
+    if (
+      editableData[editableData.length - 1].title === "" ||
+      editableData[editableData.length - 1].description === "" ||
+      editableData[editableData.length - 1].videoUrl === "" ||
+      editableData[editableData.length - 1].links[0].title === "" ||
+      editableData[editableData.length - 1].links[0].url === ""
+    ) {
       toast.error("Please fill all the fields first");
     } else {
       setActiveSection(activeSection + 1);
@@ -127,20 +130,51 @@ const CourseContent: FC<Props> = ({
         title: "",
         description: "",
         videoSection: `Untitled Section ${activeSection}`,
+        videoLength: 0,
         links: [{ title: "", url: "" }],
+        suggestion: "",
       };
-      setCourseContentData([...dataForUpdate, newContent]);
+      setEditableData([...editableData, newContent]);
     }
   };
 
   const handleOptions = () => {
-    const lastContent = dataForUpdate[dataForUpdate.length - 1];
-
-    if (checkCommonFields(lastContent)) {
-      toast.error("Section can't be empty");
+    if (
+      editableData[editableData.length - 1].title === "" ||
+      editableData[editableData.length - 1].description === "" ||
+      editableData[editableData.length - 1].videoUrl === "" ||
+      editableData[editableData.length - 1].links[0].title === "" ||
+      editableData[editableData.length - 1].links[0].url === ""
+    ) {
+      toast.error("Please fill all the fields first");
     } else {
       setActive(active + 1);
       handleCourseSubmit();
+    }
+  };
+
+  const updateData = () => {
+    if (
+      editableData[editableData.length - 1].title === "" ||
+      editableData[editableData.length - 1].description === "" ||
+      editableData[editableData.length - 1].videoUrl === "" ||
+      editableData[editableData.length - 1].links[0].title === "" ||
+      editableData[editableData.length - 1].links[0].url === ""
+    ) {
+      toast.error("Please fill all the fields first");
+    } else {
+      const editablecourseContentData = editableData.map((item: any) => {
+        return {
+          title: item.title,
+          description: item.description,
+          videoUrl: item.videoUrl,
+          videoSection: item.videoSection,
+          videoLength: item.videoLength.toString(),
+          links: item.links,
+          suggestion: item.suggestion,
+        };
+      });
+      setCourseContentData(editablecourseContentData);
     }
   };
 
@@ -151,10 +185,11 @@ const CourseContent: FC<Props> = ({
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
-        {dataForUpdate?.map((item: any, index: number) => {
+        <label className={styles.title}>Changes are automatically saved</label>
+        {editableData?.map((item: any, index: number) => {
           const showSectionInput =
             index === 0 ||
-            item.videoSection !== dataForUpdate[index - 1].videoSection;
+            item.videoSection !== editableData[index - 1].videoSection;
 
           return (
             <>
@@ -176,8 +211,9 @@ const CourseContent: FC<Props> = ({
                         } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none`}
                         value={item.videoSection}
                         onChange={(e) => {
-                          const updatedData = [...dataForUpdate];
+                          const updatedData = [...editableData];
                           updatedData[index].videoSection = e.target.value;
+                          setEditableData(updatedData);
                           setCourseContentData(updatedData);
                         }}
                       />
@@ -191,7 +227,6 @@ const CourseContent: FC<Props> = ({
                     <>
                       {item.title ? (
                         <p className="font-Poppins dark:text-white text-black">
-                          {/* {item.title + 1}. {item.title} */}
                           {index + 1}. {item.title}
                         </p>
                       ) : (
@@ -210,9 +245,9 @@ const CourseContent: FC<Props> = ({
                       }`}
                       onClick={() => {
                         if (index > 0) {
-                          const updateData = [...dataForUpdate];
+                          const updateData = [...editableData];
                           updateData.splice(index, 1);
-                          setCourseContentData(updateData);
+                          setEditableData(updateData);
                         }
                       }}
                     />
@@ -228,6 +263,7 @@ const CourseContent: FC<Props> = ({
                     />
                   </div>
                 </div>
+
                 {!isCollapsed[index] && (
                   <>
                     <div className="my-3">
@@ -243,8 +279,9 @@ const CourseContent: FC<Props> = ({
                         className={styles.input}
                         value={item.title}
                         onChange={(e) => {
-                          const updatedData = [...dataForUpdate];
+                          const updatedData = [...editableData];
                           updatedData[index].title = e.target.value;
+                          setEditableData(updatedData);
                           setCourseContentData(updatedData);
                         }}
                       />
@@ -253,12 +290,13 @@ const CourseContent: FC<Props> = ({
                       <label className={styles.label}>Video Url</label>
                       <input
                         type="text"
-                        placeholder="hzsed"
+                        placeholder={`Id code: 'asjhgda879a8jdadhdad'`}
                         className={styles.input}
                         value={item.videoUrl}
                         onChange={(e) => {
-                          const updatedData = [...dataForUpdate];
+                          const updatedData = [...editableData];
                           updatedData[index].videoUrl = e.target.value;
+                          setEditableData(updatedData);
                           setCourseContentData(updatedData);
                         }}
                       />
@@ -273,10 +311,11 @@ const CourseContent: FC<Props> = ({
                         className={styles.input}
                         value={item.videoLength}
                         onChange={(e) => {
-                          const updatedData = [...dataForUpdate];
+                          const updatedData = [...editableData];
                           updatedData[index].videoLength = parseInt(
                             e.target.value
                           );
+                          setEditableData(updatedData);
                           setCourseContentData(updatedData);
                         }}
                       />
@@ -288,18 +327,21 @@ const CourseContent: FC<Props> = ({
                         rows={6}
                         cols={30}
                         placeholder="Describe the video..."
-                        className={`${styles.input} !h-min -y2`}
+                        className={`${styles.input} !h-min py-2`}
                         value={item.description}
                         onChange={(e) => {
-                          const updatedData = [...dataForUpdate];
+                          const updatedData = [...editableData];
                           updatedData[index].description = e.target.value;
+                          setEditableData(updatedData);
                           setCourseContentData(updatedData);
                         }}
                       />
                       <br />
-                      <br />
                     </div>
-                    {item?.links.map((link: any, linkIndex: number) => (
+
+                    {/* links mapping */}
+
+                    {item.links.map((link: any, linkIndex: number) => (
                       <div className="mb-3 block" key={linkIndex}>
                         <div className="w-full flex items-center justify-between">
                           <label className={styles.label}>
@@ -325,9 +367,10 @@ const CourseContent: FC<Props> = ({
                           className={styles.input}
                           value={link.title}
                           onChange={(e) => {
-                            const updatedData = [...dataForUpdate];
-                            updatedData[index].links[0].title = e.target.value;
-                            setCourseContentData(updatedData);
+                            const updatedData = [...editableData];
+                            updatedData[index].links[linkIndex].title =
+                              e.target.value;
+                            setEditableData(updatedData);
                           }}
                         />
 
@@ -337,9 +380,10 @@ const CourseContent: FC<Props> = ({
                           className={`${styles.input} mt-6`}
                           value={link.url}
                           onChange={(e) => {
-                            const updatedData = [...dataForUpdate];
-                            updatedData[index].links[0].url = e.target.value;
-                            setCourseContentData(updatedData);
+                            const updatedData = [...editableData];
+                            updatedData[index].links[linkIndex].url =
+                              e.target.value;
+                            setEditableData(updatedData);
                           }}
                         />
                       </div>
@@ -358,7 +402,7 @@ const CourseContent: FC<Props> = ({
                 )}
                 <br />
                 {/* {Add new content} */}
-                {index === dataForUpdate.length - 1 && (
+                {index === editableData.length - 1 && (
                   <div>
                     <p
                       className="flex items-center text-[18px] dark:text-white text-black cursor-pointer"

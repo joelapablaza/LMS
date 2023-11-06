@@ -46,8 +46,6 @@ const CreateCourse = (props: Props) => {
   ]);
   const [courseData, setCourseData] = useState({});
 
-  console.log(courseData);
-
   const handleSubmit = async () => {
     // format benefits array
     const formattedBenefits = benefits.map((benefit) => ({
@@ -58,20 +56,22 @@ const CreateCourse = (props: Props) => {
       title: prerequisite.title,
     }));
     // format course content array
-    const formattedCourseContent = courseContentData.map((content) => {
-      return {
-        videoUrl: content.videoUrl,
-        title: content.title,
-        description: content.description,
-        videoSection: content.videoSection,
-        videoLength: content.videoLength,
-        links: content.links.map((link: any) => ({
-          title: link.title,
-          url: link.url,
-        })),
-        suggestion: content.suggestion,
-      };
-    });
+    const formattedCourseContentData = courseContentData.map(
+      (courseContent) => {
+        return {
+          videoUrl: courseContent.videoUrl,
+          title: courseContent.title,
+          description: courseContent.description,
+          videoSection: courseContent.videoSection,
+          videoLength: courseContent.videoLength,
+          links: courseContent.links.map((link: any) => ({
+            title: link.title,
+            url: link.url,
+          })),
+          suggestion: courseContent.suggestion,
+        };
+      }
+    );
     // prepare our data object
     const data = {
       name: courseInfo.name,
@@ -83,10 +83,10 @@ const CreateCourse = (props: Props) => {
       level: courseInfo.level,
       demoUrl: courseInfo.demoUrl,
       thumbnail: courseInfo.thumbnail,
+      totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
-      courseData: formattedCourseContent,
-      totalVideos: courseContentData.length,
+      courseData: formattedCourseContentData,
     };
 
     setCourseData(data);
@@ -150,6 +150,7 @@ const CreateCourse = (props: Props) => {
             setActive={setActive}
             courseData={courseData}
             handleCrourseCreate={handleCrourseCreate}
+            courseContentData={courseContentData}
             isEdit={false}
           />
         )}

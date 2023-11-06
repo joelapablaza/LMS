@@ -62,10 +62,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
             renderCell: (params: any) => {
               return (
                 <a href={`mailto:${params.row.userEmail}`}>
-                  <AiOutlineMail
-                    className="dark:text-white text-black"
-                    size={20}
-                  />
+                  <AiOutlineMail className="text-green-600" size={25} />
                 </a>
               );
             },

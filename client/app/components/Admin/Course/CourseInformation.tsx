@@ -41,7 +41,7 @@ const CourseInformation: FC<Props> = ({
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        if (reader.readyState == 2) {
+        if (reader.readyState === 2) {
           setCourseInfo({ ...courseInfo, thumbnail: reader.result });
           setImageLoaded(true);
         }
@@ -106,8 +106,8 @@ const CourseInformation: FC<Props> = ({
             id=""
             cols={30}
             rows={6}
-            placeholder="Write something amazing..."
-            className={`${styles.input} !h-min py-2`}
+            placeholder="Describe your course from a seller point of view..."
+            className={`${styles.input} !h-min !py-2`}
             value={courseInfo.description}
             onChange={(e: any) =>
               setCourseInfo({

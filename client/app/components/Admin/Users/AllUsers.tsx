@@ -47,7 +47,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     if (isUpdateUserRoleSuccess) {
       refetch();
       toast.success("User role updated successfully");
-      setAddNewMemberModalOpen(false);
+      setAddNewMemberModalOpen(!addNewMemberModalOpen);
     }
     if (deleteSuccess) {
       refetch();
@@ -90,7 +90,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
         return (
           <>
             <a href={`mailto:${params.row.email}`}>
-              <AiOutlineMail className=" text-green-600" size={20} />
+              <AiOutlineMail className=" text-green-600" size={25} />
             </a>
           </>
         );
@@ -109,7 +109,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                 setUserId(params.row.id);
               }}
             >
-              <AiOutlineDelete className=" text-red-500" size={20} />
+              <AiOutlineDelete className=" text-red-500" size={25} />
             </Button>
           </>
         );
@@ -169,8 +169,8 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
         <Box m="20px">
           <div className="w-full flex justify-end">
             <div
-              className={`${styles.button} !w-[220px] dark:bg-[#57c7a3] !h-[35px] dark:border border-[#ffffff6c]`}
-              onClick={() => setAddNewMemberModalOpen(true)}
+              className={`${styles.button} !w-[220px] dark:bg-[#3e4396] !h-[35px] `}
+              onClick={() => setAddNewMemberModalOpen(!addNewMemberModalOpen)}
             >
               Add New Member
             </div>
@@ -241,13 +241,13 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                 </h1>
                 <div className="w-full flex items-center justify-between mb-4 mt-12">
                   <div
-                    className={`${styles.button} !w-[120px] h-[30px] bg-[#57c7a3]`}
+                    className={`${styles.button} !w-[120px] h-[30px] bg-[#2a4d7e]`}
                     onClick={() => setOpen(!open)}
                   >
                     Cancel
                   </div>
                   <div
-                    className={`${styles.button} !w-[120px] h-[30px] bg-[#d63f41]`}
+                    className={`${styles.button} !w-[120px] h-[30px] bg-[#af4042]`}
                     onClick={handleDelete}
                   >
                     Delete
@@ -260,7 +260,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           {addNewMemberModalOpen && (
             <Modal
               open={addNewMemberModalOpen}
-              onClose={() => setAddNewMemberModalOpen(false)}
+              onClose={() => setAddNewMemberModalOpen(!addNewMemberModalOpen)}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
@@ -288,8 +288,10 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                 </div>
                 <div className="w-full flex items-center justify-between mb-4 mt-12">
                   <div
-                    className={`${styles.button} !w-[120px] h-[30px] bg-[#d63f41]`}
-                    onClick={() => setOpen(!open)}
+                    className={`${styles.button} !w-[120px] h-[30px] bg-[#2a4d7e]`}
+                    onClick={() =>
+                      setAddNewMemberModalOpen(!addNewMemberModalOpen)
+                    }
                   >
                     Cancel
                   </div>

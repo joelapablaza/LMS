@@ -18,7 +18,6 @@ import {
   QuizIcon,
   WysiwygIcon,
   ManageHistoryIcon,
-  SettingsIcon,
   ExitToAppIcon,
 } from "./Icon";
 import avatarDefault from "../../../../public/assets/avatar.png";
@@ -26,7 +25,6 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Quiz } from "@mui/icons-material";
 
 interface itemProps {
   title: string;
@@ -183,6 +181,7 @@ const Sidebar = () => {
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              key={Math.random()}
             />
 
             <Typography

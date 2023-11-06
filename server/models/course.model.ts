@@ -35,6 +35,7 @@ interface ICourseData extends Document {
 interface ICourse extends Document {
   name: string;
   description: string;
+  categories: string;
   price: number;
   estimatedPrice?: number;
   thumbnail: object;
@@ -59,10 +60,15 @@ const reviewSchema = new Schema<IReview>({
   commentReplies: [Object],
 });
 
-const linkSchema = new Schema<ILink>({
-  title: String,
-  url: String,
-});
+const linkSchema = new Schema<ILink>(
+  {
+    title: String,
+    url: String,
+  },
+  {
+    _id: false,
+  }
+);
 
 const commentSchema = new Schema<IComent>({
   user: Object,
@@ -89,6 +95,10 @@ const courseSchema = new Schema<ICourse>(
       requried: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    categories: {
       type: String,
       required: true,
     },
