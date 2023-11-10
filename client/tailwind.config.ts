@@ -17,6 +17,7 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "text-gradient": "linear-gradient(to right, var(--tw-gradient-stops))",
       },
       screens: {
         "1000px": "1000px",
@@ -29,6 +30,20 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: any) {
+      const newUtilities = {
+        ".text-gradient": {
+          "background-image":
+            "linear-gradient(to right, var(--tw-gradient-stops))",
+          "-webkit-background-clip": "text",
+          "background-clip": "text",
+          color: "transparent",
+        },
+      };
+
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
 };
 export default config;

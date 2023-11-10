@@ -78,7 +78,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
       <div
         className={`${
           active
-            ? "border-[#cccccd] dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 left-0 w-full h-[80px] z-[80] border-b dark:border-[#3f414f] shadow-xl transition duration-500"
+            ? "border-[#cccccd] bg-white dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 left-0 w-full h-[80px] z-[80] border-b dark:border-[#3f414f] shadow-xl transition duration-500"
             : "border-[#cccccd] w-full border-b dark:border-[#3f414f] h-[80px] z-[80] dark:shadow"
         }`}
       >
