@@ -1,19 +1,26 @@
 import Ratings from "@/app/utils/Ratings";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import { format } from "timeago.js";
 import CoursePlayer from "@/app/utils/CoursePlayer";
 import Link from "next/link";
 import CourseContentList from "../Course/CourseContentList";
 import { styles } from "@/app/styles/style";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckOutForm from "../Paymeny/CheckOutForm";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 type Props = {
   data: any;
+  clientSecret: string;
+  stripePromise: any;
 };
 
-const CourseDetails = ({ data }: Props) => {
-  const { user } = useSelector((state: any) => state.auth);
+const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
+  const { data: userData } = useLoadUserQuery(undefined, {});
+  const user = userData?.user;
+  const [open, setOpen] = useState(false);
 
   const discountPercentege =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
@@ -23,7 +30,10 @@ const CourseDetails = ({ data }: Props) => {
   const isPurchased =
     user && user?.courses?.find((course: any) => course._id === data._id);
 
-  const handleOrder = (e: any) => {};
+  const handleOrder = (e: any) => {
+    e.preventDefault();
+    setOpen(true);
+  };
 
   return (
     <div>
@@ -175,9 +185,9 @@ const CourseDetails = ({ data }: Props) => {
                 {isPurchased ? (
                   <Link
                     href={`/course-access/${data._id}`}
-                    className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
+                    className={`${styles.button} !w-[200px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                   >
-                    Enter to the Course
+                    Watch the course
                   </Link>
                 ) : (
                   <div
@@ -205,6 +215,29 @@ const CourseDetails = ({ data }: Props) => {
           </div>
         </div>
       </div>
+
+      <>
+        {open && (
+          <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
+            <div className="w-[500px] min-h-[450px] bg-white rounded-xl shadow p-5">
+              <div className="w-full flex justify-end">
+                <IoCloseOutline
+                  size={40}
+                  className="cursor-pointer text-black"
+                  onClick={() => setOpen(false)}
+                />
+              </div>
+              <div className="w-full">
+                {stripePromise && clientSecret && (
+                  <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <CheckOutForm setOpen={setOpen} data={data} />
+                  </Elements>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     </div>
   );
 };

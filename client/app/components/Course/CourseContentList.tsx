@@ -67,7 +67,7 @@ const CourseContentList: FC<Props> = ({
               {/* Render Video Section */}
 
               <div
-                className="w-full flex justify-between items-center cursor-pointer border-b border-gray-400"
+                className="w-full flex justify-between items-center cursor-pointer "
                 onClick={() => toggleSection(section)}
               >
                 <h2 className="text-[22px] text-black dark:text-white">
