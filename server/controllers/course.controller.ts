@@ -267,6 +267,8 @@ export const AddAnswer = CatchAsyncError(
       const newAnswer: any = {
         user: req.user,
         answer,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       // add this answer to our course question
@@ -327,9 +329,11 @@ export const addReview = CatchAsyncError(
       const userCourseList = req.user?.courses;
       const courseId = req.params.id;
 
+      console.log(req.params.id);
+
       // chech if courseId already exist in userCourseList based on _id
       const courseExist = userCourseList?.some(
-        (course: any) => course._id.toString() === courseId
+        (course: any) => course._id.toString() === courseId.toString()
       );
 
       if (!courseExist) {
@@ -345,6 +349,8 @@ export const addReview = CatchAsyncError(
         user: req.user,
         comment: review,
         rating,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       course?.reviews.push(reviewData);
@@ -362,11 +368,14 @@ export const addReview = CatchAsyncError(
 
       await course?.save();
 
+      await redis.set(courseId, JSON.stringify(course), "EX", 604800);
+
       // create notification to control panel
-      const notification: any = {
+      await NotificationModel.create({
+        user: req.user?._id,
         title: "New Review Recived",
         message: `${req.user?.name} has reviewd the course ${course?.name}`,
-      };
+      });
 
       // send notification to control panel
 
@@ -408,6 +417,8 @@ export const addReplayToReview = CatchAsyncError(
       const replyData: any = {
         user: req.user,
         comment,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       // if not commentReplies
@@ -418,6 +429,8 @@ export const addReplayToReview = CatchAsyncError(
       review.commentReplies?.push(replyData);
 
       await course.save();
+
+      await redis.set(courseId, JSON.stringify(course), "EX", 604800);
 
       res.status(200).json({
         success: true,

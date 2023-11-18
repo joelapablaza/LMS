@@ -6,20 +6,6 @@ import ReviewCard from "../Review/ReviewCard";
 type Props = {};
 
 export const reviews = [
-  // {
-  //   name: "Gene Bates",
-  //   avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-  //   profession: "Student",
-  //   comment:
-  //     "As a avid learner, Elearning has exceeded my expectations. Variety, quality, and community come together here. Highly recommended!",
-  // },
-  // {
-  //   name: "Holly Collins",
-  //   avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-  //   profession: "Student | Harvard University",
-  //   comment:
-  //     "I've been on the lookout for the perfect e-learning platform, and Elearning is it! The wide range of courses and the supportive community make it a top choice for learners.",
-  // },
   {
     name: "Luis Ramirez",
     avatar: "https://randomuser.me/api/portraits/men/3.jpg",
