@@ -1,5 +1,5 @@
 import Ratings from "@/app/utils/Ratings";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import { format } from "timeago.js";
@@ -17,12 +17,24 @@ type Props = {
   data: any;
   clientSecret: string;
   stripePromise: any;
+  setRoute: any;
+  setOpen: any;
 };
 
-const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
+const CourseDetails = ({
+  data,
+  clientSecret,
+  stripePromise,
+  setRoute,
+  setOpen: openAuthModal,
+}: Props) => {
   const { data: userData } = useLoadUserQuery(undefined, {});
-  const user = userData?.user;
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<any>();
+
+  useEffect(() => {
+    setUser(userData?.user);
+  }, [userData]);
 
   const discountPercentege =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
@@ -34,7 +46,12 @@ const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
 
   const handleOrder = (e: any) => {
     e.preventDefault();
-    setOpen(true);
+    if (user) {
+      setOpen(true);
+    } else {
+      setRoute("Login");
+      openAuthModal(true);
+    }
   };
 
   return (
@@ -270,7 +287,7 @@ const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
               <div className="w-full">
                 {stripePromise && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckOutForm setOpen={setOpen} data={data} />
+                    <CheckOutForm setOpen={setOpen} data={data} user={user} />
                   </Elements>
                 )}
               </div>

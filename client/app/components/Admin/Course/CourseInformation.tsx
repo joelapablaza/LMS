@@ -1,7 +1,5 @@
 import { styles } from "@/app/styles/style";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
-import { LargeNumberLike } from "crypto";
-import Image from "next/image";
 import React, { FC, useEffect, useState } from "react";
 
 type Props = {
@@ -184,7 +182,7 @@ const CourseInformation: FC<Props> = ({
             >
               <option value="">Select Category</option>
               {categories.map((item: any) => (
-                <option value={item._id} key={item._id}>
+                <option value={item.title} key={item._id}>
                   {item.title}
                 </option>
               ))}

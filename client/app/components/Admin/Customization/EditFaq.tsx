@@ -24,7 +24,7 @@ const EditFaq = (props: Props) => {
 
   const [questions, setQuestions] = useState<any[]>([]);
 
-  // TODO Se activa y desactiva el campo de answer cuando apreto espacio
+  // TODO  Se activa y desactiva el campo de answer cuando apreto espacio
 
   useEffect(() => {
     if (data) {

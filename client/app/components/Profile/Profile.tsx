@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import SideBarProfile from "./SideBarProfile";
 import { useLogOutQuery } from "@/redux/features/auth/authApi";
 import { signOut } from "next-auth/react";
@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import ProfileInfo from "./ProfileInfo";
 import ChangePassword from "./ChangePassword";
+import EnrolledCourses from "./EnrolledCourses";
+import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 
 type Props = {
   user: any;
@@ -17,6 +19,11 @@ const Profile: FC<Props> = ({ user }) => {
   const [avatar, setAvatar] = useState(null);
   const [active, setActive] = useState(1);
   const [logout, setLogout] = useState(false);
+  const [courses, setCourses] = useState();
+
+  const { data, isLoading } = useGetAllCoursesQuery(undefined, {});
+
+  console.log(data);
 
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
@@ -30,11 +37,24 @@ const Profile: FC<Props> = ({ user }) => {
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
-      setScroll(window.scrollY > 85);
+      if (window.scrollY > 85) {
+        setScroll(true);
+      } else {
+        setScroll(false);
+      }
     });
-  } else {
-    setScroll(false);
   }
+
+  useEffect(() => {
+    if (data) {
+      const filterCourses = user.courses
+        .map((purchasedCourse: any) =>
+          data.courses.find((course: any) => course._id === purchasedCourse._id)
+        )
+        .filter((course: any) => course !== undefined);
+      setCourses(filterCourses);
+    }
+  }, [data]);
 
   return (
     <div className="w-[85%] flex mx-auto">
@@ -61,6 +81,11 @@ const Profile: FC<Props> = ({ user }) => {
       {active === 2 && (
         <div className="w-full h-full bg-transparent mt-[80px]">
           <ChangePassword />
+        </div>
+      )}
+      {active === 3 && (
+        <div className="w-full h-full bg-transparent mt-[80px]">
+          <EnrolledCourses courses={courses} />
         </div>
       )}
     </div>

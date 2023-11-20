@@ -75,7 +75,7 @@ const EditCategories = (props: Props) => {
     }
   };
 
-  // TODO Hacer que se remarque el input seleccionado
+  //  Hacer que se remarque el input seleccionado
 
   return (
     <>

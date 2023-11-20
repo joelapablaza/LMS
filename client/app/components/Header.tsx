@@ -17,6 +17,7 @@ import {
   useLogOutQuery,
   useSocialAuthMutation,
 } from "@/redux/features/auth/authApi";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 type Props = {
   open: boolean;
@@ -29,7 +30,11 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  const { user } = useSelector((state: any) => state.auth);
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useLoadUserQuery(undefined, {});
   const { data } = useSession();
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
@@ -40,25 +45,28 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   });
 
   useEffect(() => {
-    if (!user) {
-      if (data) {
-        socialAuth({
-          email: data?.user?.email,
-          name: data?.user?.name,
-          avatar: data?.user?.image,
-        });
+    if (!isLoading) {
+      if (!userData) {
+        if (data) {
+          socialAuth({
+            email: data?.user?.email,
+            name: data?.user?.name,
+            avatar: data?.user?.image,
+          });
+          refetch();
+        }
       }
-    }
-    if (data === null) {
-      if (isSuccess) {
-        toast.success("Login successfull");
+      if (data === null) {
+        if (isSuccess) {
+          toast.success("Login successfull");
+        }
       }
-    }
-    if (data === null) {
-      setLogout(true);
+      if (data === null && !isLoading && !userData) {
+        setLogout(true);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, data]);
+  }, [userData, data, isLoading]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -103,10 +111,14 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              {user ? (
+              {userData ? (
                 <Link href={"/profile"}>
                   <Image
-                    src={user.avatar?.url ? user.avatar.url : avatarDefault}
+                    src={
+                      userData.user.avatar?.url
+                        ? userData.user.avatar.url
+                        : avatarDefault
+                    }
                     alt=""
                     className="w-[30px] h-[30px] rounded-full cursor-pointer"
                     width={30}
@@ -158,6 +170,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
               setRoute={setRoute}
               activeItem={activeItem}
               component={Login}
+              refetch={refetch}
             />
           )}
         </>
