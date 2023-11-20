@@ -23,8 +23,6 @@ const Profile: FC<Props> = ({ user }) => {
 
   const { data, isLoading } = useGetAllCoursesQuery(undefined, {});
 
-  console.log(data);
-
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });

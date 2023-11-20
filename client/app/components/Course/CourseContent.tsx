@@ -38,7 +38,7 @@ const CourseContent = ({ id, user }: Props) => {
           />
           <div className="w-full grid 800px:grid-cols-10">
             <Heading
-              title={data[activeVideo]?.title}
+              title={data?.[activeVideo]?.title}
               description="Lern Python making a world use project"
               keywords={data[activeVideo]?.tags}
             />

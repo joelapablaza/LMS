@@ -93,7 +93,7 @@ const CourseInformation: FC<Props> = ({
             }
             id="name"
             placeholder="MERN stack LMS platform with next 13"
-            className={`${styles.input}`}
+            className={`${styles.input} `}
           />
         </div>
         <br />

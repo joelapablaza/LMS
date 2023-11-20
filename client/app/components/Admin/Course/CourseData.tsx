@@ -108,6 +108,7 @@ const CourseData: FC<Props> = ({
         ))}
         <AddCircleIcon
           style={{ margin: "10px 0px", cursor: "pointer", width: "30px" }}
+          className="text-black dark:text-white"
           onClick={handleAddBenefit}
         />
       </div>
@@ -135,6 +136,7 @@ const CourseData: FC<Props> = ({
         ))}
         <AddCircleIcon
           style={{ margin: "10px 0px", cursor: "pointer", width: "30px" }}
+          className="text-black dark:text-white"
           onClick={handleAddPrerequisite}
         />
       </div>

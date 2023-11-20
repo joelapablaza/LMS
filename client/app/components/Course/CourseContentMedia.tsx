@@ -62,8 +62,6 @@ const CourseContentMedia: FC<Props> = ({
   );
   const course = courseData?.course;
 
-  console.log(courseData);
-
   const [
     addNewQuestion,
     { isSuccess, isLoading: LoadingWhileCreatingNewQueston, error },
@@ -206,6 +204,7 @@ const CourseContentMedia: FC<Props> = ({
         review,
         rating,
         courseId: id,
+        avatar: user.avatar.url,
       });
     }
   };
@@ -233,7 +232,7 @@ const CourseContentMedia: FC<Props> = ({
         <div
           className={`${
             styles.button
-          } !w-[unset] !min-h-[40px] !py-[unset] items-center text-black dark:text-white ${
+          } !w-[unset] !min-h-[40px] !py-[unset] items-center text-white ${
             activeVideo === 0 && "!cursor-no-drop opacity-[.8]"
           }`}
           onClick={() =>
@@ -245,7 +244,7 @@ const CourseContentMedia: FC<Props> = ({
         <div
           className={`${
             styles.button
-          } !w-[unset] !min-h-[40px] !py-[unset] items-center text-black dark:text-white ${
+          } !w-[unset] !min-h-[40px] !py-[unset] items-center text-white ${
             activeVideo === 0 && "!cursor-pointer opacity-[.8]"
           }`}
           onClick={() =>
@@ -407,7 +406,7 @@ const CourseContentMedia: FC<Props> = ({
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         placeholder="Write your review here..."
-                        className="outline-none bg-transparent border dark:border-[#ffffff57] border-[#68686842] w-full p-2 rounded 800px:text-[18px] font-Poppins dark:text-white"
+                        className="outline-none bg-transparent border dark:border-[#ffffff57] border-[#68686842] w-full p-2 rounded 800px:text-[18px] font-Poppins text-black dark:text-white"
                       />
                       <div className="absolute bottom-0 right-0 mb-2 mr-2">
                         <div
@@ -437,7 +436,7 @@ const CourseContentMedia: FC<Props> = ({
                     <div className="w-full my-5">
                       <div className="w-full flex text-black dark:text-white">
                         <Image
-                          src={user.avatar ? user.avatar.url : defaultAvatar}
+                          src={item.avatar ? item.avatar : defaultAvatar}
                           width={50}
                           height={50}
                           alt="avatar"
@@ -448,7 +447,7 @@ const CourseContentMedia: FC<Props> = ({
                           <h1 className="text-[20px] ">{item?.user.name}</h1>
                           <Ratings rating={item.rating} />
 
-                          <p>{item?.review}</p>
+                          <p>{item?.comment}</p>
                           <small className="text-[#000000b8] dark:text-[#ffffff83]">
                             {format(item?.createdAt)} {"•"}
                           </small>
@@ -458,7 +457,7 @@ const CourseContentMedia: FC<Props> = ({
                       {user.role === "admin" &&
                         item.commentReplies.length === 0 && (
                           <span
-                            className={`${styles.label} cursor-pointer float-right`}
+                            className={`${styles.label} cursor-pointer float-left mb-4 mt-2 ml-[60px]`}
                             onClick={() => {
                               setIsReviewReply(true), setReviewId(item._id);
                             }}

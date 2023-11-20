@@ -16,7 +16,7 @@ const page = (props: Props) => {
           description="Elearning - Admin Panel"
           keywords="Programming, MERN, Redux, Machine learning"
         />
-        <div className="flex h-screen">
+        <div className="flex h-vh">
           <div className="1500px:w-[16%] w-1/5">
             <AdminSidebar />
           </div>

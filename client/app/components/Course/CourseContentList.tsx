@@ -95,7 +95,9 @@ const CourseContentList: FC<Props> = ({
                   return (
                     <div
                       className={`w-full ${
-                        videoIndex === activeVideo ? "bg-slate-800" : ""
+                        videoIndex === activeVideo
+                          ? "bg-[#dcdcdc] dark:bg-slate-800"
+                          : ""
                       } cursor-pointer transition-all p-2`}
                       key={item._id}
                       onClick={() =>
@@ -114,7 +116,7 @@ const CourseContentList: FC<Props> = ({
                           {item.title}
                         </h1>
                       </div>
-                      <h5>
+                      <h5 className="text-black dark:text-white">
                         {item.videoLength > 60
                           ? contentLength.toFixed(2)
                           : item.videoLength}{" "}

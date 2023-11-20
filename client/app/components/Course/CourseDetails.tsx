@@ -75,7 +75,7 @@ const CourseDetails = ({
             </div>
 
             <br />
-            <h1 className="text-[25px] font-Poppins font-[600]">
+            <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
               What you will learn from this course
             </h1>
             <div>
@@ -99,7 +99,7 @@ const CourseDetails = ({
               <br />
             </div>
 
-            <h1 className="text-[25px] font-Poppins font-[600]">
+            <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
               Prerequisites to taking this course
             </h1>
             {data.prerequisites?.map((item: any, index: number) => (
@@ -138,7 +138,7 @@ const CourseDetails = ({
               <div className="800px:flex items-center">
                 <Ratings rating={data?.ratings} />
                 <div className="mb-2 800px:mb-[unset]" />
-                <h5>
+                <h5 className="text-black dark:text-white">
                   {Number.isInteger(data?.ratings)
                     ? data?.ratings.toFixed(1)
                     : data?.ratings.toFixed(2)}{" "}
@@ -188,7 +188,7 @@ const CourseDetails = ({
                     </div>
 
                     {item.commentReplies.map((i: any, index: number) => (
-                      <div className="w-full flex 800px:ml-16 my-5">
+                      <div className="w-full flex 800px:ml-16 my-5 text-black dark:text-white">
                         <div className="w-[50px] h-[50px]">
                           <Image
                             src={
@@ -206,7 +206,7 @@ const CourseDetails = ({
                           <div className="flex items-center">
                             <h5 className="text-[20px]">{i.user.name}</h5>{" "}
                             {i.user.role === "admin" && (
-                              <VscVerifiedFilled className="text-[#42A5F5] ml-2 text-[20px]" />
+                              <VscVerifiedFilled className="text-[#42A5F5] ml-2 text-[20px] " />
                             )}
                           </div>
                           <p>{i.comment}</p>

@@ -15,7 +15,7 @@ const Page = (props: Props) => {
   return (
     <div>
       <Heading
-        title="Learnbay - Policy Us!"
+        title="LearnIt - Policy Us!"
         description="Leanbay is a platform specially for the Freshers and also for the Experienced Canditates to enhance there technical skill-sets."
         keywords="Programming, MERN, Full Stack Developer, Software Engineer, Web Development, MongoDb, Expres.js, React.js, Node.js, Javascript"
       />

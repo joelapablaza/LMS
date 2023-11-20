@@ -24,7 +24,12 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
 
   return (
     <div
-      style={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        paddingTop: "56.25%",
+        overflow: "hidden",
+        zIndex: 30,
+      }}
     >
       {videoData.otp && videoData.playbackInfo !== "" && (
         <iframe
@@ -36,6 +41,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title }) => {
             position: "absolute",
             top: 0,
             left: 0,
+            zIndex: 10,
           }}
           allowFullScreen={true}
           allow="encrypted-media"

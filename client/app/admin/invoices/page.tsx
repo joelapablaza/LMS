@@ -4,6 +4,7 @@ import Heading from "../../utils/Heading";
 import AdminSidebar from "../../components/Admin/sidebar/AdminSidebar";
 import AdminProtected from "../../hooks/adminProtected";
 import AllInvoices from "../../components/Admin/Orders/AllInvoices";
+import DashboardHero from "@/app/components/Admin/DashboardHero";
 
 type Props = {};
 
@@ -21,6 +22,7 @@ const page = (props: Props) => {
             <AdminSidebar />
           </div>
           <div className="w-[85%]">
+            <DashboardHero />
             <AllInvoices isDashboard={false} />
           </div>
         </div>

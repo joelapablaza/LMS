@@ -70,88 +70,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
         ]),
   ];
 
-  const rows: any = [
-    {
-      id: "187631873681673",
-      userName: "Alfredo Hentler",
-      userEmail: "alfredoHentlirin@gmail.com",
-      title: "React JS Course",
-      price: "$30",
-      created_at: "10 days ago",
-    },
-    {
-      id: "29837472839472",
-      userName: "Elena Rodriguez",
-      userEmail: "elena.rodriguez@example.com",
-      title: "Web Design Workshop",
-      price: "$25",
-      created_at: "2 weeks ago",
-    },
-    {
-      id: "394729847593749",
-      userName: "John Smith",
-      userEmail: "john.smith@example.com",
-      title: "Python Programming",
-      price: "$40",
-      created_at: "3 days ago",
-    },
-    {
-      id: "495849574893485",
-      userName: "Maria Lopez",
-      userEmail: "maria.lopez@example.com",
-      title: "Machine Learning Masterclass",
-      price: "$50",
-      created_at: "1 week ago",
-    },
-    {
-      id: "587432489834732",
-      userName: "David Johnson",
-      userEmail: "david.johnson@example.com",
-      title: "JavaScript Fundamentals",
-      price: "$20",
-      created_at: "4 days ago",
-    },
-    {
-      id: "685973489749734",
-      userName: "Anna Williams",
-      userEmail: "anna.williams@example.com",
-      title: "Graphic Design Basics",
-      price: "$15",
-      created_at: "6 days ago",
-    },
-    {
-      id: "789237489237498",
-      userName: "Robert Brown",
-      userEmail: "robert.brown@example.com",
-      title: "Data Analysis with Python",
-      price: "$35",
-      created_at: "5 days ago",
-    },
-    {
-      id: "897429384749348",
-      userName: "Laura Martinez",
-      userEmail: "laura.martinez@example.com",
-      title: "iOS App Development",
-      price: "$45",
-      created_at: "2 days ago",
-    },
-    {
-      id: "984732974897493",
-      userName: "Michael Davis",
-      userEmail: "michael.davis@example.com",
-      title: "Java Programming Basics",
-      price: "$25",
-      created_at: "8 days ago",
-    },
-    {
-      id: "109384754893749",
-      userName: "Sara Taylor",
-      userEmail: "sara.taylor@example.com",
-      title: "Web Development Bootcamp",
-      price: "$55",
-      created_at: "7 days ago",
-    },
-  ];
+  const rows: any = [];
 
   orderData &&
     orderData.forEach((item: any) => {
@@ -220,7 +139,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
                   theme === "dark" ? "#b7ebd3 !important" : "#000 !important",
               },
               "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: "#fff !important",
+                color: theme === "dark" ? "#fff" : "#000",
               },
             }}
           >

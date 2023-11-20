@@ -14,14 +14,14 @@ const About = (props: Props) => {
       <div className="w-[95%] 800px:w-[85%] m-auto">
         <div className="text-[18px] font-Poppins">
           Are you ready to take your programming skills to the next level? Look
-          no further than Learnbay, the premier programming community dedicated
+          no further than LearnIt, the premier programming community dedicated
           to helping new programmers achieve their goals and reach their full
           potential.
           <br />
           <br />
-          As the founder and CEO of Learnbay, I know firsthand the challenges
+          As the founder and CEO of LearnIt, I know firsthand the challenges
           that come with learning and growing in the programming industry.
-          That&apos;s why I created Learnbay to provide new programmers with the
+          That&apos;s why I created LearnIt to provide new programmers with the
           resources and support they need to succeed.
           <br />
           <br />
@@ -32,25 +32,25 @@ const About = (props: Props) => {
           industry, without breaking the bank.
           <br />
           <br />
-          At Learnbay, we believe that price should never be a barrier to
+          At LearnIt, we believe that price should never be a barrier to
           achieving your dreams. That&apos;s why our courses are priced low — so
           that anyone, regardless of their financial situation, can access the
           tools and knowledge they need to succeed.
           <br />
           <br />
-          But Learnbay is more than just a community — we&apos;re a family. Our
+          But LearnIt is more than just a community — we&apos;re a family. Our
           supportive community of like-minded individuals is here to help you
           every step of the way, whether you&apos;re just starting out or
           looking to take your skills to the next level.
           <br />
           <br />
-          With Learnbay by your side, there&apos;s nothing standing between you
+          With LearnIt by your side, there&apos;s nothing standing between you
           and your dream job. Our courses and community will provide you with
           the guidance, support, and motivation you need to unleash your full
           potential and become a skilled programmer.
           <br />
           <br />
-          So what are you waiting for? Join the Learnbay family today and
+          So what are you waiting for? Join the LearnIt family today and
           let&apos;s conquer the programming industry together! With our
           affordable courses, informative videos, and supportive community, the
           sky&apos;s the limit.

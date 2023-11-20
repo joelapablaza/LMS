@@ -100,7 +100,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
               <label className="block pb-2">Full Name</label>
               <input
                 type="text"
-                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0 bg-white dark:bg-slate-900 `}
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -111,7 +111,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
               <input
                 type="text"
                 readOnly
-                className={`${styles.input} !w-[95%] mb-1 800px:mb-0`}
+                className={`${styles.input} !w-[95%] mb-1 800px:mb-0 bg-white dark:bg-slate-900 `}
                 required
                 value={user?.email}
               />

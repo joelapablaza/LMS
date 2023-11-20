@@ -1,11 +1,9 @@
 import React from "react";
 import { styles } from "../styles/style";
 
-type Props = {};
-
-const Policy = (props: Props) => {
+const Policy = () => {
   return (
-    <div className=" mb-20 text-black dark:text-white">
+    <div className="mb-20 text-black dark:text-white">
       <div className="w-[95%] !800px:w-[82%] m-auto py-2 px-3 text-white my-10">
         <h1 className={`${styles.title} !text-center pt-2 800px:!text-[45px]`}>
           Policy Terms & <span className="text_animation">Conditions</span>
@@ -14,17 +12,17 @@ const Policy = (props: Props) => {
       <div className="w-[95%] 800px:w-[85%] m-auto">
         <ul style={{ listStyle: "unset", marginLeft: "15px" }}>
           <p className="py-2 ml-[-15px] text-[16px] font-Poppins leading-8 whitespace-pre-line">
-            One of our main priorities at the Becodemy website (learnbay.com) is
+            One of our main priorities at the LearnIt website (learnit.com) is
             the privacy of our user&apos;s information. This document contains
             detailed information about what information we collect from the
-            Becodemy website and how we use it.
+            LearnIt website and how we use it.
             <br />
             If you have any questions or need more information about our privacy
             policy, please do not hesitate to contact us.
             <br />
             This Privacy Policy applies only to our online activities and is
             valid for information shared by our website visitors and/or
-            collected from the Becodemy website. This policy does not apply to
+            collected from the LearnIt website. This policy does not apply to
             any information collected offline or through channels other than
             this website.
           </p>
@@ -76,12 +74,12 @@ const Policy = (props: Props) => {
           <br />
           <li className="text-[22px] text-cyan-400">Cookies</li>
           <p className="py-2 ml-[-15px] text-[16px] font-Poppins leading-8 whitespace-pre-line">
-            Like all other websites, the Becodemy website and browser use
-            cookies (&apos;cookies&apos;). These cookies are used to store
-            information including visitor preferences and website pages that the
-            visitor has accessed or visited. The information is used to optimize
-            users&apos; experience by customizing the content of our web pages
-            based on visitors&apos; browser type and/or other information.
+            Like all other websites, the LearnIt website and browser use cookies
+            (&apos;cookies&apos;). These cookies are used to store information
+            including visitor preferences and website pages that the visitor has
+            accessed or visited. The information is used to optimize users&apos;
+            experience by customizing the content of our web pages based on
+            visitors&apos; browser type and/or other information.
           </p>
         </ul>
       </div>
