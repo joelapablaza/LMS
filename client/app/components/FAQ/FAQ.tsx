@@ -27,7 +27,7 @@ const FAQ: FC<Props> = (props: Props) => {
     <div>
       <div className="w-[90%] 800px:w-[80%] m-auto">
         <h1 className={`${styles.title} 800px:text-[40px]`}>
-          Frequently Asked Questions
+          Preguntas Frecuentes
         </h1>
         <div className="mt-12">
           <dl className="space-y-8 ">

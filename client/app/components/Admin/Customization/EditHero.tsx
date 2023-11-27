@@ -26,7 +26,7 @@ const EditHero: FC<Props> = (props) => {
     }
     if (isSuccess) {
       refetch();
-      toast.success("Hero updated successfully");
+      toast.success("Hero actualizado exitosamente");
     }
     if (error && "data" in error) {
       const errorData = error as any;
@@ -83,13 +83,13 @@ const EditHero: FC<Props> = (props) => {
             className="dark:text-white resize-none text-[#0000007c] text-[30px] px-3 w-full 1000px:text-[60px] 1500px:text-[70px] font-[60px] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[60%] bg-transparent"
             rows={4}
             value={title}
-            placeholder="Enter your title here"
+            placeholder="Entra tu tiulo aqui"
             onChange={(e) => setTitle(e.target.value)}
           />
           <br />
           <textarea
             className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px]  1500px:!w-[55%] 1100px:!w-[74%] bg-transparent mt-10"
-            placeholder="Enter your sub title here"
+            placeholder="Entra tu subtitulo aqui"
             value={subtitle}
             rows={4}
             onChange={(e) => setSubtitle(e.target.value)}
@@ -119,7 +119,7 @@ const EditHero: FC<Props> = (props) => {
                 : () => null
             }
           >
-            Save
+            Guardar
           </div>
         </div>
       </div>

@@ -25,6 +25,9 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useLogOutQuery } from "@/redux/features/auth/authApi";
+import { signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 interface itemProps {
   title: string;
@@ -62,14 +65,20 @@ const Sidebar = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
     return null;
   }
 
-  const logoutHandler = () => {
+  const logOutHandler = async () => {
     setLogout(true);
+    await signOut();
+    redirect("/");
   };
 
   return (
@@ -127,7 +136,7 @@ const Sidebar = () => {
               >
                 <Link href="/">
                   <h3 className="text-[25px] font-Poppins uppercase dark:text-[#d8d8d8] text-black">
-                    Elearning
+                    LearnIt
                   </h3>
                 </Link>
                 <IconButton
@@ -192,7 +201,7 @@ const Sidebar = () => {
               {!isCollapsed && "Data"}
             </Typography>
             <Item
-              title="Users"
+              title="Usuarios"
               to="/admin/users"
               icon={<GroupsIcon />}
               selected={selected}
@@ -200,7 +209,7 @@ const Sidebar = () => {
             />
 
             <Item
-              title="Invoices"
+              title="Comprobantes"
               to="/admin/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
@@ -215,14 +224,14 @@ const Sidebar = () => {
               {!isCollapsed && "Content"}
             </Typography>
             <Item
-              title="Create Course"
+              title="Crear Curso"
               to="/admin/create-course"
               icon={<VideoCallIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Live Courses"
+              title="Cursos activos"
               to="/admin/courses"
               icon={<OndemandVideoIcon />}
               selected={selected}
@@ -250,7 +259,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Categories"
+              title="Categorias"
               to="/admin/categories"
               icon={<WysiwygIcon />}
               selected={selected}
@@ -264,7 +273,7 @@ const Sidebar = () => {
               {!isCollapsed && "Controllers"}
             </Typography>
             <Item
-              title="Manage Team"
+              title="Gestionar equipo"
               to="/admin/team"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
@@ -278,14 +287,14 @@ const Sidebar = () => {
               {!isCollapsed && "Analytics"}
             </Typography>
             <Item
-              title="Courses Analytics"
+              title="Análisis de cursos"
               to="/admin/courses-analytics"
               icon={<BarCharOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Orders Analytics"
+              title="Análisis de pedidos"
               to="/admin/orders-analytics"
               icon={<MapOutlinedIcon />}
               selected={selected}
@@ -293,7 +302,7 @@ const Sidebar = () => {
             />
 
             <Item
-              title="Users Analytics"
+              title="Análisis de usuarios"
               to="/admin/users-analytics"
               icon={<ManageHistoryIcon />}
               selected={selected}
@@ -307,9 +316,9 @@ const Sidebar = () => {
             >
               {!isCollapsed && "Extras"}
             </Typography>
-            <div onClick={logoutHandler}>
+            <div onClick={logOutHandler}>
               <Item
-                title="Logout"
+                title="Salir"
                 to="/"
                 icon={<ExitToAppIcon />}
                 selected={selected}

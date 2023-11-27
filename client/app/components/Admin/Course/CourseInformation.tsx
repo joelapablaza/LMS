@@ -7,6 +7,8 @@ type Props = {
   setCourseInfo: (courseInfo: any) => void;
   active: number;
   setActive: (active: number) => void;
+  createThumbnail: string;
+  setCreateThumbnail: (createThumbnail: string) => void;
 };
 
 const CourseInformation: FC<Props> = ({
@@ -14,6 +16,8 @@ const CourseInformation: FC<Props> = ({
   setCourseInfo,
   active,
   setActive,
+  createThumbnail,
+  setCreateThumbnail,
 }) => {
   const { data, isLoading, refetch } = useGetHeroDataQuery("Categories", {
     refetchOnMountOrArgChange: true,
@@ -40,7 +44,9 @@ const CourseInformation: FC<Props> = ({
 
       reader.onload = (e: any) => {
         if (reader.readyState === 2) {
-          setCourseInfo({ ...courseInfo, thumbnail: reader.result });
+          if (typeof reader.result === "string") {
+            setCreateThumbnail(reader.result);
+          }
           setImageLoaded(true);
         }
       };
@@ -67,7 +73,9 @@ const CourseInformation: FC<Props> = ({
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        setCourseInfo({ ...courseInfo, thumbnail: reader.result });
+        if (typeof reader.result === "string") {
+          setCreateThumbnail(reader.result);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -242,7 +250,7 @@ const CourseInformation: FC<Props> = ({
             onDragLeave={handleDragLeave}
             onDrop={handlreDrop}
           >
-            {courseInfo.thumbnail?.url ? (
+            {/* {courseInfo.thumbnail?.url ? (
               <img
                 src={courseInfo.thumbnail.url}
                 alt=""
@@ -251,6 +259,17 @@ const CourseInformation: FC<Props> = ({
             ) : Object.keys(courseInfo.thumbnail).length !== 0 ? (
               <img
                 src={courseInfo.thumbnail}
+                alt=""
+                className="max-h-full w-full object-cover"
+              />
+            ) : (
+              <span className="text-black dark:text-white">
+                Drag and drop your thumbnail here or click to browse
+              </span>
+            )} */}
+            {createThumbnail ? (
+              <img
+                src={createThumbnail}
                 alt=""
                 className="max-h-full w-full object-cover"
               />

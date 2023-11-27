@@ -18,9 +18,9 @@ const Page: FC<Props> = (props) => {
     <div>
       <Protected>
         <Heading
-          title={`${user.name} profile - Elearning`}
-          description="Elearning is a platform for students to learn and get help from teachers"
-          keywords="Programming, MERN, Redux, NextJS"
+          title={`${user.name} perfil - LearnIt`}
+          description="LearnIt es una plataforma para que los estudiantes aprendan y reciban ayuda de los profesores"
+          keywords="Programacion, MERN, Redux, NextJS"
         />
         <Header
           open={open}

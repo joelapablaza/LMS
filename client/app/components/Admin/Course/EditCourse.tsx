@@ -12,6 +12,14 @@ import {
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
+// interfaces
+import {
+  ICourseContentData,
+  IEditCourse,
+  IEditCourseInfo,
+  Course,
+} from "../../../interfaces/Course";
+
 type Props = {
   id: string;
 };
@@ -26,48 +34,36 @@ const EditCourse: FC<Props> = ({ id }) => {
   const [courseData, setCourseData] = useState({});
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
+  const [createThumbnail, setCreateThumbnail] = useState<string>("");
 
-  type CourseContentData = {
-    title: string;
-    description: string;
-    videoUrl: string;
-    videoSection: string;
-    videoLength: string;
-    links: { title?: string; url?: string }[];
-    suggestion: string;
-  };
-
-  const [courseInfo, setCourseInfo] = useState({
+  const [courseInfo, setCourseInfo] = useState<IEditCourseInfo>({
     name: "",
     description: "",
+    price: "",
+    estimatedPrice: "",
     categories: "",
-    price: 0,
-    estimatedPrice: 0,
     tags: "",
     level: "",
     demoUrl: "",
-    thumbnail: {},
   });
 
   const [courseContentData, setCourseContentData] = useState<
-    CourseContentData[]
+    ICourseContentData[]
   >([]);
 
   const editCourseData =
-    data && data.courses.find((course: any) => course._id === id);
+    data && data.courses.find((course: Course) => course._id === id);
 
   useEffect(() => {
     if (isSuccess) {
       const random = Math.random().toString(36);
       toast.success("Course Updated successfully");
-      // redirect("/admin/courses");
+
       redirect(`/admin/courses?reload=${random}`);
     }
-    if (error) {
-      if ("data" in error) {
-        const errorMessage = error as any;
-        toast.error(errorMessage.data.message);
-      }
+    if (error && "data" in error) {
+      const errorMessage = error.data as { message: string };
+      toast.error(errorMessage.message);
     }
   }, [isSuccess, error]);
 
@@ -82,11 +78,11 @@ const EditCourse: FC<Props> = ({ id }) => {
         tags: editCourseData.tags,
         level: editCourseData.level,
         demoUrl: editCourseData.demoUrl,
-        thumbnail: editCourseData?.thumbnail,
       });
       setBenefits(editCourseData.benefits);
       setPrerequisites(editCourseData.prerequisites);
       setCourseContentData(editCourseData.courseData);
+      setCreateThumbnail(editCourseData?.thumbnail.url);
     }
   }, [editCourseData]);
 
@@ -107,7 +103,7 @@ const EditCourse: FC<Props> = ({ id }) => {
       title: content.title,
       description: content.description,
       videoSection: content.videoSection,
-      videoLength: content?.videoLength,
+      videoLength: parseFloat(content?.videoLength),
       links: content.links.map((link) => ({
         title: link.title,
         url: link.url,
@@ -116,15 +112,19 @@ const EditCourse: FC<Props> = ({ id }) => {
     }));
 
     // Formatting course info
-    const newCourseData = {
+    const newCourseData: IEditCourse = {
       name: courseInfo.name,
       description: courseInfo.description,
-      price: courseInfo.price,
-      estimatedPrice: courseInfo.estimatedPrice,
+      categories: courseInfo.categories,
+      price: parseFloat(courseInfo.price),
+      estimatedPrice: parseFloat(courseInfo.estimatedPrice),
       tags: courseInfo.tags,
       level: courseInfo.level,
       demoUrl: courseInfo.demoUrl,
-      thumbnail: courseInfo.thumbnail,
+      thumbnail: {
+        url: createThumbnail,
+        public_id: editCourseData?.thumbnail.public_id,
+      },
       totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
@@ -136,8 +136,10 @@ const EditCourse: FC<Props> = ({ id }) => {
 
   const handleCrourseCreate = async (e: any) => {
     const data = courseData;
-    console.log(typeof courseData);
-    await updateCourse({ id: editCourseData._id, data });
+    await updateCourse({
+      id: editCourseData._id,
+      data,
+    });
   };
 
   return (
@@ -149,6 +151,8 @@ const EditCourse: FC<Props> = ({ id }) => {
             setCourseInfo={setCourseInfo}
             active={active}
             setActive={setActive}
+            setCreateThumbnail={setCreateThumbnail}
+            createThumbnail={createThumbnail}
           />
         )}
 

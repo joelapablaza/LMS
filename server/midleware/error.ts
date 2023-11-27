@@ -12,25 +12,25 @@ const ErrorMiddleware = (
 
   // wrong monogb id error
   if (err.name === "CastError") {
-    const message = `Rerousce not found. Invalid: ${err.path}`;
+    const message = `Recurso no encontrado. Invalido: ${err.path}`;
     err = new ErrorHandler(message, 400);
   }
 
   // duplicate key error
   if (err.code === 11000) {
-    const message = `Duplicate ${Object.keys(err.keyValue)} entered`;
+    const message = `Key duplicada ${Object.keys(err.keyValue)}`;
     err = new ErrorHandler(message, 400);
   }
 
   // wrong jwt error
   if (err.name === "JsonWebTokenError") {
-    const message = `Json web token is invalid, tray again`;
+    const message = `El token JSON web no es válido, inténtalo de nuevo.`;
     err = new ErrorHandler(message, 400);
   }
 
   // JWT expired error
   if (err.name === "TokenExpiredError") {
-    const message = `Json web token is expired, try again`;
+    const message = `El token JSON web expiró, inténtalo de nuevo.`;
     err = new ErrorHandler(message, 400);
   }
 

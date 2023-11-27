@@ -5,15 +5,19 @@ import AdminSidebar from "@/app/components/Admin/sidebar/AdminSidebar";
 import Heading from "@/app/utils/Heading";
 import React from "react";
 
-const page = ({ params }: any) => {
+interface PageParams {
+  id: string;
+}
+
+const page = ({ params }: { params: PageParams }) => {
   const id = params?.id;
 
   return (
     <div>
       <Heading
         title="LearnIt"
-        description="Leanbay is a platform specially for the Freshers and also for the Experienced Canditates to enhance there technical skill-sets."
-        keywords="Programming, MERN, Full Stack Developer, Software Engineer, Web Development, MongoDb, Expres.js, React.js, Node.js, Javascript"
+        description="Leanbay es una plataforma diseñada especialmente para los recién llegados y también para candidatos con experiencia, con el objetivo de mejorar sus conjuntos de habilidades técnicas."
+        keywords="Programacion, MERN, Full Stack Developer, Software Engineer, Web Development, MongoDb, Expres.js, React.js, Node.js, Javascript"
       />
       <div className="flex">
         <div className="1500px:w-[16%] w-1/5">

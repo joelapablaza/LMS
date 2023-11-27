@@ -9,13 +9,20 @@ import { useCreateCourseMutation } from "../../../../redux/features/courses/cour
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
+// interfaces
+import {
+  ICreateCourse,
+  ICourseInfo,
+  ICourseContentData,
+} from "../../../interfaces/Course";
+
 type Props = {};
 
 const CreateCourse = (props: Props) => {
   const [createCourse, { isLoading, isSuccess, error }] =
     useCreateCourseMutation();
   const [active, setActive] = useState(0);
-  const [courseInfo, setCourseInfo] = useState({
+  const [courseInfo, setCourseInfo] = useState<ICourseInfo>({
     name: "",
     description: "",
     categories: "",
@@ -24,11 +31,12 @@ const CreateCourse = (props: Props) => {
     tags: "",
     level: "",
     demoUrl: "",
-    thumbnail: {},
   });
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
-  const [courseContentData, setCourseContentData] = useState([
+  const [courseContentData, setCourseContentData] = useState<
+    ICourseContentData[]
+  >([
     {
       videoUrl: "",
       title: "",
@@ -44,17 +52,18 @@ const CreateCourse = (props: Props) => {
       suggestion: "",
     },
   ]);
+  const [createThumbnail, setCreateThumbnail] = useState<string>("");
   const [courseData, setCourseData] = useState({});
 
   const handleSubmit = async () => {
-    // format benefits array
     const formattedBenefits = benefits.map((benefit) => ({
       title: benefit.title,
     }));
-    // format prerequisites array
+
     const formattedPrerequisites = prerequisites.map((prerequisite) => ({
       title: prerequisite.title,
     }));
+
     // format course content array
     const formattedCourseContentData = courseContentData.map(
       (courseContent) => {
@@ -63,7 +72,7 @@ const CreateCourse = (props: Props) => {
           title: courseContent.title,
           description: courseContent.description,
           videoSection: courseContent.videoSection,
-          videoLength: courseContent.videoLength,
+          videoLength: parseFloat(courseContent.videoLength),
           links: courseContent.links.map((link: any) => ({
             title: link.title,
             url: link.url,
@@ -72,17 +81,18 @@ const CreateCourse = (props: Props) => {
         };
       }
     );
+
     // prepare our data object
-    const data = {
+    const data: ICreateCourse = {
       name: courseInfo.name,
       description: courseInfo.description,
       categories: courseInfo.categories,
-      price: courseInfo.price,
-      estimatedPrice: courseInfo.estimatedPrice,
+      price: parseFloat(courseInfo.price),
+      estimatedPrice: parseFloat(courseInfo.estimatedPrice),
       tags: courseInfo.tags,
       level: courseInfo.level,
       demoUrl: courseInfo.demoUrl,
-      thumbnail: courseInfo.thumbnail,
+      thumbnail: createThumbnail,
       totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
@@ -96,7 +106,7 @@ const CreateCourse = (props: Props) => {
     const data = courseData;
 
     if (!isLoading) {
-      await createCourse(data);
+      await createCourse({ data, createThumbnail });
     }
   };
 
@@ -106,8 +116,8 @@ const CreateCourse = (props: Props) => {
       redirect("/admin/courses");
     }
     if (error && "data" in error) {
-      const errorMessage = error as any;
-      toast.error(errorMessage.data.message);
+      const errorMessage = error.data as { message: string };
+      toast.error(errorMessage.message);
     }
   }, [isLoading, isSuccess, error]);
 
@@ -120,6 +130,8 @@ const CreateCourse = (props: Props) => {
             setCourseInfo={setCourseInfo}
             active={active}
             setActive={setActive}
+            setCreateThumbnail={setCreateThumbnail}
+            createThumbnail={createThumbnail}
           />
         )}
 

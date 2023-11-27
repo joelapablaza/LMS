@@ -19,6 +19,12 @@ import {
   updateUserRoleService,
 } from "../services/user.service";
 import { UserRole } from "../models/user.model";
+import dotenv from "dotenv";
+
+dotenv.config();
+const ACTIVATION_SECRET = process.env.ACTIVATION_SECRET;
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
 // register user
 interface IRegistrationBody {
@@ -35,7 +41,7 @@ export const registrationUser = CatchAsyncError(
 
       const isEmailExist = await userModel.findOne({ email });
       if (isEmailExist) {
-        return next(new ErrorHandler("Email already exist", 400));
+        return next(new ErrorHandler("Email ya registrado", 400));
       }
 
       const user: IRegistrationBody = {
@@ -57,14 +63,14 @@ export const registrationUser = CatchAsyncError(
       try {
         await sendMail({
           email: user.email,
-          subject: "Activate your account",
+          subject: "Activa tu cuenta",
           template: "activation-mail.ejs",
           data,
         });
 
         res.status(201).json({
           success: true,
-          message: `Please check your email: ${user.email} to activate your account.`,
+          message: `Por favor revisa tu correo: ${user.email} para activar tu cuenta.`,
           activationToken: activationToken.token,
         });
       } catch (error: any) {
@@ -119,7 +125,7 @@ export const activateUser = CatchAsyncError(
       ) as { user: IUser; activationCode: string };
 
       if (newUser.activationCode !== activation_code) {
-        return next(new ErrorHandler("Invalid activation code", 400));
+        return next(new ErrorHandler("Código de activación invalido", 400));
       }
 
       const { name, email, password } = newUser.user;
@@ -127,7 +133,7 @@ export const activateUser = CatchAsyncError(
       const existUser = await userModel.findOne({ email });
 
       if (existUser) {
-        return next(new ErrorHandler("Email already exist", 400));
+        return next(new ErrorHandler("Email ya registrado", 400));
       }
 
       const user = await userModel.create({
@@ -156,19 +162,24 @@ export const loginUser = CatchAsyncError(
     try {
       const { email, password } = req.body as ILoginRequest;
       if (!email || !password) {
-        return next(new ErrorHandler("Please enter email and password", 400));
+        return next(
+          new ErrorHandler(
+            "Por favor, ingresa tu correo electrónico y contraseña",
+            400
+          )
+        );
       }
 
       const user = await userModel.findOne({ email }).select("+password");
 
       if (!user) {
-        return next(new ErrorHandler("Invalid email or password", 400));
+        return next(new ErrorHandler("Email o contraseña invalida", 400));
       }
 
       const isPasswordMatch = await user.comparePassword(password);
 
       if (!isPasswordMatch) {
-        return next(new ErrorHandler("Invalid email or password", 400));
+        return next(new ErrorHandler("Email o contraseña invalida", 400));
       }
 
       sendToken(user, 200, res);
@@ -189,7 +200,7 @@ export const logoutUser = CatchAsyncError(
 
       res.status(200).json({
         success: true,
-        message: "Logged out successfully",
+        message: "Te has desconectado exitosamente",
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
@@ -198,55 +209,102 @@ export const logoutUser = CatchAsyncError(
 );
 
 // update access token
+// export const updateAccessToken = CatchAsyncError(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const refresh_token = req.cookies.refresh_token as string;
+//       const decoded = jwt.verify(
+//         refresh_token,
+//         process.env.REFRESH_TOKEN as string
+//       ) as JwtPayload;
+
+//       const message = "No se pudo actualizar el token de acceso";
+//       if (!decoded) {
+//         return next(new ErrorHandler(message, 400));
+//       }
+
+//       const session = await redis.get(decoded.id as string);
+
+//       if (!session) {
+//         return next(
+//           new ErrorHandler(
+//             "Por favor, inicia sesión para acceder a estos recursos",
+//             400
+//           )
+//         );
+//       }
+
+//       const user = JSON.parse(session);
+
+//       const accesToken = jwt.sign(
+//         { id: user._id },
+//         process.env.ACCESS_TOKEN as string,
+//         {
+//           expiresIn: "5m",
+//         }
+//       );
+
+//       const refreshToken = jwt.sign(
+//         { id: user._id },
+//         process.env.REFRESH_TOKEN as string,
+//         {
+//           expiresIn: "3d",
+//         }
+//       );
+
+//       req.user = user;
+
+//       res.cookie("access_token", accesToken, accessTokenOptions);
+//       res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
+//       await redis.set(user._id, JSON.stringify(user), "EX", 604800);
+
+//       next();
+//     } catch (error: any) {
+//       return next(new ErrorHandler(`Desde UpdateToken, ${error.message}`, 400));
+//     }
+//   }
+// );
 export const updateAccessToken = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refresh_token = req.cookies.refresh_token as string;
       const decoded = jwt.verify(
         refresh_token,
-        process.env.REFRESH_TOKEN as string
+        REFRESH_TOKEN as string
       ) as JwtPayload;
+      const message = "Unable to refresh token";
 
-      const message = "Could not refresh token";
-      if (!decoded) {
+      console.log("DECODED", decoded);
+
+      if (!decoded.id) {
         return next(new ErrorHandler(message, 400));
       }
 
       const session = await redis.get(decoded.id as string);
-
       if (!session) {
-        return next(
-          new ErrorHandler("Please login for access this resources", 400)
-        );
+        return next(new ErrorHandler("Please login first", 400));
       }
 
       const user = JSON.parse(session);
+      const accessToken = jwt.sign({ id: user._id }, ACCESS_TOKEN as string, {
+        expiresIn: "5m",
+      });
 
-      const accesToken = jwt.sign(
-        { id: user._id },
-        process.env.ACCESS_TOKEN as string,
-        {
-          expiresIn: "5m",
-        }
-      );
-
-      const refreshToken = jwt.sign(
-        { id: user._id },
-        process.env.REFRESH_TOKEN as string,
-        {
-          expiresIn: "3d",
-        }
-      );
+      const refreshToken = jwt.sign({ id: user._id }, REFRESH_TOKEN as string, {
+        expiresIn: "3d",
+      });
 
       req.user = user;
 
-      res.cookie("access_token", accesToken, accessTokenOptions);
+      res.cookie("access_token", accessToken, accessTokenOptions);
       res.cookie("refresh_token", refreshToken, refreshTokenOptions);
 
-      await redis.set(user._id, JSON.stringify(user), "EX", 604800);
+      await redis.set(user._id, JSON.stringify(user), "EX", 259200); //Expires in 3days
 
       next();
     } catch (error: any) {
+      console.log("ERROR DESDE UPDATE TOKEN");
       return next(new ErrorHandler(error.message, 400));
     }
   }
@@ -332,16 +390,21 @@ export const updatePassword = CatchAsyncError(
       console.log(user?.password);
 
       if (!oldPassword || !newPassword) {
-        return next(new ErrorHandler("Please enter old and new password", 400));
+        return next(
+          new ErrorHandler(
+            "Por favor, ingresa la contraseña antigua y la nueva",
+            400
+          )
+        );
       }
       if (user?.password === undefined) {
-        return next(new ErrorHandler("Invalid User", 400));
+        return next(new ErrorHandler("Usuario inexistente", 400));
       }
 
       const isPasswordMatch = await user?.comparePassword(oldPassword);
 
       if (!isPasswordMatch) {
-        return next(new ErrorHandler("Invalid old password", 400));
+        return next(new ErrorHandler("Contraseña antigua incorrecta", 400));
       }
 
       user.password = newPassword;
@@ -434,7 +497,7 @@ export const updateUserRole = CatchAsyncError(
       if (!Object.values(UserRole).includes(role)) {
         return res.status(400).json({
           success: false,
-          error: "Invalid role specified",
+          error: "Rol especificado no válido",
         });
       }
       updateUserRoleService(res, email, role);
@@ -453,7 +516,7 @@ export const deleteUser = CatchAsyncError(
       const user = await userModel.findById(id);
 
       if (!user) {
-        return next(new ErrorHandler("User not found", 400));
+        return next(new ErrorHandler("Usuario no encontrado", 400));
       }
 
       await user.deleteOne({ id });
@@ -462,7 +525,7 @@ export const deleteUser = CatchAsyncError(
 
       res.status(204).json({
         success: true,
-        message: "User deleted successfully",
+        message: "Usuario eliminado exitosamente",
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));

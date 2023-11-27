@@ -1,5 +1,5 @@
 import { useGetCourseContentQuery } from "@/redux/features/courses/coursesApi";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import Heading from "@/app/utils/Heading";
 import CourseContentMedia from "./CourseContentMedia";
@@ -39,8 +39,8 @@ const CourseContent = ({ id, user }: Props) => {
           <div className="w-full grid 800px:grid-cols-10">
             <Heading
               title={data?.[activeVideo]?.title}
-              description="Lern Python making a world use project"
-              keywords={data[activeVideo]?.tags}
+              description={data?.[activeVideo]?.title}
+              keywords={data?.[activeVideo]?.tags}
             />
             <div className="col-span-7">
               <CourseContentMedia

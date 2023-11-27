@@ -114,7 +114,7 @@ const DashboardWidgets: FC<Props> = ({ open, value }) => {
                   {orderIncrementAnalyticsPecent?.currentMonth}
                 </h5>
                 <h5 className="pt-2 font-Poppins dark:text-[#fff] text-black text-[20px] font-[400]">
-                  Sales Obtained
+                  Ventas obtenidas
                 </h5>
               </div>
               <div>
@@ -144,7 +144,7 @@ const DashboardWidgets: FC<Props> = ({ open, value }) => {
                   {userIncrementAnalyticsPecent?.currentMonth}
                 </h5>
                 <h5 className="pt-2 font-Poppins dark:text-[#fff] text-black text-[20px] font-[400]">
-                  New Users
+                  Nuevos Usuarios
                 </h5>
               </div>
               <div>
@@ -176,7 +176,7 @@ const DashboardWidgets: FC<Props> = ({ open, value }) => {
           <h5
             className={`${styles.title} !text-start text-[20px] font-[400] pb-3 font-Poppins dark:text-[#fff] text-black`}
           >
-            Recent Transactions
+            Transacciones recientes
           </h5>
           <AllInvoices isDashboard={true} />
         </div>

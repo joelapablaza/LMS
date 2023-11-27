@@ -11,26 +11,22 @@ import {
 import Loader from "../../Loader/Loader";
 import { useGetCoursesAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
 import { styles } from "@/app/styles/style";
+import { OneCourseAnalytics } from "@/app/interfaces/CourseAnalitics";
 
 type Props = {};
+
+interface AnalyticsData {
+  name: string;
+  uv: number;
+}
 
 const CourseAnalytics = (props: Props) => {
   const { data, isLoading } = useGetCoursesAnalyticsQuery({});
 
-  // const analyticsData = [
-  //   { name: "January", uv: 3 },
-  //   { name: "February", uv: 5 },
-  //   { name: "March", uv: 7 },
-  //   { name: "April", uv: 9 },
-  //   { name: "May", uv: 11 },
-  //   { name: "June", uv: 13 },
-  //   { name: "July", uv: 15 },
-  // ];
-
-  const analyticsData: any = [];
+  const analyticsData: AnalyticsData[] = [];
 
   data &&
-    data.courses.last12Months.forEach((item: any) => {
+    data.courses.last12Months.forEach((item: OneCourseAnalytics) => {
       analyticsData.push({ name: item.month, uv: item.count });
     });
 
@@ -44,10 +40,10 @@ const CourseAnalytics = (props: Props) => {
         <div className="h-screen">
           <div className="mt-[50px]">
             <h1 className={`${styles.title} px-5 !text-start`}>
-              Courses Analytics
+              Análisis de cursos
             </h1>
             <p className={`${styles.label} px-5`}>
-              Las 12 months analytics data{" "}
+              Datos analíticos de los últimos 12 meses{" "}
             </p>
           </div>
           <div className="w-full h-[90%] flex items-center justify-center">

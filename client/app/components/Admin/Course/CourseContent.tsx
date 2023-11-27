@@ -149,6 +149,7 @@ const CourseContent: FC<Props> = ({
       toast.error("Please fill all the fields first");
     } else {
       setActive(active + 1);
+      console.log(editableData);
       handleCourseSubmit();
     }
   };
@@ -371,6 +372,7 @@ const CourseContent: FC<Props> = ({
                             updatedData[index].links[linkIndex].title =
                               e.target.value;
                             setEditableData(updatedData);
+                            setCourseContentData(updatedData);
                           }}
                         />
 
@@ -384,6 +386,7 @@ const CourseContent: FC<Props> = ({
                             updatedData[index].links[linkIndex].url =
                               e.target.value;
                             setEditableData(updatedData);
+                            setCourseContentData(updatedData);
                           }}
                         />
                       </div>

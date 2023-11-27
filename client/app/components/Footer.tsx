@@ -20,7 +20,7 @@ const Footer = (props: Props) => {
                   href={"/about"}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
-                  Our Story
+                  Nuestra Historia
                 </Link>
               </li>
               <li>
@@ -28,7 +28,7 @@ const Footer = (props: Props) => {
                   href={"/privacy-policy"}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
-                  Privacy Policy
+                  Politica de Privacidad
                 </Link>
               </li>
               <li>
@@ -52,7 +52,7 @@ const Footer = (props: Props) => {
                   href={"/courses"}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
-                  Courses
+                  Cursos
                 </Link>
               </li>
               <li>
@@ -60,7 +60,7 @@ const Footer = (props: Props) => {
                   href={"/profile"}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
-                  My Account
+                  Mi cuenta
                 </Link>
               </li>
               <li>
@@ -68,7 +68,7 @@ const Footer = (props: Props) => {
                   href={"/course-dashboard"}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
-                  Course Dashboard
+                  Panel del Curso
                 </Link>
               </li>
             </ul>
@@ -108,20 +108,20 @@ const Footer = (props: Props) => {
 
           <div>
             <h3 className="text-[20px] font-[600] text-black dark:text-white">
-              Contact Info
+              Informacion de contacto
             </h3>
             <p className="text-base text-black dark:text-gray-300 dark:hover:text-white pb-2">
-              Call Me: +54 9 343 5074458
+              Tel: +54 9 343 5074458
             </p>
             <p className="text-base text-black dark:text-gray-300 dark:hover:text-white pb-2">
-              Mail Me: joelapablaza@gmail.com
+              Email: joelapablaza@gmail.com
             </p>
           </div>
         </div>
         <br />
 
         <p className="mt-2 text-center text-black dark:text-white">
-          Copyright © 2023 Elearning | Made by Joel Apablaza
+          Copyright © 2023 LearnIt | Desarrollado por Joel Apablaza
         </p>
       </div>
       <br />

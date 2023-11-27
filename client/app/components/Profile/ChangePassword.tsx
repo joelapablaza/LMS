@@ -42,18 +42,17 @@ const ChangePassword: FC<Props> = (props) => {
         toast.error(errorData.data.message);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, error]);
 
   return (
     <div className="w-full pl-7 px-2 800px:px-5 800px:pl-0">
       <h1 className="block text-[25px] 800px:text-[30px] font-Poppins text-center font-[500] text-black dark:text-white pb-2">
-        Change Password
+        Cambiar Contraseña
       </h1>
       {isEditable && (
         <h5 className="block font-Poppins text-center font-[500] text-black dark:text-white pb-2">
-          You are logged in from Google or Github, password change is not
-          available
+          Has iniciado sesión a través de Google o Github; el cambio de
+          contraseña no está disponible
         </h5>
       )}
       <div className="w-full">
@@ -64,7 +63,7 @@ const ChangePassword: FC<Props> = (props) => {
         >
           <div className="w-[100%] 800px:w-[60%] mt-5">
             <label className="block pb-2 text-black dark:text-white">
-              Enter your old password
+              Ingresa tu contraseña antigua
             </label>
             <input
               type="password"
@@ -77,7 +76,7 @@ const ChangePassword: FC<Props> = (props) => {
           </div>
           <div className="w-[100%] 800px:w-[60%] mt-5">
             <label className="block pb-2 text-black dark:text-white">
-              Enter your new password
+              Ingresa tu nueva contraseña
             </label>
             <input
               type="password"
@@ -90,7 +89,7 @@ const ChangePassword: FC<Props> = (props) => {
           </div>
           <div className="w-[100%] 800px:w-[60%] mt-5">
             <label className="block pb-2 text-black dark:text-white">
-              Enter your confirm password
+              Ingresa tu contraseña de confirmación
             </label>
             <input
               type="password"

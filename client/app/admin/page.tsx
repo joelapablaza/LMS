@@ -12,9 +12,9 @@ const page = (props: Props) => {
     <div>
       <AdminProtected>
         <Heading
-          title="Elearning - Admin"
-          description="Elearning - Admin Panel"
-          keywords="Programming, MERN, Redux, Machine learning"
+          title="LearnIt - Admin"
+          description="LearnIt - Panel Administrador"
+          keywords="Programación, MERN, Redux, Machine learning"
         />
         <div className="flex h-vh">
           <div className="1500px:w-[16%] w-1/5">

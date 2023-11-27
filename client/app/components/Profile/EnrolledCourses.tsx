@@ -18,7 +18,7 @@ const EnrolledCourses = ({ courses }: Props) => {
 
         {courses && courses.length === 0 && (
           <h1 className="text-center text-20px font-Poppins mt-10">
-            You don&apos;t have purchased any course yet!
+            No has comprado ningún curso aún
           </h1>
         )}
       </div>

@@ -18,8 +18,8 @@ const Page: FC<Props> = (props) => {
   return (
     <div>
       <Heading
-        title="Elearning"
-        description="Elearning is a platform for students to learn and get help from teachers"
+        title="LearnIt"
+        description="LearnIt is a platform for students to learn and get help from teachers"
         keywords="Programming, MERN, Redux, NextJS"
       />
       <Header

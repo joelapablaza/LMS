@@ -15,6 +15,26 @@ import Link from "next/link";
 
 type Props = {};
 
+interface CourseGrid {
+  id: string;
+  title: string;
+  purchased: number;
+  ratings: number;
+  price: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Course {
+  _id: string;
+  name: string;
+  purchased: number;
+  ratings: number;
+  price: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const AllCourses = (props: Props) => {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
@@ -35,16 +55,16 @@ const AllCourses = (props: Props) => {
   };
 
   const columns = [
-    { field: "title", headerName: "Course Title", flex: 1 },
-    { field: "ratings", headerName: "Ratings", flex: 0.5 },
-    { field: "price", headerName: "Price", flex: 0.5 },
-    { field: "purchased", headerName: "Purchased", flex: 0.5 },
+    { field: "title", headerName: "Titulo del Curso", flex: 1 },
+    { field: "ratings", headerName: "Puntuación", flex: 0.5 },
+    { field: "price", headerName: "Precio", flex: 0.5 },
+    { field: "purchased", headerName: "Comprado", flex: 0.5 },
     { field: "created_at", headerName: "Created At", flex: 0.5 },
     {
       field: " ",
       headerName: "Edit",
       flex: 0.2,
-      renderCell: (params: any) => {
+      renderCell: (params: { row: { id: string } }) => {
         return (
           <>
             <Link href={`/admin/edit-course/${params.row.id}`}>
@@ -56,9 +76,9 @@ const AllCourses = (props: Props) => {
     },
     {
       field: "",
-      headerName: "Delete",
+      headerName: "Eliminar",
       flex: 0.2,
-      renderCell: (params: any) => {
+      renderCell: (params: { row: { id: string } }) => {
         return (
           <>
             <Button
@@ -75,11 +95,11 @@ const AllCourses = (props: Props) => {
     },
   ];
 
-  const rows: any = [];
+  const rows: CourseGrid[] = [];
 
   {
     data &&
-      data?.courses.forEach((item: any) => {
+      data?.courses.forEach((item: Course) => {
         rows.push({
           id: item._id,
           title: item.name,
@@ -95,12 +115,12 @@ const AllCourses = (props: Props) => {
   useEffect(() => {
     if (isSuccess) {
       refetch();
-      toast.success("Course Deleted successfully");
+      toast.success("Curso eliminado exitosamente");
       setOpen(!open);
     }
 
     if (error && "data" in error) {
-      const errorData = error.data as any;
+      const errorData = error.data as { message: string };
       toast.error(errorData.message);
     }
   }, [isSuccess, error]);
@@ -179,20 +199,20 @@ const AllCourses = (props: Props) => {
             >
               <Box className="absolute top-[35%] left-[35%] translate-x-1/2 transform-x-1/2 p-5 dark:bg-[#090909] bg-[#ffffffeb] rounded-lg">
                 <h1 className={`${styles.title}`}>
-                  Are you sure, want to delete <br /> this Course?
+                  Estas seguro que deseas eliminar <br /> este Curso?
                 </h1>
                 <div className="w-full flex items-center justify-between mb-4 mt-12">
                   <div
                     className={`${styles.button} !w-[120px] h-[30px] bg-[#57c7a3]`}
                     onClick={() => setOpen(!open)}
                   >
-                    Cancel
+                    Cancelar
                   </div>
                   <div
                     className={`${styles.button} !w-[120px] h-[30px] bg-[#d63f41]`}
                     onClick={handleDelete}
                   >
-                    Delete
+                    Eliminar
                   </div>
                 </div>
               </Box>

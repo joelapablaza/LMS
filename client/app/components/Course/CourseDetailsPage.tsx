@@ -49,9 +49,9 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
       ) : (
         <div>
           <Heading
-            title={data.course.name + "- Elearning"}
+            title={data.course.name + "- LearnIt"}
             description={
-              "Elearning is a programming community wich is developed by..."
+              "LearnIt es una comunidad de programación desarrollada por..."
             }
             keywords={data?.course?.tags}
           />

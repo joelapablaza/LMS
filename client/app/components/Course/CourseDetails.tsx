@@ -70,13 +70,13 @@ const CourseDetails = ({
                 </h5>
               </div>
               <h5 className="text-black dark:text-white">
-                {data.purchased} Students
+                {data.purchased} Estudiantes
               </h5>
             </div>
 
             <br />
             <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-              What you will learn from this course
+              Lo que aprenderás de este curso:
             </h1>
             <div>
               {data.benefits?.map((item: any, index: number) => (
@@ -100,7 +100,7 @@ const CourseDetails = ({
             </div>
 
             <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-              Prerequisites to taking this course
+              Requisitos previos para tomar este curso:
             </h1>
             {data.prerequisites?.map((item: any, index: number) => (
               <div className="w-full flex 800px:items-center py-2" key={index}>
@@ -118,7 +118,7 @@ const CourseDetails = ({
 
             <div>
               <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-                Course Overview
+                Visión general del curso
               </h1>
               <CourseContentList data={data?.courseData} isDemo={true} />
             </div>
@@ -126,7 +126,7 @@ const CourseDetails = ({
             <br />
             <div className="w-full">
               <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-                Course Details
+                Detalles del curso
               </h1>
               <p className="text-[18px] mt-[20px] whitespace-pre-line w-full overflow-hidden text-black dark:text-white">
                 {data.description}
@@ -142,7 +142,7 @@ const CourseDetails = ({
                   {Number.isInteger(data?.ratings)
                     ? data?.ratings.toFixed(1)
                     : data?.ratings.toFixed(2)}{" "}
-                  Course Rating • {data?.reviews?.length} Reviews
+                  Calificación del curso • {data?.reviews?.length} Reviews
                 </h5>
               </div>
               <br />
@@ -244,29 +244,29 @@ const CourseDetails = ({
                     href={`/course-access/${data._id}`}
                     className={`${styles.button} !w-[200px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                   >
-                    Watch the course
+                    Ver el curso
                   </Link>
                 ) : (
                   <div
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                     onClick={handleOrder}
                   >
-                    Buy Now ${data.price}
+                    Tomar el Curso ${data.price}
                   </div>
                 )}
               </div>
               <br />
               <p className="pb-1 text-black dark:text-white">
-                • Source code included
+                • Código fuente incluido
               </p>
               <p className="pb-1 text-black dark:text-white">
-                • Full lifetime access
+                • Acceso completo de por vida
               </p>
               <p className="pb-1 text-black dark:text-white">
-                • Certificate of completion
+                • Certificado de finalización
               </p>
               <p className="pb-3 800px:pb-1 text-black dark:text-white">
-                • Premium Support
+                • Soporte Premium
               </p>
             </div>
           </div>

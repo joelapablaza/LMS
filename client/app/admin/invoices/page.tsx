@@ -13,8 +13,8 @@ const page = (props: Props) => {
     <div>
       <AdminProtected>
         <Heading
-          title="Elearning - Admin"
-          description="Elearning - Admin Panel"
+          title="LearnIt - Admin"
+          description="LearnIt - Panel Administrador"
           keywords="Programming, MERN, Redux, Machine learning"
         />
         <div className="flex h-screen">

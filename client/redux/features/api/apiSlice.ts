@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userLoggedIn } from "../auth/authSlice";
-import { useSelector } from "react-redux";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -16,7 +15,7 @@ export const apiSlice = createApi({
       }),
     }),
     loadUser: builder.query({
-      query: (data) => ({
+      query: () => ({
         url: "me",
         method: "GET",
         credentials: "include" as const,
@@ -30,6 +29,7 @@ export const apiSlice = createApi({
               user: result.data.user,
             })
           );
+          console.log("USER DATA", result.data.user);
         } catch (error: any) {
           console.log(error);
         }
@@ -39,4 +39,3 @@ export const apiSlice = createApi({
 });
 
 export const { useLoadUserQuery } = apiSlice;
-//useRefreshTokenQuery

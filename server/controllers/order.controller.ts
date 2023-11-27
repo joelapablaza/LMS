@@ -25,7 +25,9 @@ export const createOrder = CatchAsyncError(
         );
 
         if (paymentIntent.status !== "succeeded") {
-          return next(new ErrorHandler("Payment fail", 400));
+          return next(
+            new ErrorHandler("La transacción de pago ha fallado", 400)
+          );
         }
       }
 
@@ -36,15 +38,13 @@ export const createOrder = CatchAsyncError(
       );
 
       if (courseExistInUser) {
-        return next(
-          new ErrorHandler("You have already purchased this course", 400)
-        );
+        return next(new ErrorHandler("Ya has comprado este curso", 400));
       }
 
       const course = await courseModel.findById(courseId);
 
       if (!course) {
-        return next(new ErrorHandler("Course not found", 404));
+        return next(new ErrorHandler("Curso no encontrado", 404));
       }
 
       const data: any = {
@@ -58,7 +58,7 @@ export const createOrder = CatchAsyncError(
           _id: course._id.toString().slice(0, 6),
           name: course.name,
           price: course.price,
-          date: new Date().toLocaleDateString("en-US", {
+          date: new Date().toLocaleDateString("es-AR", {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -75,7 +75,7 @@ export const createOrder = CatchAsyncError(
         if (user) {
           await sendMail({
             email: user.email,
-            subject: "Order Confirmation",
+            subject: "Confirmación de pedido",
             template: "order-confirmation.ejs",
             data: mailData,
           });
@@ -92,8 +92,8 @@ export const createOrder = CatchAsyncError(
 
       await NotificationModel.create({
         user: user?._id,
-        title: "New Order",
-        message: `You have a new order from ${course?.name}`,
+        title: "Nuevo Pedido",
+        message: `Tienes un nuevo pedido de ${course?.name}`,
       });
 
       course.purchased += 1;

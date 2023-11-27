@@ -3,11 +3,11 @@ import React, { FC } from "react";
 
 export const navItemsData = [
   {
-    name: "Home",
+    name: "Inicio",
     url: "/",
   },
   {
-    name: "Courses",
+    name: "Cursos",
     url: "/courses",
   },
   {
@@ -15,7 +15,7 @@ export const navItemsData = [
     url: "/about",
   },
   {
-    name: "Policy",
+    name: "Politicas",
     url: "/policy",
   },
   {
@@ -39,7 +39,7 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
               <span
                 className={`${
                   activeItem === index
-                    ? "dark:text-[#37a39a] text-[#37a39a]"
+                    ? "dark:text-[#39c1f3] text-[#39c1f3]"
                     : "dark:text-white text-black"
                 } text-[18px] px-6 font-Poppins font-[400]`}
               >
@@ -53,7 +53,7 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
           <div className="w-full text-center py-6">
             <Link href={"/"} passHref>
               <span className="text-[25px] font-Poppins font-[500] text-black dark:text-white">
-                Elearning
+                LearnIt
               </span>
             </Link>
           </div>

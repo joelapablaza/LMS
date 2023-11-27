@@ -10,33 +10,24 @@ import {
 import Loader from "../../Loader/Loader";
 import { useGetUsersAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
 import { styles } from "@/app/styles/style";
+import { OneUserAnalytics } from "@/app/interfaces/CourseAnalitics";
 
 type Props = {
   isDashboard?: boolean;
 };
 
+interface AnalyticsData {
+  name: string;
+  count: number;
+}
+
 const UsersAnalytics: FC<Props> = ({ isDashboard }) => {
   const { data, isLoading } = useGetUsersAnalyticsQuery({});
 
-  // const analyticsData = [
-  //   { name: "January 2023", count: 450 },
-  //   { name: "February 2023", count: 800 },
-  //   { name: "March 2023", count: 650 },
-  //   { name: "April 2023", count: 750 },
-  //   { name: "May 2023", count: 1500 },
-  //   { name: "June 2023", count: 950 },
-  //   { name: "July 2023", count: 1050 },
-  //   { name: "August 2023", count: 1150 },
-  //   { name: "September 2023", count: 1250 },
-  //   { name: "October 2023", count: 1350 },
-  //   { name: "November 2023", count: 1450 },
-  //   { name: "December 2023", count: 2000 },
-  // ];
-
-  const analyticsData: any = [];
+  const analyticsData: AnalyticsData[] = [];
 
   data &&
-    data.users.last12Months.forEach((item: any) => {
+    data.users.last12Months.forEach((item: OneUserAnalytics) => {
       analyticsData.push({ name: item.month, count: item.count });
     });
 
@@ -60,11 +51,11 @@ const UsersAnalytics: FC<Props> = ({ isDashboard }) => {
                 isDashboard && "!text-[20px]"
               } px-5 !text-start`}
             >
-              User Analytics
+              Análisis de usuarios
             </h1>
             {!isDashboard && (
               <p className={`${styles.label} px-5`}>
-                Last 12 months analytics data{" "}
+                Datos analíticos de los últimos 12 meses{" "}
               </p>
             )}
           </div>

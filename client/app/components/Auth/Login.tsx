@@ -21,9 +21,13 @@ type Props = {
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email("Invalid email")
-    .required("Please enter your email"),
-  password: Yup.string().required("Please enter your password").min(6),
+    .email("Email Invalido")
+    .required("Por favor ingrese su email"),
+  password: Yup.string()
+    .required(
+      "Por favor ingrese su contraseña, debe contener al menos 8 caracteres"
+    )
+    .min(8),
 });
 
 const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
@@ -40,7 +44,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Login successfully");
+      toast.success("Ingreso exitoso");
       setOpen(false);
       refetch();
     }
@@ -58,7 +62,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
 
   return (
     <div className="w-full">
-      <h1 className={`${styles.title} mb-3`}>Login with Elearning</h1>
+      <h1 className={`${styles.title} mb-3`}>Login with LearnIt</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email" className={styles.label}>
           Enter your Email
@@ -69,7 +73,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
           value={values.email}
           onChange={handleChange}
           id="email"
-          placeholder="loginmail@gmail.com"
+          placeholder="suemail@email.com"
           className={`${errors.email && touched.email && "border-red-500"} ${
             styles.input
           }`}
@@ -79,7 +83,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
         )}
         <div className="w-full mt-5 relative mb-1">
           <label htmlFor="email" className={styles.label}>
-            Enter your password
+            Ingrese su contraseña
           </label>
           <input
             type={!show ? "password" : "text"}
@@ -114,7 +118,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
         </div>
         <br />
         <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
-          Or sign with
+          O inicia sesión con
         </h5>
         <div className="flex items-center justify-center my-3">
           <FcGoogle
@@ -129,12 +133,12 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
           />
         </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px]">
-          Not have any account?{" "}
+          ¿No tienes ninguna cuenta?{" "}
           <span
             className="text-[#2190ff] pl-1 cursor-pointer"
             onClick={() => setRoute("Sign-Up")}
           >
-            Sing Up
+            Registrate
           </span>
         </h5>
         <br />

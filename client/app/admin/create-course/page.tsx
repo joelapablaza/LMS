@@ -11,8 +11,8 @@ const page = (props: Props) => {
   return (
     <div>
       <Heading
-        title="Elearning - Admin"
-        description="Create new course"
+        title="LearnIt - Admin"
+        description="Crear nuevo curso"
         keywords="Programming, MERN, Redux, Machine learning"
       />
       <div className="flex">

@@ -17,11 +17,19 @@ type Props = {
 };
 
 const schema = Yup.object().shape({
-  name: Yup.string().required("Please enter your name"),
+  name: Yup.string().required("Por favor ingrese su nombre"),
   email: Yup.string()
-    .email("Invalid email")
-    .required("Please enter your email"),
-  password: Yup.string().required("Please enter your password").min(6),
+    .email("Email invalido")
+    .required("Por favor ingrese su email"),
+  password: Yup.string()
+    .required(
+      "La contraseña debe tener al menos 8 digitos, una letra mayuscula y un número"
+    )
+    .min(8)
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)/,
+      "La contraseña debe tener al menos 8 digitos, una letra mayuscula y un número"
+    ),
 });
 
 const SingUp: FC<Props> = ({ setRoute }) => {
@@ -30,7 +38,7 @@ const SingUp: FC<Props> = ({ setRoute }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      const message = data?.message || "Registration successful";
+      const message = data?.message || "Registrado Exitosamente";
       toast.success(message);
       setRoute("Verification");
     }
@@ -59,7 +67,7 @@ const SingUp: FC<Props> = ({ setRoute }) => {
 
   return (
     <div className="w-full">
-      <h1 className={`${styles.title} mb-3`}>Join to Elearning</h1>
+      <h1 className={`${styles.title} mb-3`}>Join to LearnIt</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className={styles.label}>
@@ -71,7 +79,7 @@ const SingUp: FC<Props> = ({ setRoute }) => {
             value={values.name}
             onChange={handleChange}
             id="name"
-            placeholder="John Doe"
+            placeholder="su nombre"
             className={`${errors.name && touched.name && "border-red-500"} ${
               styles.input
             }`}
@@ -89,7 +97,7 @@ const SingUp: FC<Props> = ({ setRoute }) => {
           value={values.email}
           onChange={handleChange}
           id="email"
-          placeholder="loginmail@gmail.com"
+          placeholder="suemail@email.com"
           className={`${errors.email && touched.email && "border-red-500"} ${
             styles.input
           }`}
@@ -134,7 +142,7 @@ const SingUp: FC<Props> = ({ setRoute }) => {
         </div>
         <br />
         <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
-          Or join with
+          O únase con
         </h5>
         <div className="flex items-center justify-center my-3">
           <FcGoogle size={30} className="cursor-pointer mr-2" />
@@ -144,12 +152,12 @@ const SingUp: FC<Props> = ({ setRoute }) => {
           />
         </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px]">
-          Already have an account?{" "}
+          ¿Ya tienes una cuenta?{" "}
           <span
             className="text-[#2190ff] pl-1 cursor-pointer"
             onClick={() => setRoute("Login")}
           >
-            Sing In
+            Ingresa
           </span>
         </h5>
         <br />

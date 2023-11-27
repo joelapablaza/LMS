@@ -3,7 +3,6 @@ import SideBarProfile from "./SideBarProfile";
 import { useLogOutQuery } from "@/redux/features/auth/authApi";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
 import ProfileInfo from "./ProfileInfo";
 import ChangePassword from "./ChangePassword";
 import EnrolledCourses from "./EnrolledCourses";
@@ -14,7 +13,6 @@ type Props = {
 };
 
 const Profile: FC<Props> = ({ user }) => {
-  const { data: session } = useSession();
   const [scroll, setScroll] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [active, setActive] = useState(1);
@@ -33,15 +31,21 @@ const Profile: FC<Props> = ({ user }) => {
     redirect("/");
   };
 
-  if (typeof window !== "undefined") {
-    window.addEventListener("scroll", () => {
+  useEffect(() => {
+    const handleScroll = () => {
       if (window.scrollY > 85) {
         setScroll(true);
       } else {
         setScroll(false);
       }
-    });
-  }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (data) {

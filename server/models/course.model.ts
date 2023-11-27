@@ -12,6 +12,7 @@ interface IReview extends Document {
   rating: number;
   comment: string;
   commentReplies?: IComent[];
+  avatar?: string;
 }
 
 interface ILink extends Document {
@@ -53,6 +54,7 @@ interface ICourse extends Document {
 const reviewSchema = new Schema<IReview>(
   {
     user: Object,
+    avatar: String,
     rating: {
       type: Number,
       default: 0,
@@ -116,11 +118,11 @@ const courseSchema = new Schema<ICourse>(
     thumbnail: {
       public_id: {
         type: String,
-        // required: false,
+        required: false,
       },
       url: {
         type: String,
-        // required: true,
+        required: true,
       },
     },
     tags: {

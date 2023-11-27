@@ -66,7 +66,7 @@ const CoursePreview: FC<Props> = ({
           <div
             className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson] cursor-not-allowed`}
           >
-            But Now ${courseData?.price}
+            Toma el Curso ${courseData?.price}
           </div>
         </div>
 
@@ -81,20 +81,18 @@ const CoursePreview: FC<Props> = ({
           <div
             className={`${styles.button} !w-[120px] my-3 ml-4 font-Poppins cursor-pointer`}
           >
-            Apply
+            Aplicar
           </div>
         </div>
         <p className="pb-1 text-black dark:text-white">
-          • Source code included
+          • Codigo fuente incluido
         </p>
+        <p className="pb-1 text-black dark:text-white">• Acceso de por vida</p>
         <p className="pb-1 text-black dark:text-white">
-          • Full lifetime access
-        </p>
-        <p className="pb-1 text-black dark:text-white">
-          • Certificate of completion
+          • Certificado de finalización
         </p>
         <p className="pb-3 800px:pb-1 text-black dark:text-white">
-          • Premium Support
+          • Soporte Premium
         </p>
       </div>
 
@@ -108,13 +106,17 @@ const CoursePreview: FC<Props> = ({
               <Ratings
                 rating={courseData?.ratings ? courseData?.ratings : 4.5}
               />
-              <h5 className="text-black dark:text-white">0 Reviews</h5>
+              <h5 className="text-black dark:text-white">
+                {courseData?.ratings}
+              </h5>
             </div>
-            <h5 className="text-black dark:text-white">0 Students</h5>
+            <h5 className="text-black dark:text-white">
+              {courseData?.purchased}
+            </h5>
           </div>
           <br />
           <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-            What will you learn from this course?
+            ¿Qué aprenderás de este curso?
           </h1>
         </div>
         {courseData?.benefits?.map((item: any, index: number) => (
@@ -132,7 +134,7 @@ const CoursePreview: FC<Props> = ({
         <br />
 
         <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-          Whare are the prerequisites for starting this course?
+          ¿Cuáles son los requisitos previos para comenzar este curso?
         </h1>
         {courseData?.prerequisites?.map((item: any, index: number) => (
           <div className="w-full flex 800px:items-center py2" key={index}>
@@ -151,7 +153,7 @@ const CoursePreview: FC<Props> = ({
         {/* course description */}
         <div className="w-full">
           <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
-            Course Details
+            Detalles del Curso
           </h1>
           <p className="text-[18px] mt-[20px] whitespace-pre-line w-full overflow-hidden text-black dark:text-white">
             {courseData?.description}

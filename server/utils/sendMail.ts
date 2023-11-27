@@ -2,11 +2,34 @@ import nodemailer, { Transporter } from "nodemailer";
 import ejs from "ejs";
 import path from "path";
 
+type UserData = {
+  user: {
+    name: string;
+  };
+  activationCode: string;
+};
+
+type CourseData = {
+  name: string;
+  title: string;
+};
+
+type OrderData = {
+  order: {
+    _id: string;
+    name: string;
+    price: number;
+    date: string;
+  };
+};
+
+type EmailData = UserData | CourseData | OrderData;
+
 interface IEmailOptions {
   email: string;
   subject: string;
   template: string;
-  data: { [key: string]: any };
+  data: EmailData;
 }
 
 const sendMail = async (options: IEmailOptions): Promise<void> => {

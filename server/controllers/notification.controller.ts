@@ -29,7 +29,7 @@ export const updateNotification = CatchAsyncError(
       const notification = await NotificationModel.findById(req.params.id);
 
       if (!notification) {
-        return next(new ErrorHandler("Notification not found", 404));
+        return next(new ErrorHandler("Notficacion no encontrada", 404));
       }
 
       notification.status = "read";
@@ -61,8 +61,8 @@ cron.schedule("0 0 0 * * *", async () => {
 
     await NotificationModel.create({
       user: "admin",
-      title: "Notifications Deleted",
-      message: `Old notifications succefully deleted`,
+      title: "Notificaciones eliminadas",
+      message: `Notificaciones antiguas borradas con éxito`,
     });
   } catch (error: any) {
     console.log(error.message);

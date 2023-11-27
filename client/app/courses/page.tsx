@@ -41,10 +41,7 @@ const page = (props: Props) => {
   }, [data, category, search]);
 
   const categories = categoriesData?.layout.categories;
-  console.log(data);
 
-  console.log(categories);
-  console.log("category", category);
   return (
     <div>
       {isLoading ? (
@@ -61,9 +58,9 @@ const page = (props: Props) => {
 
           <div className="w-[95%] 800px:w-[85%] m-auto min-h-[70vh]">
             <Heading
-              title={"All courses - Elearning"}
-              description={"Elearning is a programming community"}
-              keywords="programming, community, coding skills, expert, collaboration"
+              title={"Todos los Cursos - LearnIt"}
+              description={"LearnIt es una comunidad de programación"}
+              keywords="programación, comunidad, habilidades de codificación, experto, colaboración"
             />
             <br />
             <div className="w-full flex items-center flex-wrap">
@@ -97,8 +94,8 @@ const page = (props: Props) => {
                 className={`${styles.label} justify-center min-h-[50vh] flex items-center`}
               >
                 {search
-                  ? "No courses found"
-                  : "No courses available on this category"}
+                  ? "No cursos encontrados"
+                  : "No hay cursos disponibles en esta categoría"}
               </p>
             )}
             <br />

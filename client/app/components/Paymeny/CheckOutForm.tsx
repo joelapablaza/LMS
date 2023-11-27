@@ -1,13 +1,13 @@
-import React, { FC, useState, useEffect } from "react";
+import { styles } from "@/app/styles/style";
+import { FC, useState, useEffect } from "react";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
 import {
   useStripe,
   useElements,
   LinkAuthenticationElement,
   PaymentElement,
 } from "@stripe/react-stripe-js";
-import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-import { styles } from "@/app/styles/style";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import socketIO from "socket.io-client";
@@ -25,6 +25,7 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
   const elements = useElements();
   const [message, setMessage] = useState<any>("");
   const [loadUser, setLoadUser] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [createOrder, { data: orderData, error }] = useCreateOrderMutation();
   const {} = useLoadUserQuery({ skip: loadUser ? false : true });
@@ -45,6 +46,7 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       setIsLoading(false);
       createOrder({ courseId: data._id, payment_info: paymentIntent });
+      setMessage("Payment Success");
     }
   };
 

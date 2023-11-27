@@ -42,7 +42,7 @@ const SideBarProfile: FC<Props> = ({
           className="w-[20px] h-[20px] 800px:w-[30px] 800px:h-[30px] cursor-pointer rounded-full"
         />
         <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-          My Account
+          Mi cuenta
         </h5>
       </div>
       <div
@@ -57,7 +57,7 @@ const SideBarProfile: FC<Props> = ({
           className="dark:text-white text-black"
         />
         <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-          Change Password
+          Cambiar Contraseña
         </h5>
       </div>
       <div
@@ -72,7 +72,7 @@ const SideBarProfile: FC<Props> = ({
           className="dark:text-white text-black"
         />
         <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-          Enrolled Courses
+          Mis Cursos
         </h5>
       </div>
 
@@ -89,7 +89,7 @@ const SideBarProfile: FC<Props> = ({
             className="dark:text-white text-black"
           />
           <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-            Admin Dashboard
+            Panel de Administrador
           </h5>
         </Link>
       )}
@@ -106,7 +106,7 @@ const SideBarProfile: FC<Props> = ({
           className="dark:text-white text-black"
         />
         <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-          Log Out
+          Salir
         </h5>
       </div>
     </div>

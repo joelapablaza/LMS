@@ -84,7 +84,7 @@ const CourseContentList: FC<Props> = ({
             </div>
             <h5 className="text-black dark:text-white">
               {sectionVideoCount} Lessons . {sectinoVideoLength}{" "}
-              {sectionContentHours > 60 ? "hours" : "minutes"}
+              {sectionContentHours > 60 ? "horas" : "minutos"}
             </h5>
             <br />
             {isSectionVisible && (

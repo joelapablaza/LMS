@@ -28,11 +28,4 @@ analyticsRouter.get(
   getOrdersAnalytics
 );
 
-// analyticsRouter.get(
-//   "/get-analytics/:model",
-//   isAuthenticated,
-//   authorizeRoles("admin"),
-//   getAnalytics
-// );
-
 export default analyticsRouter;

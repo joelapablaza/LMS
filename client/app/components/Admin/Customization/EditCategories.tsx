@@ -24,7 +24,7 @@ const EditCategories = (props: Props) => {
       setCategories(data.layout.categories);
     }
     if (isSuccess) {
-      toast.success("Categories updated successfully");
+      toast.success("Categorias actualizadas exitosamente");
       refetch();
     }
 
@@ -42,7 +42,7 @@ const EditCategories = (props: Props) => {
 
   const addNewCategoryHandler = () => {
     if (categories[categories.length - 1].title === "") {
-      toast.error(" Category's Title cannot be empty");
+      toast.error("El título de la categoría no puede estar vacío");
     } else {
       setCategories((prevCategory: any) => [...prevCategory, { title: "" }]);
     }
@@ -83,7 +83,7 @@ const EditCategories = (props: Props) => {
         <Loader />
       ) : (
         <div className="mt-[120px] text-center">
-          <h1 className={`${styles.title}`}> All Categories</h1>
+          <h1 className={`${styles.title}`}> Todas las categorias</h1>
 
           {categories &&
             categories.map((item: any, index: number) => {
@@ -96,7 +96,7 @@ const EditCategories = (props: Props) => {
                       onChange={(e: any) =>
                         handleCategoryChange(item._id, e.target.value)
                       }
-                      placeholder="Add a new category"
+                      placeholder="Agregar Categoria"
                     />
 
                     <AiOutlineDelete
@@ -138,7 +138,7 @@ const EditCategories = (props: Props) => {
                 : saveCategoryHandler
             }
           >
-            Save
+            Guardar
           </div>
         </div>
       )}

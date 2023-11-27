@@ -11,6 +11,7 @@ import notificationRoute from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
 import morgan from "morgan";
+import ErrorHandler from "./utils/ErrorHandler";
 
 // body parser
 app.use(express.json({ limit: "50mb" }));
@@ -49,8 +50,7 @@ app.get("/test", (req: Request, res: Response, next: NextFunction) => {
 
 // unknown route
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-  const err = new Error(`Route ${req.originalUrl} not found`) as any;
-  err.statusCode = 404;
+  const err = new ErrorHandler(`Route ${req.originalUrl} not found`, 404);
   next(err);
 });
 

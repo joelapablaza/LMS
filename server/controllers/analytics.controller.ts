@@ -53,35 +53,3 @@ export const getOrdersAnalytics = CatchAsyncError(
     }
   }
 );
-
-// get analytics --- admin only
-// export const getAnalytics = CatchAsyncError(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const model = req.params.model;
-//       let data;
-
-//       // switch case
-//       switch (model) {
-//         case "users":
-//           data = await generateLast12MonthsData(userModel);
-//           break;
-//         case "courses":
-//           data = await generateLast12MonthsData(courseModel);
-//           break;
-//         case "orders":
-//           data = await generateLast12MonthsData(OrderModel);
-//           break;
-//         default:
-//           return next(new ErrorHandler("Invalid Model", 400));
-//       }
-
-//       res.status(200).json({
-//         success: true,
-//         data,
-//       });
-//     } catch (error: any) {
-//       return next(new ErrorHandler(error.message, 500));
-//     }
-//   }
-// );

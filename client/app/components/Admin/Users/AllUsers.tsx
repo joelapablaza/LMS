@@ -46,12 +46,12 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     }
     if (isUpdateUserRoleSuccess) {
       refetch();
-      toast.success("User role updated successfully");
+      toast.success("El rol de usuario se actualizó correctamente");
       setAddNewMemberModalOpen(!addNewMemberModalOpen);
     }
     if (deleteSuccess) {
       refetch();
-      toast.success("User deleted successfully");
+      toast.success("Usuario Eliminado Correctamente");
       setOpen(!open);
     }
     if (deleteError) {
@@ -77,14 +77,14 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
   };
 
   const columns = [
-    { field: "name", headerName: "Name", flex: 0.5 },
+    { field: "name", headerName: "Nombre", flex: 0.5 },
     { field: "email", headerName: "Email", flex: 0.5 },
-    { field: "role", headerName: "Role", flex: 0.5 },
-    { field: "courses", headerName: "Purchased Courses", flex: 0.5 },
+    { field: "role", headerName: "Rol", flex: 0.5 },
+    { field: "courses", headerName: "Cursos Comprados", flex: 0.5 },
     { field: "created_at", headerName: "Created At", flex: 0.5 },
     {
       field: " ",
-      headerName: "Send Mail",
+      headerName: "Enviar Email",
       flex: 0.2,
       renderCell: (params: any) => {
         return (
@@ -98,7 +98,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     },
     {
       field: "",
-      headerName: "Delete",
+      headerName: "Eliminar",
       flex: 0.2,
       renderCell: (params: any) => {
         return (
@@ -172,7 +172,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
               className={`${styles.button} !w-[220px] dark:bg-[#3e4396] !h-[35px] `}
               onClick={() => setAddNewMemberModalOpen(!addNewMemberModalOpen)}
             >
-              Add New Member
+              Añadir Miembro
             </div>
           </div>
           <Box
@@ -237,20 +237,20 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
             >
               <Box className="absolute top-[35%] left-[35%] translate-x-1/2 transform-x-1/2 p-5 dark:bg-[#090909] bg-[#ffffffeb] rounded-lg">
                 <h1 className={`${styles.title}`}>
-                  Are you sure, want to delete <br /> this User?
+                  ¿Estás seguro de que quieres eliminar a <br /> este Usuario?
                 </h1>
                 <div className="w-full flex items-center justify-between mb-4 mt-12">
                   <div
                     className={`${styles.button} !w-[120px] h-[30px] bg-[#2a4d7e]`}
                     onClick={() => setOpen(!open)}
                   >
-                    Cancel
+                    Cancelar
                   </div>
                   <div
                     className={`${styles.button} !w-[120px] h-[30px] bg-[#af4042]`}
                     onClick={handleDelete}
                   >
-                    Delete
+                    Eliminar
                   </div>
                 </div>
               </Box>
@@ -266,7 +266,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
             >
               <Box className="absolute top-[25%] left-[35%] translate-x-1/2 transform-x-1/2 p-5 dark:bg-[#090909] bg-[#ffffffeb] rounded-lg">
                 <h1 className={`${styles.title}`}>
-                  Add new user to the team..
+                  Agregar nuevo usuario al equipo...
                 </h1>
                 <div className="w-full flex flex-col items-center mb-4 mt-8">
                   <input
@@ -281,9 +281,9 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                   >
-                    <option value="user">User</option>
+                    <option value="user">Usuario</option>
                     <option value="admin">Admin</option>
-                    <option value="moderator">Moderator</option>
+                    <option value="moderator">Moderador</option>
                   </select>
                 </div>
                 <div className="w-full flex items-center justify-between mb-4 mt-12">
@@ -293,13 +293,13 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                       setAddNewMemberModalOpen(!addNewMemberModalOpen)
                     }
                   >
-                    Cancel
+                    Cancelar
                   </div>
                   <div
                     className={`${styles.button} !w-[120px] h-[30px] bg-[#57c7a3]`}
                     onClick={handleAddUser}
                   >
-                    Save
+                    Guardar
                   </div>
                 </div>
               </Box>

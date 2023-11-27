@@ -21,14 +21,17 @@ export const isAuthenticated = CatchAsyncError(
     ) as JwtPayload;
 
     if (!decoded) {
-      new ErrorHandler("Access token is not valid", 400);
+      new ErrorHandler("El token de acceso no es válido", 400);
     }
 
     const user = await redis.get(decoded.id);
 
     if (!user) {
       return next(
-        new ErrorHandler("Please login to access this resource", 400)
+        new ErrorHandler(
+          "Por favor, inicia sesión para acceder a este recurso",
+          400
+        )
       );
     }
 
@@ -43,7 +46,7 @@ export const authorizeRoles = (...roles: string[]) => {
     if (!roles.includes(req.user?.role || "")) {
       return next(
         new ErrorHandler(
-          `Role: ${req.user?.role} is not allowed to acces this resource`,
+          `Rol: ${req.user?.role} no tiene permitido acceder a este recurso`,
           403
         )
       );

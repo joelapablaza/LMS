@@ -1,5 +1,5 @@
 import { styles } from "@/app/styles/style";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, ChangeEvent } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import toast from "react-hot-toast";
 
@@ -32,7 +32,7 @@ const CourseData: FC<Props> = ({
     []
   );
 
-  const handleBenefitChange = (index: number, value: any) => {
+  const handleBenefitChange = (index: number, value: string) => {
     const updatedBenefits = [...benefitsData];
     updatedBenefits[index].title = value;
     setBenefits(updatedBenefits);
@@ -42,7 +42,7 @@ const CourseData: FC<Props> = ({
     setBenefits([...benefitsData, { title: "" }]);
   };
 
-  const handlePrerequisitesChange = (index: number, value: any) => {
+  const handlePrerequisitesChange = (index: number, value: string) => {
     const updatedPrerequisites = [...prerequisitesData];
     updatedPrerequisites[index].title = value;
     setPrerequisites(updatedPrerequisites);
@@ -69,7 +69,7 @@ const CourseData: FC<Props> = ({
       setPrerequisites(prerequisitesData);
       setActive(active + 1);
     } else {
-      toast.error("Please fill out all the fields to proceed");
+      toast.error("Por favor, completa todos los campos para continuar");
     }
   };
 
@@ -91,19 +91,21 @@ const CourseData: FC<Props> = ({
         {/* Benefit Section */}
 
         <label className={`${styles.label} text-[20px]`} htmlFor="email">
-          What are the benefits of this course?
+          ¿Cuáles son los beneficios de este curso?
         </label>
         <br />
-        {benefitsData.map((benefit: any, index: number) => (
+        {benefitsData.map((benefit: Benefit, index: number) => (
           <input
             type="text"
             key={index}
             name="Benefit"
-            placeholder="You will be able to build a full stack LMS Platform..."
+            placeholder="Podrás construir una plataforma LMS Full-Stack..."
             required
             className={`${styles.input} my-2`}
             value={benefit.title}
-            onChange={(e: any) => handleBenefitChange(index, e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handleBenefitChange(index, e.target.value)
+            }
           />
         ))}
         <AddCircleIcon
@@ -117,19 +119,19 @@ const CourseData: FC<Props> = ({
 
       <div>
         <label className={`${styles.label} text-[20px]`} htmlFor="email">
-          What are the prerequisites for taking course?
+          ¿Cuáles son los requisitos previos para tomar el curso?
         </label>
         <br />
-        {prerequisites.map((prerequisite: any, index: number) => (
+        {prerequisites.map((prerequisite: Prerequisites, index: number) => (
           <input
             type="text"
             key={index}
             name="prerequisite"
-            placeholder="You need basic MERN stack knowledge"
+            placeholder="Necesitas conocimientos básicos en MERN Stack"
             required
             className={`${styles.input} my-2`}
             value={prerequisite.title}
-            onChange={(e: any) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               handlePrerequisitesChange(index, e.target.value)
             }
           />

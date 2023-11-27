@@ -23,7 +23,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Account activated successfully");
+      toast.success("La cuenta se activó correctamente");
       setRoute("Login");
     }
     if (error) {
@@ -33,7 +33,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
         setInvalidError(true);
       }
     } else {
-      console.log("An error ocurred: ", error);
+      console.log("Ocurrio un error: ", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, error]);
@@ -107,17 +107,17 @@ const Verification: FC<Props> = ({ setRoute }) => {
       <br />
       <div className="w-full flex justify-center">
         <button className={styles.button} onClick={verificationHandler}>
-          Verify OPT
+          Verificar OPT
         </button>
       </div>
       <br />
       <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
-        Go back to sign in?{" "}
+        ¿Regresar para iniciar sesión?{" "}
         <span
           className="text-[#2190ff] pl-1 cursor-pointer"
           onClick={() => setRoute("Login")}
         >
-          Sign in
+          Ingresa
         </span>
       </h5>
     </div>

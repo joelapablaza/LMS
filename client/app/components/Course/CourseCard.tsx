@@ -34,7 +34,7 @@ const CourseCard: FC<Props> = ({ item, isProfile }) => {
               isProfile && "hidden 800px:inline"
             }`}
           >
-            {item.purchased} Students
+            {item.purchased} Estudiantes
           </h5>
         </div>
         <div className="w-full flex items-center justify-between pt-3">
@@ -52,7 +52,7 @@ const CourseCard: FC<Props> = ({ item, isProfile }) => {
               className="text-black dark:text-white"
             />
             <h5 className="pl-2 text-black dark:text-white">
-              {item.courseData?.length} Lectures
+              {item.courseData?.length} Lecciones
             </h5>
           </div>
         </div>

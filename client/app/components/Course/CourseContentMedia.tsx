@@ -100,14 +100,14 @@ const CourseContentMedia: FC<Props> = ({
 
   const handleQuestionSubmit = (e: any) => {
     if (question.length === 0) {
-      toast.error("Please fill the question field");
+      toast.error("Por favor, completa el campo de la pregunta");
     } else {
       addNewQuestion({
         question,
         courseId: id,
-        contentId: data[activeVideo]._id,
+        contentId: data?.[activeVideo]._id,
       });
-      toast.success("Your Question Adeed Successfully");
+      toast.success("Tu pregunta se añadió correctamente");
     }
   };
 
@@ -115,22 +115,22 @@ const CourseContentMedia: FC<Props> = ({
     if (isSuccess) {
       setQuestion("");
       refetch();
-      toast.success("Your Question Adeed Successfully");
+      toast.success("Tu pregunta se añadió correctamente");
       socketId.emit("notification", {
         userId: user._id,
-        title: "New Question Recieved",
-        message: `You have a new question in ${data[activeVideo].title} !`,
+        title: "Nueva Pregunta Recibida",
+        message: `Tienes una nueva pregunta en ${data?.[activeVideo].title} !`,
       });
     }
     if (answerSuccess) {
       setAnswer("");
       refetch();
-      toast.success("Your Answer Adeed Successfully");
+      toast.success("Tu respuesta se añadió correctamente");
       if (user.role !== "admin") {
         socketId.emit("notification", {
           userId: user._id,
-          title: "New Answer Recieved",
-          message: `You question in course:${data[activeVideo].title}, got a new response!`,
+          title: "Nueva respuesta recibida",
+          message: `Tu pregunta en el curso: ${data?.[activeVideo].title}, ¡ha recibido una nueva respuesta!`,
         });
       }
     }
@@ -138,17 +138,17 @@ const CourseContentMedia: FC<Props> = ({
       setReview("");
       setRating(1);
       courseRefetch();
-      toast.success("Your Review Adeed Successfully");
+      toast.success("Tu reseña se agregó correctamente");
       socketId.emit("notification", {
         userId: user._id,
-        title: "New Review Recieved",
-        message: `${user?.name} has added a review on ${course?.name}`,
+        title: "Nueva Review Recibida",
+        message: `${user?.name} ha añadido una reseña en ${course?.name}`,
       });
     }
     if (replyToReviewSuccess) {
       setReviewReply("");
       refetch();
-      toast.success("Your Reply To Review Adeed Successfully");
+      toast.success("Tu respuesta a la reseña se añadió correctamente");
     }
     if (error) {
       if ("data" in error) {
@@ -192,13 +192,13 @@ const CourseContentMedia: FC<Props> = ({
       answer,
       courseId: id,
       questionId: questionId,
-      contentId: data[activeVideo]._id,
+      contentId: data?.[activeVideo]._id,
     });
   };
 
   const handleReviewSubmit = async () => {
     if (review.length === 0) {
-      toast.error("Please fill the review field");
+      toast.error("Por favor, completa el campo de la reseña");
     } else {
       addReviewToCourse({
         review,
@@ -212,7 +212,7 @@ const CourseContentMedia: FC<Props> = ({
   const handleReviewReplySubmit = async () => {
     if (!loadingWhileReplyToReview) {
       if (reviewReply.length === 0) {
-        toast.error("Please fill the reply field");
+        toast.error("Por favor, completa el campo de la respuesta");
       } else {
         addReplyToReview({
           reviewId,
@@ -225,8 +225,8 @@ const CourseContentMedia: FC<Props> = ({
   return (
     <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
       <CoursePlayer
-        title={data[activeVideo]?.title}
-        videoUrl={data[activeVideo]?.videoUrl}
+        title={data?.[activeVideo]?.title}
+        videoUrl={data?.[activeVideo]?.videoUrl}
       />
       <div className="w-full flex items-center justify-between my-3 ">
         <div
@@ -259,7 +259,7 @@ const CourseContentMedia: FC<Props> = ({
         </div>
       </div>
       <h1 className="pt-2 text-[25px] font-[600] text-black dark:text-white">
-        {data[activeVideo].title}
+        {data?.[activeVideo].title}
       </h1>
       <br />
       <div className="w-full py-4 px-5 flex items-center justify-between bg-slate-500 bg-opacity-20 backdrop-blur shadow-[bg-slate-700] rounded shadow-inner">
@@ -279,12 +279,12 @@ const CourseContentMedia: FC<Props> = ({
 
       {activeBar === 0 && (
         <p className="text-[18px] whitespace-pre-line mb-3 text-black dark:text-white">
-          {data[activeVideo]?.description}
+          {data?.[activeVideo]?.description}
         </p>
       )}
       {activeBar === 1 && (
         <div className="ml-5">
-          {data[activeVideo]?.links.map((item: any, index: number) => (
+          {data?.[activeVideo]?.links.map((item: any, index: number) => (
             <>
               <div className="mb-5">
                 <h2 className="800px:text-20px 800px:inline-block text-black dark:text-white ">
@@ -373,7 +373,8 @@ const CourseContentMedia: FC<Props> = ({
                   />
                   <div className="w-full">
                     <h5 className="pl-3 text-[20px] font-[500] text-black dark:text-white">
-                      Give a Rating <span className="text-red-500">*</span>
+                      Dar tu calificación{" "}
+                      <span className="text-red-500">*</span>
                     </h5>
 
                     <div className="flex w-full ml-2 pb-3">
@@ -462,7 +463,7 @@ const CourseContentMedia: FC<Props> = ({
                               setIsReviewReply(true), setReviewId(item._id);
                             }}
                           >
-                            Add Reply
+                            Responder
                           </span>
                         )}
 
@@ -471,7 +472,7 @@ const CourseContentMedia: FC<Props> = ({
                           <textarea
                             cols={40}
                             rows={1}
-                            placeholder="Enter your reply"
+                            placeholder="Añadir comentario"
                             value={reviewReply}
                             onChange={(e) => setReviewReply(e.target.value)}
                             className=" text-black dark:text-white block 800px:ml-10  outline-none bg-transparent border-b dark:border-[#ffffff57] border-[#68686842] p-[5px] w-[90%]"
@@ -558,7 +559,7 @@ const ComposeReply = ({
   return (
     <>
       <div className="w-full my-3">
-        {data[activeVideo].questions.map((item: any, index: number) => (
+        {data?.[activeVideo].questions.map((item: any, index: number) => (
           <ReplyItem
             key={index}
             item={item}

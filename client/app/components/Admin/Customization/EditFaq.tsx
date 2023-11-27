@@ -24,15 +24,13 @@ const EditFaq = (props: Props) => {
 
   const [questions, setQuestions] = useState<any[]>([]);
 
-  // TODO  Se activa y desactiva el campo de answer cuando apreto espacio
-
   useEffect(() => {
     if (data) {
       setQuestions(data.layout.faq);
     }
     if (isLayoutSuccess) {
       refetch();
-      toast.success("FAQ updated successfully");
+      toast.success("FAQ actualizado exitosamente");
     }
 
     if (error && "data" in error) {
@@ -110,7 +108,7 @@ const EditFaq = (props: Props) => {
                     key={q._id}
                   >
                     <dt className="text-lg">
-                      <button
+                      <div
                         className="flex items-start dark:text-white text-black justify-between w-full text-left focus:outline-none"
                         onClick={() => toggleQuestion(q._id)}
                       >
@@ -120,7 +118,7 @@ const EditFaq = (props: Props) => {
                           onChange={(e: any) =>
                             handleQuestionChange(q._id, e.target.value)
                           }
-                          placeholder="Add your question..."
+                          placeholder="Agrega tu pregunta..."
                           className={`${styles.input} border-none`}
                         />
 
@@ -131,7 +129,7 @@ const EditFaq = (props: Props) => {
                             <MdOutlineKeyboardArrowDown className="h-6 w-6" />
                           )}
                         </span>
-                      </button>
+                      </div>
                     </dt>
 
                     {q.active && (
@@ -143,7 +141,7 @@ const EditFaq = (props: Props) => {
                           onChange={(e: any) =>
                             handleAnswerChange(q._id, e.target.value)
                           }
-                          placeholder="Add your answer..."
+                          placeholder="Agrega tu respuesta..."
                         />
                         <span className="ml-6 flex-shink-0 ">
                           <AiOutlineDelete
@@ -189,7 +187,7 @@ const EditFaq = (props: Props) => {
                 : handleEdit
             }
           >
-            Save
+            Guardar
           </div>
         </div>
       )}

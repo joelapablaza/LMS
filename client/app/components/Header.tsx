@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, MouseEvent } from "react";
 import NavItems from "../utils/NavItems";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
 import CustomModal from "../utils/CustomModal";
@@ -10,7 +10,6 @@ import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
-import { useSelector } from "react-redux";
 import Image from "next/image";
 import defaultAvatar from "../../public/assets/avatar.png";
 import { useSession } from "next-auth/react";
@@ -32,7 +31,6 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  // const { user } = useSelector((state: any) => state.auth);
   const {
     data: userData,
     isLoading,
@@ -86,8 +84,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
     };
   }, []);
 
-  const handleClose = (e: any) => {
-    if (e.target.id === "screen") {
+  const handleClose = (e: MouseEvent | MouseEvent) => {
+    if ((e.target as HTMLElement).id === "screen") {
       setOpenSidebar(false);
     }
   };
@@ -97,11 +95,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
       <div
         className={`header-container ${active ? "sticky top-0 z-[999]" : ""}`}
       >
-        <div className="w-[95%] 800px:w-[92%] m-auto h-full ">
+        <div className="w-[100%] m-auto h-full">
           <div
-            className={`w-full h-[80px] flex items-center justify-between p-3 ${
+            className={`w-full h-[80px] flex items-center justify-around p-3 ${
               active
-                ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 bg-[#f0f0f0]"
+                ? "dark:bg-opacity-50 dark:bg-gradient-to-b border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 bg-[#f0f0f0]"
                 : "border-b dark:border-[#ffffff1c] dark:shadow"
             }`}
           >
@@ -138,7 +136,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                       alt=""
                       width={30}
                       height={30}
-                      // style={{ objectFit: "contain" }}
                       className="w-[30px] h-[30px] rounded-full cursor-pointer"
                       style={{
                         border: activeItem === 6 ? " 2px solid #37a39a" : "",
@@ -194,7 +191,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               <br />
               <hr />
               <p className="text-[16px] px-2 pl-5  dark:text-white text-black">
-                Copyright ©️ 2023 Leanbay
+                Copyright ©️ 2023 LearnIt
               </p>
             </div>
           </div>

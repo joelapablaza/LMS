@@ -44,14 +44,14 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
 
   const columns: any = [
     { field: "id", headerName: "ID", flex: 0.3 },
-    { field: "userName", headerName: "Name", flex: isDashboard ? 0.6 : 0.5 },
+    { field: "userName", headerName: "Nombre", flex: isDashboard ? 0.6 : 0.5 },
     ...(isDashboard
       ? []
       : [
           { field: "userEmail", headerName: "Email", flex: 1 },
-          { field: "title", headerName: "Course Title", flex: 1 },
+          { field: "title", headerName: "Titulo del Curso", flex: 1 },
         ]),
-    { field: "price", headerName: "Price", flex: 0.5 },
+    { field: "price", headerName: "Precio", flex: 0.5 },
     ...(isDashboard
       ? [{ field: "created_at", headerName: "Created At", flex: 0.5 }]
       : [

@@ -12,41 +12,24 @@ import {
 import Loader from "../../Loader/Loader";
 import { useGetOrdersAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
 import { styles } from "@/app/styles/style";
-
-// const analyticsData = [
-//   {
-//     name: "Page A",
-//     Count: 4000,
-//   },
-//   {
-//     name: "Page B",
-//     Count: 3000,
-//   },
-//   {
-//     name: "Page C",
-//     Count: 5000,
-//   },
-//   {
-//     name: "Page D",
-//     Count: 4000,
-//   },
-//   {
-//     name: "Page E",
-//     Count: 3000,
-//   },
-// ];
+import { OneOrderAnalytics } from "@/app/interfaces/CourseAnalitics";
 
 type Props = {
   isDashboard?: boolean;
 };
 
+interface AnalyticsData {
+  name: string;
+  Count: number;
+}
+
 const OrdersAnalytics: FC<Props> = ({ isDashboard }) => {
   const { data, isLoading } = useGetOrdersAnalyticsQuery({});
 
-  const analyticsData: any = [];
+  const analyticsData: AnalyticsData[] = [];
 
   data &&
-    data.orders.last12Months?.forEach((item: any) => {
+    data.orders.last12Months?.forEach((item: OneOrderAnalytics) => {
       analyticsData.push({ name: item.month, Count: item.count });
     });
 
@@ -68,11 +51,11 @@ const OrdersAnalytics: FC<Props> = ({ isDashboard }) => {
                 isDashboard && "!text-[20px]"
               } px-5 !text-start`}
             >
-              Orders Analytics
+              Análisis de pedidos
             </h1>
             {!isDashboard && (
               <p className={`${styles.label} !px-5`}>
-                Last 12 months analytics data{" "}
+                Datos analíticos de los últimos 12 meses{" "}
               </p>
             )}
           </div>

@@ -10,14 +10,13 @@ type Props = {};
 
 const Page = (props: Props) => {
   const [open, setOpen] = useState(false);
-  // const [activeItem, setActiveItem] = useState();
   const [route, setRoute] = useState("Login");
 
   return (
     <div>
       <Heading
-        title="LearnIt - About Us!"
-        description="Leanbay is a platform specially for the Freshers and also for the Experienced Canditates to enhance there technical skill-sets."
+        title="LearnIt - Sobre nosotros!"
+        description="Leanbay es una plataforma diseñada especialmente para los recién llegados y también para candidatos con experiencia, con el objetivo de mejorar sus conjuntos de habilidades técnicas."
         keywords="Programming, MERN, Full Stack Developer, Software Engineer, Web Development, MongoDb, Expres.js, React.js, Node.js, Javascript"
       />
       <Header
