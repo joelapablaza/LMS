@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
 import { styles } from "@/app/styles/style";
-import { useSession } from "next-auth/react";
 import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
 import toast from "react-hot-toast";
 
@@ -9,10 +8,8 @@ type Props = {};
 const ChangePassword: FC<Props> = (props) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [isEditable, setIsEditable] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
-  const { data } = useSession();
 
   const handlePasswordChange = async (e: any) => {
     e.preventDefault();
@@ -27,12 +24,6 @@ const ChangePassword: FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    if (data) {
-      setIsEditable(false);
-    } else {
-      setIsEditable(true);
-    }
-
     if (isSuccess) {
       toast.success("Pasword changed successfully");
     }
@@ -49,12 +40,6 @@ const ChangePassword: FC<Props> = (props) => {
       <h1 className="block text-[25px] 800px:text-[30px] font-Poppins text-center font-[500] text-black dark:text-white pb-2">
         Cambiar Contraseña
       </h1>
-      {isEditable && (
-        <h5 className="block font-Poppins text-center font-[500] text-black dark:text-white pb-2">
-          Has iniciado sesión a través de Google o Github; el cambio de
-          contraseña no está disponible
-        </h5>
-      )}
       <div className="w-full">
         <form
           aria-required
@@ -71,7 +56,6 @@ const ChangePassword: FC<Props> = (props) => {
               required
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
-              disabled={!isEditable}
             />
           </div>
           <div className="w-[100%] 800px:w-[60%] mt-5">
@@ -84,7 +68,6 @@ const ChangePassword: FC<Props> = (props) => {
               required
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              disabled={!isEditable}
             />
           </div>
           <div className="w-[100%] 800px:w-[60%] mt-5">
@@ -97,11 +80,9 @@ const ChangePassword: FC<Props> = (props) => {
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              disabled={!isEditable}
             />
             <input
               type="submit"
-              disabled={!isEditable}
               className={`w-[95%] h-[40px] border border-[#37a39a] text-center rounded-[3px] mt-8 cursor-pointer text-black dark:text-white`}
             />
           </div>
