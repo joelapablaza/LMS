@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import SideBarProfile from "./SideBarProfile";
 import { useLogOutQuery } from "@/redux/features/auth/authApi";
-import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 import ProfileInfo from "./ProfileInfo";
 import ChangePassword from "./ChangePassword";
 import EnrolledCourses from "./EnrolledCourses";
 import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
+import toast from "react-hot-toast";
 
 type Props = {
   user: any;
@@ -26,8 +26,8 @@ const Profile: FC<Props> = ({ user }) => {
   });
 
   const logOutHandler = async () => {
+    toast.success("Sesión Cerrada");
     setLogout(true);
-    await signOut();
     redirect("/");
   };
 

@@ -2,21 +2,15 @@
 import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  AiOutlineEye,
-  AiOutlineEyeInvisible,
-  AiFillGithub,
-} from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { styles } from "../../../app/styles/style";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
 
 type Props = {
   setRoute: (route: string) => void;
   setOpen: (open: boolean) => void;
-  refetch: any;
 };
 
 const schema = Yup.object().shape({
@@ -30,9 +24,18 @@ const schema = Yup.object().shape({
     .min(8),
 });
 
-const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
+const Login: FC<Props> = ({ setRoute, setOpen }) => {
   const [show, setShow] = useState(false);
+  const [loadUser, setLoadUser] = useState(false);
   const [login, { isSuccess, error }] = useLoginMutation();
+
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useLoadUserQuery(undefined, {
+    skip: !loadUser ? true : false,
+  });
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -45,8 +48,8 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Ingreso exitoso");
+      setLoadUser(true);
       setOpen(false);
-      refetch();
     }
     if (error) {
       if ("data" in error) {
@@ -117,26 +120,11 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
           <input type="submit" value="Login" className={styles.button} />
         </div>
         <br />
-        <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
-          O inicia sesión con
-        </h5>
-        <div className="flex items-center justify-center my-3">
-          <FcGoogle
-            size={30}
-            className="cursor-pointer mr-2"
-            onClick={() => signIn("google")}
-          />
-          <AiFillGithub
-            size={30}
-            className="cursor-pointer mr-2 dark:text-white text-black"
-            onClick={() => signIn("github")}
-          />
-        </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px]">
           ¿No tienes ninguna cuenta?{" "}
           <span
             className="text-[#2190ff] pl-1 cursor-pointer"
-            onClick={() => setRoute("Sign-Up")}
+            onClick={() => setRoute("Signup")}
           >
             Registrate
           </span>

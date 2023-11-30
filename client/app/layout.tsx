@@ -4,7 +4,6 @@ import { Josefin_Sans } from "next/font/google";
 import { ThemeProvider } from "./utils/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { Providers } from "./provider";
-import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import Loader from "./components/Loader/Loader";
@@ -37,12 +36,10 @@ export default function RootLayout({
         className={`${poppins.variable} ${josefin.variable} !bg-[#f0f0f0] bg-no-repeat dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950 duration-300`}
       >
         <Providers>
-          <SessionProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Custom>{children}</Custom>
-              <Toaster position="top-center" reverseOrder={false} />
-            </ThemeProvider>
-          </SessionProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Custom>{children}</Custom>
+            <Toaster position="top-center" reverseOrder={false} />
+          </ThemeProvider>
         </Providers>
       </body>
     </html>

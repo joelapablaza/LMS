@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 type Props = {
   setRoute: (route: string) => void;
+  setLoadUser: (loadUser: boolean) => void;
 };
 
 type VerifyNumber = {
@@ -16,7 +17,7 @@ type VerifyNumber = {
   "3": string;
 };
 
-const Verification: FC<Props> = ({ setRoute }) => {
+const Verification: FC<Props> = ({ setRoute, setLoadUser }) => {
   const { token } = useSelector((state: any) => state.auth);
   const [activation, { isSuccess, error }] = useActivationMutation();
   const [invalidError, setInvalidError] = useState<boolean>(false);
@@ -24,6 +25,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("La cuenta se activó correctamente");
+      setLoadUser(true);
       setRoute("Login");
     }
     if (error) {
@@ -63,10 +65,16 @@ const Verification: FC<Props> = ({ setRoute }) => {
       activation_code: verificationNumber,
     });
   };
+
   const handleInputChange = (index: number, value: string) => {
     setInvalidError(false);
-    const newVerifyNumber = { ...verifyNumber, [index]: value };
-    setVerifyNumber(newVerifyNumber);
+
+    setVerifyNumber((prev) => {
+      return {
+        ...prev,
+        [index]: value[0] || "",
+      };
+    });
 
     if (value === "" && index > 0) {
       inputRefs[index - 1].current?.focus();
@@ -74,6 +82,29 @@ const Verification: FC<Props> = ({ setRoute }) => {
       inputRefs[index + 1].current?.focus();
     }
   };
+
+  const handlePaste = async (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault(); // Evitar el pegado por defecto
+
+    const pastedText = e.clipboardData.getData("text");
+
+    if (pastedText.length !== 4 || !/^\d+$/.test(pastedText)) {
+      setInvalidError(true);
+      return;
+    }
+
+    // Actualizar cada campo con el dígito correspondiente
+    setVerifyNumber({
+      0: pastedText[0],
+      1: pastedText[1],
+      2: pastedText[2],
+      3: pastedText[3],
+    });
+
+    // Mover el foco al primer campo después del pegado
+    inputRefs[0].current?.focus();
+  };
+
   return (
     <div>
       <h1 className={styles.title}>Verify Your Account</h1>
@@ -85,7 +116,10 @@ const Verification: FC<Props> = ({ setRoute }) => {
       </div>
       <br />
       <br />
-      <div className="m-auto flex items-center justify-around">
+      <div
+        className="m-auto flex items-center justify-around"
+        onPaste={handlePaste}
+      >
         {Object.keys(verifyNumber).map((key, index) => (
           <input
             type="number"

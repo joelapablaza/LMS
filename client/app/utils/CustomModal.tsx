@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Modal, Box } from "@mui/material";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 type Props = {
   open: boolean;
@@ -16,8 +17,17 @@ const CustomModal: FC<Props> = ({
   activeItem,
   component: Component,
   setRoute,
-  refetch,
 }) => {
+  const [loadUser, setLoadUser] = useState(false);
+
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useLoadUserQuery(undefined, {
+    skip: !loadUser ? true : false,
+  });
+
   return (
     <div>
       <Modal
@@ -27,7 +37,11 @@ const CustomModal: FC<Props> = ({
         aria-describedby="modal-modal-description"
       >
         <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
-          <Component setOpen={setOpen} setRoute={setRoute} refetch={refetch} />
+          <Component
+            setOpen={setOpen}
+            setRoute={setRoute}
+            setLoadUser={setLoadUser}
+          />
         </Box>
       </Modal>
     </div>
