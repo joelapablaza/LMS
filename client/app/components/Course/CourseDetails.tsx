@@ -242,13 +242,13 @@ const CourseDetails = ({
                 {isPurchased ? (
                   <Link
                     href={`/course-access/${data._id}`}
-                    className={`${styles.button} !w-[200px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
+                    className={`${styles.button} !w-[200px] my-3 font-Poppins cursor-pointer !bg-[#42A5F5]`}
                   >
                     Ver el curso
                   </Link>
                 ) : (
                   <div
-                    className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
+                    className={`${styles.button} !w-[240px] my-3 font-Poppins cursor-pointer !bg-[#42A5F5]`}
                     onClick={handleOrder}
                   >
                     Tomar el Curso ${data.price}

@@ -13,6 +13,7 @@ import Verification from "../components/Auth/Verification";
 import Image from "next/image";
 import defaultAvatar from "../../public/assets/avatar.png";
 import { useSelector } from "react-redux";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 type Props = {
   open: boolean;
@@ -26,6 +27,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const userData = useSelector((state: any) => state.auth.user);
+  const { data: user, isLoading } = useLoadUserQuery(undefined, {});
+
+  useEffect(() => {
+    console.log("DesdeHeader", user);
+  }, [user]);
 
   useEffect(() => {
     const handleScroll = () => {

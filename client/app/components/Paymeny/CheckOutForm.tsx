@@ -50,8 +50,6 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
     }
   };
 
-  // TODO chequear por que no redirije al curso despues de comprarlo
-
   useEffect(() => {
     if (orderData) {
       setLoadUser(true);
@@ -60,7 +58,7 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
         message: `You have a new order from ${data.name}`,
         userId: user._id,
       });
-      redirect(`/course-access/${data._id}`);
+      redirect(`/thank-you`);
     }
     if (error && "data" in error) {
       const errorMessage = error as any;
@@ -69,23 +67,31 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
   }, [orderData, error]);
 
   return (
-    <form onSubmit={handleSubmit} id="payment-form">
-      <div className="flex flex-col justify-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      id="payment-form"
+      className="flex flex-col h-full"
+    >
+      <div className="flex-grow gap-2 min-h-[350px]">
         <LinkAuthenticationElement id="link-authentication-element" />
         <PaymentElement id="payment-element" />
-
+      </div>
+      <div>
         <button disabled={isLoading || !stripe || !elements} id="submite">
-          <span id="button-text" className={`${styles.button} mt-2 !h-[35px]`}>
+          <span id="button-text" className={`${styles.button} mt-5 !h-[35px]`}>
             {isLoading ? "Paying..." : "Pay now"}
           </span>
+          {message && (
+            <div
+              id="payment-message"
+              className="text-cyan-900 font-Poppins pt-3 text-center"
+            >
+              {message}
+            </div>
+          )}
         </button>
 
         {/* Show any error or success messages */}
-        {message && (
-          <div id="payment-message" className="text-red-700 font-Poppins pt-3">
-            {message}
-          </div>
-        )}
       </div>
     </form>
   );

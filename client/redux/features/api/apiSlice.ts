@@ -29,7 +29,6 @@ export const apiSlice = createApi({
               user: result.data.user,
             })
           );
-          console.log("USER DATA", result.data.user);
         } catch (error: any) {
           console.log(error);
         }
@@ -38,4 +37,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useLoadUserQuery } = apiSlice;
+export const { useLoadUserQuery, usePrefetch } = apiSlice;

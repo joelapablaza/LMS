@@ -7,19 +7,22 @@ import ChangePassword from "./ChangePassword";
 import EnrolledCourses from "./EnrolledCourses";
 import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
+import Loader from "../Loader/Loader";
+import User from "@/app/interfaces/User";
 
 type Props = {
-  user: any;
+  user: User;
 };
+
+// TODO Que carguen los cursos al ingresar a la pagina
+// TODO Modificar el modal de pago
 
 const Profile: FC<Props> = ({ user }) => {
   const [scroll, setScroll] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [active, setActive] = useState(1);
   const [logout, setLogout] = useState(false);
-  const [courses, setCourses] = useState();
-
-  const { data, isLoading } = useGetAllCoursesQuery(undefined, {});
+  const [courses, setCourses] = useState<any>();
 
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
@@ -48,18 +51,57 @@ const Profile: FC<Props> = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    if (data) {
+    console.log(" objeto user", user);
+    if (user) {
       const filterCourses = user.courses
-        .map((purchasedCourse: any) =>
-          data.courses.find((course: any) => course._id === purchasedCourse._id)
+        ?.map((purchasedCourse: any) =>
+          user.courses?.find(
+            (course: any) => course._id === purchasedCourse._id
+          )
         )
         .filter((course: any) => course !== undefined);
       setCourses(filterCourses);
     }
-  }, [data]);
+  }, [user]);
 
   return (
     <div className="w-[85%] flex mx-auto">
+      {/* {user ? (
+        <Loader />
+      ) : (
+        <>
+          <div
+            className={`w-[60px] 800px:w-[310px] h-[450px] dark:bg-slate-900 bg-opacity-90 bg-[#fcfcfc] border dark:border-[#ffffff1d] border-[#00000014] rounded-[5px] shadow-sm dark:shadow-sm mt-[80px] mb-[80px] sticky ${
+              scroll ? "top-[120px]" : "top-[30px]"
+            } left-[30px]`}
+          >
+            <SideBarProfile
+              user={user}
+              active={active}
+              avatar={avatar}
+              setActive={setActive}
+              logOutHandler={logOutHandler}
+            />
+          </div>
+
+          {active === 1 && (
+            <div className="w-full h-full bg-transparent mt-[80px]">
+              <EnrolledCourses courses={courses} />
+            </div>
+          )}
+          {active === 2 && (
+            <div className="w-full h-full bg-transparent mt-[80px]">
+              <ProfileInfo avatar={avatar} user={user} />
+            </div>
+          )}
+
+          {active === 3 && (
+            <div className="w-full h-full bg-transparent mt-[80px]">
+              <ChangePassword />
+            </div>
+          )}
+        </>
+      )} */}
       <div
         className={`w-[60px] 800px:w-[310px] h-[450px] dark:bg-slate-900 bg-opacity-90 bg-[#fcfcfc] border dark:border-[#ffffff1d] border-[#00000014] rounded-[5px] shadow-sm dark:shadow-sm mt-[80px] mb-[80px] sticky ${
           scroll ? "top-[120px]" : "top-[30px]"
@@ -79,15 +121,15 @@ const Profile: FC<Props> = ({ user }) => {
           <EnrolledCourses courses={courses} />
         </div>
       )}
-
       {active === 2 && (
         <div className="w-full h-full bg-transparent mt-[80px]">
-          <ChangePassword />
+          <ProfileInfo avatar={avatar} user={user} />
         </div>
       )}
+
       {active === 3 && (
         <div className="w-full h-full bg-transparent mt-[80px]">
-          <ProfileInfo avatar={avatar} user={user} />
+          <ChangePassword />
         </div>
       )}
     </div>

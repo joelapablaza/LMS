@@ -4,10 +4,12 @@ import userModel, { IUser } from "../models/user.model";
 
 // get user by id
 export const getUserById = async (id: string, res: Response) => {
-  const userJson = await redis.get(id);
+  // const userJson = await redis.get(id);
+  const user = await userModel.findById(id).populate("courses");
 
-  if (userJson) {
-    const user: IUser = JSON.parse(userJson);
+  if (user) {
+    console.log("USER POPULADO CURSOS", user);
+    // const user: IUser = JSON.parse(userJson);
     res.status(200).json({
       success: true,
       user,

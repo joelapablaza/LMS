@@ -5,6 +5,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { SiCoursera } from "react-icons/si";
 import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { AiOutlineProfile } from "react-icons/ai";
 import Link from "next/link";
 
 type Props = {
@@ -30,42 +31,6 @@ const SideBarProfile: FC<Props> = ({
         }`}
         onClick={() => setActive(1)}
       >
-        <Image
-          src={
-            user.avatar?.url || avatar
-              ? user.avatar.url || avatarDefault
-              : avatarDefault
-          }
-          width={30}
-          height={30}
-          alt=""
-          className="w-[20px] h-[20px] 800px:w-[30px] 800px:h-[30px] cursor-pointer rounded-full"
-        />
-        <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-          Mi cuenta
-        </h5>
-      </div>
-      <div
-        className={`w-full flex items-center px-3 py-4 cursor-pointer ${
-          active === 2 ? "dark:bg-slate-800 bg-white" : "bg-transparent"
-        }`}
-        onClick={() => setActive(2)}
-      >
-        <RiLockPasswordLine
-          size={20}
-          fill="currentColor"
-          className="dark:text-white text-black"
-        />
-        <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
-          Cambiar Contraseña
-        </h5>
-      </div>
-      <div
-        className={`w-full flex items-center px-3 py-4 cursor-pointer ${
-          active === 3 ? "dark:bg-slate-800 bg-white" : "bg-transparent"
-        }`}
-        onClick={() => setActive(3)}
-      >
         <SiCoursera
           size={20}
           fill="currentColor"
@@ -76,7 +41,38 @@ const SideBarProfile: FC<Props> = ({
         </h5>
       </div>
 
-      {user.role === "admin" && (
+      <div
+        className={`w-full flex items-center px-3 py-4 cursor-pointer ${
+          active === 2 ? "dark:bg-slate-800 bg-white" : "bg-transparent"
+        }`}
+        onClick={() => setActive(2)}
+      >
+        <AiOutlineProfile
+          size={20}
+          fill="currentColor"
+          className="dark:text-white text-black"
+        />
+        <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
+          Mis Datos
+        </h5>
+      </div>
+      <div
+        className={`w-full flex items-center px-3 py-4 cursor-pointer ${
+          active === 3 ? "dark:bg-slate-800 bg-white" : "bg-transparent"
+        }`}
+        onClick={() => setActive(3)}
+      >
+        <RiLockPasswordLine
+          size={20}
+          fill="currentColor"
+          className="dark:text-white text-black"
+        />
+        <h5 className="pl-2 800px:block hidden font-Poppins text-black dark:text-white">
+          Cambiar Contraseña
+        </h5>
+      </div>
+
+      {user?.role === "admin" && (
         <Link
           href={"/admin"}
           className={`w-full flex items-center px-3 py-4 cursor-pointer ${

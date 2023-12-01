@@ -69,7 +69,9 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
       <div className="w-full flex justify-center">
         <div className="relative" onClick={openFileInput}>
           <Image
-            src={user.avatar || avatar ? user.avatar.url || avatar : avatarIcon}
+            src={
+              user?.avatar || avatar ? user?.avatar?.url || avatar : avatarIcon
+            }
             alt="avatar"
             className="w-[120px] h-[120px] cursor-pointer border-[3px] border-[#37a39a] rounded-full"
             width={120}
