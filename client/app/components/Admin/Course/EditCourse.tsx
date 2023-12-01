@@ -27,7 +27,7 @@ type Props = {
 const EditCourse: FC<Props> = ({ id }) => {
   const [updateCourse, { isSuccess, error }] = useUpdateCourseMutation({});
   const [active, setActive] = useState(0);
-  const { data } = useGetAdminAllCoursesQuery(
+  const { data, isSuccess: isSuccessAllCourses } = useGetAdminAllCoursesQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
@@ -65,7 +65,7 @@ const EditCourse: FC<Props> = ({ id }) => {
       const errorMessage = error.data as { message: string };
       toast.error(errorMessage.message);
     }
-  }, [isSuccess, error]);
+  }, [isSuccess, error, isSuccessAllCourses]);
 
   useEffect(() => {
     if (editCourseData) {

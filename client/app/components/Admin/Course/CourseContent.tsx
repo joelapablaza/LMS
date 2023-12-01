@@ -149,7 +149,6 @@ const CourseContent: FC<Props> = ({
       toast.error("Please fill all the fields first");
     } else {
       setActive(active + 1);
-      console.log(editableData);
       handleCourseSubmit();
     }
   };

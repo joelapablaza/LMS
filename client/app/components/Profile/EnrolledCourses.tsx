@@ -1,10 +1,10 @@
 import React from "react";
 import CourseCard from "../Course/CourseCard";
+import { Course } from "@/app/interfaces/Course";
 
-type Props = { courses: any };
+type Props = { courses: Course[] };
 
 const EnrolledCourses = ({ courses }: Props) => {
-  console.log(courses);
   return (
     <div>
       <div className="w-full ml-10 pl-7 !px-2 !800px:px-10 800px:pl-8">

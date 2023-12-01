@@ -36,10 +36,6 @@ const CoursePreview: FC<Props> = ({
     handleCrourseCreate();
   };
 
-  useEffect(() => {
-    console.log("Desde Preview", courseContentData);
-  });
-
   return (
     <div className="w-[90%] m-auto py-5 mb-5">
       <div className="w-full relative">

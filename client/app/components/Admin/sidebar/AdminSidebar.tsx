@@ -19,6 +19,7 @@ import {
   WysiwygIcon,
   ManageHistoryIcon,
   ExitToAppIcon,
+  SpaceDashboardIcon,
 } from "./Icon";
 import avatarDefault from "../../../../public/assets/avatar.png";
 import { useSelector } from "react-redux";
@@ -128,24 +129,25 @@ const Sidebar = () => {
             }}
           >
             {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <Link href="/">
-                  <h3 className="text-[25px] font-Poppins uppercase dark:text-[#d8d8d8] text-black">
-                    LearnIt
-                  </h3>
-                </Link>
-                <IconButton
-                  onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="inline-block"
+              <div className="flex justify-between">
+                <h3 className="text-[25px] font-Poppins uppercase dark:text-[#d8d8d8] text-black">
+                  LearnIt
+                </h3>
+
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  ml="15px"
                 >
-                  <ArrowBackIosIcon className="dark:text-[#d8d8d8] text-black" />
-                </IconButton>
-              </Box>
+                  <IconButton
+                    onClick={() => setIsCollapsed(!isCollapsed)}
+                    className="inline-block"
+                  >
+                    <ArrowBackIosIcon className="dark:text-[#d8d8d8] text-black" />
+                  </IconButton>
+                </Box>
+              </div>
             )}
           </MenuItem>
 
@@ -185,9 +187,17 @@ const Sidebar = () => {
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
+              title="Volver a Learnit"
+              to="/"
+              icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              key={Math.random()}
+            />
+            <Item
               title="Dashboard"
               to="/admin"
-              icon={<HomeOutlinedIcon />}
+              icon={<SpaceDashboardIcon />}
               selected={selected}
               setSelected={setSelected}
               key={Math.random()}

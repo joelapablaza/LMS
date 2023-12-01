@@ -30,10 +30,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const { data: user, isLoading } = useLoadUserQuery(undefined, {});
 
   useEffect(() => {
-    console.log("DesdeHeader", user);
-  }, [user]);
-
-  useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 85) {
         setActive(true);

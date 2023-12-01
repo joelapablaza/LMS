@@ -16,7 +16,7 @@ const Page = (props: Props) => {
     <div>
       <Heading
         title="LearnIt - Sobre nosotros!"
-        description="Leanbay es una plataforma diseñada especialmente para los recién llegados y también para candidatos con experiencia, con el objetivo de mejorar sus conjuntos de habilidades técnicas."
+        description="LearnIt es una plataforma diseñada especialmente para los recién llegados y también para candidatos con experiencia, con el objetivo de mejorar sus conjuntos de habilidades técnicas."
         keywords="Programming, MERN, Full Stack Developer, Software Engineer, Web Development, MongoDb, Expres.js, React.js, Node.js, Javascript"
       />
       <Header

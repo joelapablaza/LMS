@@ -275,8 +275,6 @@ export const updateAccessToken = CatchAsyncError(
       ) as JwtPayload;
       const message = "Unable to refresh token";
 
-      console.log("DECODED", decoded);
-
       if (!decoded.id) {
         return next(new ErrorHandler(message, 400));
       }
@@ -304,7 +302,6 @@ export const updateAccessToken = CatchAsyncError(
 
       next();
     } catch (error: any) {
-      console.log("ERROR DESDE UPDATE TOKEN");
       return next(new ErrorHandler(error.message, 400));
     }
   }
@@ -387,7 +384,6 @@ export const updatePassword = CatchAsyncError(
       const { oldPassword, newPassword } = req.body as IUpdatePassword;
 
       const user = await userModel.findById(req.user?._id).select("+password");
-      console.log(user?.password);
 
       if (!oldPassword || !newPassword) {
         return next(
@@ -471,7 +467,6 @@ export const updateProfilePicture = CatchAsyncError(
         user,
       });
     } catch (error: any) {
-      console.log("Error desde el back", error.message);
       return next(new ErrorHandler(error.message, 400));
     }
   }

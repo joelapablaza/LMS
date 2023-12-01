@@ -35,7 +35,7 @@ const Verification: FC<Props> = ({ setRoute, setLoadUser }) => {
         setInvalidError(true);
       }
     } else {
-      console.log("Ocurrio un error: ", error);
+      toast.error("Error inesperado");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, error]);

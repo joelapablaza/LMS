@@ -1,3 +1,4 @@
+import { Course } from "@/app/interfaces/Course";
 import Ratings from "@/app/utils/Ratings";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import React, { FC } from "react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 
 type Props = {
-  item: any;
+  item: Course;
   isProfile?: boolean;
 };
 

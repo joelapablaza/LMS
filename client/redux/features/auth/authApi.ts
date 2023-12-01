@@ -28,7 +28,7 @@ export const authApi = apiSlice.injectEndpoints({
             })
           );
         } catch (error: any) {
-          console.log(error);
+          console.log("/registration", error);
         }
       },
     }),
@@ -62,7 +62,7 @@ export const authApi = apiSlice.injectEndpoints({
             })
           );
         } catch (error: any) {
-          console.log(error);
+          console.log("/lOGIN", error);
         }
       },
     }),
@@ -77,7 +77,7 @@ export const authApi = apiSlice.injectEndpoints({
           await queryFulfilled;
           dispatch(userLoggedOut());
         } catch (error: any) {
-          console.log(error);
+          console.log("Logout", error);
         }
       },
     }),

@@ -8,8 +8,6 @@ export const getUserById = async (id: string, res: Response) => {
   const user = await userModel.findById(id).populate("courses");
 
   if (user) {
-    console.log("USER POPULADO CURSOS", user);
-    // const user: IUser = JSON.parse(userJson);
     res.status(200).json({
       success: true,
       user,

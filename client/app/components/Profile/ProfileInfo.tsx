@@ -9,10 +9,11 @@ import {
 } from "@/redux/features/user/userApi";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import toast from "react-hot-toast";
+import User from "@/app/interfaces/User";
 
 type Props = {
   avatar: string | null;
-  user: any;
+  user: User;
 };
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
@@ -70,7 +71,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
         <div className="relative" onClick={openFileInput}>
           <Image
             src={
-              user?.avatar || avatar ? user?.avatar?.url || avatar : avatarIcon
+              user?.avatar || avatar ? user?.avatar?.url : "/assets/avatar.png"
             }
             alt="avatar"
             className="w-[120px] h-[120px] cursor-pointer border-[3px] border-[#37a39a] rounded-full"

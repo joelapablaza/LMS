@@ -12,7 +12,7 @@ export const reviews = [
     profession: "IT Professional",
     ratings: 5,
     comment:
-      "I've taken many online courses, but LearnIt stands out. The quality of instruction and flexibility of learning are unmatched. I've enhanced my skills significantly.",
+      "He tomado muchos cursos en línea, pero LearnIt se destaca. La calidad de la instrucción y la flexibilidad del aprendizaje son inigualables. He mejorado significativamente mis habilidades.",
   },
   {
     name: "Emily Turner",
@@ -20,7 +20,7 @@ export const reviews = [
     profession: "Graphic Designer",
     ratings: 4.5,
     comment:
-      "For a creative like me, LearnIt is a goldmine. The graphic design courses are top-notch, and the interactive assignments keep me engaged. Love it!",
+      "Para alguien creativo como yo, LearnIt es una mina de oro. Los cursos de diseño gráfico son de primera categoría y las tareas interactivas mantienen mi interés. ¡Me encanta!",
   },
   {
     name: "David Martinez",
@@ -28,7 +28,7 @@ export const reviews = [
     profession: "Entrepreneur",
     ratings: 5,
     comment:
-      "I run my own business, and LearnIt has been a game-changer. The skills I've gained through their courses have helped me succeed in the competitive market.",
+      "Dirijo mi propio negocio, y LearnIt ha sido un cambio de juego. Las habilidades que he adquirido a través de sus cursos me han ayudado a tener éxito en el mercado competitivo.",
   },
   {
     name: "Sophia Clark",
@@ -36,7 +36,7 @@ export const reviews = [
     profession: "Teacher",
     ratings: 4.5,
     comment:
-      "As an educator, I appreciate a good learning platform. LearnIt offers resources that enrich my teaching and help me stay updated with the latest pedagogical trends.",
+      "Como educador, valoro una buena plataforma de aprendizaje. LearnIt ofrece recursos que enriquecen mi enseñanza y me ayudan a mantenerme actualizado con las últimas tendencias pedagógicas.",
   },
   {
     name: "Connor Mitchell",
@@ -44,7 +44,7 @@ export const reviews = [
     profession: "Software Developer",
     ratings: 5,
     comment:
-      "LearnIt is a developer's dream. The coding courses are comprehensive, and the practical projects are invaluable. It's helped me level up my coding skills.",
+      "LearnIt es el sueño de un desarrollador. Los cursos de programación son completos y los proyectos prácticos son invaluables. Me ha ayudado a mejorar mis habilidades de codificación.",
   },
   {
     name: "Isabella White",
@@ -52,7 +52,7 @@ export const reviews = [
     profession: "Marketing Specialist",
     ratings: 5,
     comment:
-      "For anyone in the marketing field, LearnIt is a treasure trove. The courses on digital marketing and analytics are up-to-date and have boosted my career.",
+      "Para cualquiera en el campo del marketing, LearnIt es un tesoro. Los cursos sobre marketing digital y analítica están actualizados y han impulsado mi carrera.",
   },
 ];
 

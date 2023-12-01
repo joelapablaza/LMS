@@ -134,12 +134,12 @@ export const getAllCourses = CatchAsyncError(
 export const getCourseByUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userCourseList = req.user?.courses;
-      const courseId = req.params.id;
+      const userCourseList = req.user;
+      const { id } = req.params;
 
-      const courseExist = userCourseList?.find(
-        (course: any) => course._id.toString() === courseId
-      );
+      const courseExist = userCourseList?.courses.find((course: any) => {
+        return course.toString() === id;
+      });
 
       if (!courseExist) {
         return next(
@@ -147,7 +147,7 @@ export const getCourseByUser = CatchAsyncError(
         );
       }
 
-      const course = await CourseModel.findById(courseId);
+      const course = await CourseModel.findById(id);
 
       const content = course?.courseData;
 
@@ -317,8 +317,6 @@ export const addReview = CatchAsyncError(
     try {
       const userCourseList = req.user?.courses;
       const courseId = req.params.id;
-
-      console.log(req.params.id);
 
       // chech if courseId already exist in userCourseList based on _id
       const courseExist = userCourseList?.some(
