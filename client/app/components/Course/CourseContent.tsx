@@ -19,7 +19,6 @@ const CourseContent = ({ id, user }: Props) => {
     refetch,
   } = useGetCourseContentQuery(id, { refetchOnMountOrArgChange: true });
   const [open, setOpen] = useState(false);
-  // const data = contentData?.content;
   const [activeVideo, setActiveVideo] = useState(0);
   const [data, setData] = useState<any>();
   const [route, setRoute] = useState("Login");

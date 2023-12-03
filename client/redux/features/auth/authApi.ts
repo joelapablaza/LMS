@@ -1,6 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
 import { userLoggedIn, userLoggedOut, userRegistration } from "./authSlice";
-import { signOut } from "next-auth/react";
 
 type RegistrationResponse = {
   message: string;

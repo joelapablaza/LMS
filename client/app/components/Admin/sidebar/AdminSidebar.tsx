@@ -67,7 +67,7 @@ const Sidebar = () => {
   const { theme, setTheme } = useTheme();
 
   const {} = useLogOutQuery(undefined, {
-    skip: !logout ? true : false,
+    skip: !logout,
   });
 
   useEffect(() => setMounted(true), []);

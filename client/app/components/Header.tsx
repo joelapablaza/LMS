@@ -27,7 +27,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const userData = useSelector((state: any) => state.auth.user);
-  const { data: user, isLoading } = useLoadUserQuery(undefined, {});
+  // const {} = useLoadUserQuery(undefined, { refetchOnMountOrArgChange: true });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,9 +90,9 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   <Link href={"/profile"}>
                     <Image
                       src={
-                        userData?.user?.avatar
-                          ? userData?.user?.avatar?.url
-                          : defaultAvatar
+                        userData?.avatar?.url
+                          ? userData?.avatar?.url
+                          : "/assets/avatar.png"
                       }
                       alt=""
                       width={30}
@@ -128,9 +128,9 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 <Link href={"/profile"}>
                   <Image
                     src={
-                      userData?.user?.avatar
-                        ? userData?.user?.avatar?.url
-                        : defaultAvatar
+                      userData?.avatar?.url
+                        ? userData?.avatar?.url
+                        : "/assets/avatar.png"
                     }
                     alt=""
                     width={30}

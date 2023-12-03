@@ -28,13 +28,10 @@ const CourseDetails = ({
   setRoute,
   setOpen: openAuthModal,
 }: Props) => {
-  const { data: userData } = useLoadUserQuery(undefined, {});
+  const { data: userData, isSuccess } = useLoadUserQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState<any>();
-
-  useEffect(() => {
-    setUser(userData?.user);
-  }, [userData]);
 
   const discountPercentege =
     ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100;
@@ -42,11 +39,13 @@ const CourseDetails = ({
   const discountPercentegePrice = discountPercentege.toFixed(0);
 
   const isPurchased =
-    user && user?.courses?.find((course: any) => course._id === data._id);
+    userData?.user?.isVerified &&
+    userData?.user?.courses?.find((course: any) => course._id === data._id);
 
   const handleOrder = (e: any) => {
     e.preventDefault();
-    if (user) {
+    if (isSuccess) {
+      console.log(userData);
       setOpen(true);
     } else {
       setRoute("Login");
@@ -154,9 +153,9 @@ const CourseDetails = ({
                         <div className="w-[50px] h-[50px]">
                           <Image
                             src={
-                              item.user.avatar
+                              item.user.avatar.url
                                 ? item.user.avatar.url
-                                : "https://res.cloudinary.com/apablaza/image/upload/v1700204891/avatars/a1bfoopzlfdsroot5jr5.png"
+                                : "/assets/avatar.png"
                             }
                             width={50}
                             height={50}
@@ -187,14 +186,14 @@ const CourseDetails = ({
                       </div>
                     </div>
 
-                    {item.commentReplies.map((i: any, index: number) => (
+                    {item.commentReplies.map((comment: any, index: number) => (
                       <div className="w-full flex 800px:ml-16 my-5 text-black dark:text-white">
                         <div className="w-[50px] h-[50px]">
                           <Image
                             src={
-                              i.user.avatar
-                                ? i.user.avatar.url
-                                : "https://res.cloudinary.com/apablaza/image/upload/v1700204891/avatars/a1bfoopzlfdsroot5jr5.png"
+                              comment.user?.avatar?.url
+                                ? comment.user?.avatar?.url
+                                : "/assets/avatar.png"
                             }
                             width={50}
                             height={50}
@@ -204,14 +203,14 @@ const CourseDetails = ({
                         </div>
                         <div className="pl-2">
                           <div className="flex items-center">
-                            <h5 className="text-[20px]">{i.user.name}</h5>{" "}
-                            {i.user.role === "admin" && (
+                            <h5 className="text-[20px]">{comment.user.name}</h5>{" "}
+                            {comment.user.role === "admin" && (
                               <VscVerifiedFilled className="text-[#42A5F5] ml-2 text-[20px] " />
                             )}
                           </div>
-                          <p>{i.comment}</p>
+                          <p>{comment.comment}</p>
                           <small className="text-black dark:text-[#ffffff83]">
-                            {format(i.createdAt)} •
+                            {format(comment.createdAt)} •
                           </small>
                         </div>
                       </div>
@@ -287,7 +286,13 @@ const CourseDetails = ({
               <div className="w-full">
                 {stripePromise && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckOutForm setOpen={setOpen} data={data} user={user} />
+                    {isSuccess && (
+                      <CheckOutForm
+                        setOpen={setOpen}
+                        data={data}
+                        user={userData.user}
+                      />
+                    )}
                   </Elements>
                 )}
               </div>

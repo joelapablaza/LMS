@@ -28,7 +28,7 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [createOrder, { data: orderData, error }] = useCreateOrderMutation();
-  const {} = useLoadUserQuery({ skip: loadUser ? false : true });
+  const {} = useLoadUserQuery({ skip: !loadUser });
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

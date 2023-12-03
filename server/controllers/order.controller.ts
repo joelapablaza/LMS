@@ -84,10 +84,15 @@ export const createOrder = CatchAsyncError(
       } catch (error: any) {
         return next(new ErrorHandler(error.message, 500));
       }
+      console.log("User antes del push", user);
 
       user?.courses.push(course._id);
 
+      console.log("User despues del push", user);
+
       await redis.set(req.user?._id, JSON.stringify(user));
+
+      console.log("user Stringuifado", JSON.stringify(user));
 
       await user?.save();
 
@@ -132,7 +137,6 @@ export const sendStripePublishbleKey = CatchAsyncError(
 export const newPayment = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
       const myPayment = await stripe.paymentIntents.create({
         amount: req.body.amount,
         currency: "USD",

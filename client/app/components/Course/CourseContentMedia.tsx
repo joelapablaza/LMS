@@ -24,17 +24,35 @@ import { format } from "timeago.js";
 import { BiMessage } from "react-icons/bi";
 
 import socketIO from "socket.io-client";
+import Loader from "../Loader/Loader";
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 type Props = {
-  data: any;
+  data: CursoInfo[];
   user: any;
   refetch: any;
   id: string;
   activeVideo: number;
   setActiveVideo: (activeVideo: number) => void;
 };
+
+interface CursoInfo {
+  videoUrl: string;
+  title: string;
+  videoSection: string;
+  description: string;
+  videoLength: number;
+  links: Link[];
+  suggestion: string;
+  _id: string;
+  questions: any[];
+}
+
+interface Link {
+  title: string;
+  url: string;
+}
 
 const CourseContentMedia: FC<Props> = ({
   data,
@@ -54,12 +72,18 @@ const CourseContentMedia: FC<Props> = ({
   const [questionId, setQuestionId] = useState("");
   const [reviewId, setReviewId] = useState("");
 
-  const { data: courseData, refetch: courseRefetch } = useGetCourseDetailsQuery(
-    id,
-    {
-      refetchOnMountOrArgChange: true,
-    }
-  );
+  const {
+    data: courseData,
+    refetch: courseRefetch,
+    isLoading,
+  } = useGetCourseDetailsQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  useEffect(() => {
+    console.log(reviewReply);
+  }, [reviewReply]);
+
   const course = courseData?.course;
 
   const [
@@ -162,17 +186,15 @@ const CourseContentMedia: FC<Props> = ({
         toast.error(errMsg.data.message);
       }
     }
-    if (errorWhileAddingReview) {
-      if ("data" in errorWhileAddingReview) {
-        const errMsg = error as any;
-        toast.error(errMsg.data.message);
-      }
+
+    if (errorWhileAddingReview && "data" in errorWhileAddingReview) {
+      const errorData = errorWhileAddingReview.data as { message: string };
+      toast.error(errorData.message);
     }
-    if (errorWhileReplyToReview) {
-      if ("data" in errorWhileReplyToReview) {
-        const errMsg = error as any;
-        toast.error(errMsg.data.message);
-      }
+
+    if (errorWhileReplyToReview && "data" in errorWhileReplyToReview) {
+      const errorData = errorWhileReplyToReview.data as { message: string };
+      toast.error(errorData.message);
     }
   }, [
     refetch,
@@ -217,12 +239,15 @@ const CourseContentMedia: FC<Props> = ({
         addReplyToReview({
           reviewId,
           courseId: id,
-          reviewReply: reviewReply,
+          reviewReply,
         });
       }
     }
   };
-  return (
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
       <CoursePlayer
         title={data?.[activeVideo]?.title}

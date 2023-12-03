@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Protected from "../hooks/useProtected";
 import Heading from "../utils/Heading";
 import Header from "../components/Header";
@@ -13,15 +13,15 @@ const Page: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(5);
   const [route, setRoute] = useState("Login");
-  const { data, isLoading, refetch } = useLoadUserQuery(undefined, {
+  const { data, isLoading, refetch, isSuccess } = useLoadUserQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
-  const userMemo = useMemo(() => data ?? null, [data]);
+  console.log("Esto es userMemo", data);
 
-  useEffect(() => {
-    refetch();
-  }, []);
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   return (
     <div>
@@ -30,7 +30,7 @@ const Page: FC<Props> = (props) => {
       ) : (
         <Protected>
           <Heading
-            title={`${userMemo?.user?.name} perfil - LearnIt`}
+            title={`${data?.user?.name} perfil - LearnIt`}
             description="LearnIt es una plataforma para que los estudiantes aprendan y reciban ayuda de los profesores"
             keywords="Programacion, MERN, Redux, NextJS"
           />
@@ -41,7 +41,7 @@ const Page: FC<Props> = (props) => {
             route={route}
             setRoute={setRoute}
           />
-          <Profile user={userMemo?.user} />
+          {isSuccess && <Profile user={data?.user} />}
         </Protected>
       )}
     </div>

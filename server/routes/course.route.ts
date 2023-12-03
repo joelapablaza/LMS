@@ -76,7 +76,7 @@ courseRouter.get(
   getAdminAllCourses
 );
 
-courseRouter.post("/getVdoCipherOTP/", generateVideoUrl);
+courseRouter.post("/getVdoCipherOTP", generateVideoUrl);
 
 courseRouter.delete(
   "/delete-course/:id",

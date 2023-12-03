@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 
 export default function UserAuth() {
   const { user } = useSelector((state: any) => state.auth);
-  return !!user;
+  const isAuthenticated = user.isVerified;
+  return isAuthenticated;
 }

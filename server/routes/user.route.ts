@@ -23,55 +23,55 @@ userRouter.post("/active-user", activateUser);
 
 userRouter.post("/login", loginUser);
 
-userRouter.get("/logout", updateAccessToken, isAuthenticated, logoutUser);
+userRouter.get("/logout", isAuthenticated, logoutUser);
 
 userRouter.get("/refresh", updateAccessToken);
 
-userRouter.get("/me", updateAccessToken, isAuthenticated, getUserInfo);
+userRouter.get("/me", isAuthenticated, updateAccessToken, getUserInfo);
 
 userRouter.post("/social-auth", socialAuth);
 
 userRouter.put(
   "/update-user-info",
-  updateAccessToken,
   isAuthenticated,
+  updateAccessToken,
   updateUserInfo
 );
 
 userRouter.put(
   "/update-user-password",
-  updateAccessToken,
   isAuthenticated,
+  updateAccessToken,
   updatePassword
 );
 
 userRouter.put(
   "/update-user-avatar",
-  updateAccessToken,
   isAuthenticated,
+  updateAccessToken,
   updateProfilePicture
 );
 
 userRouter.get(
   "/get-users",
-  updateAccessToken,
   isAuthenticated,
+  updateAccessToken,
   authorizeRoles("admin"),
   getAllUsers
 );
 
 userRouter.put(
   "/update-user-role",
-  updateAccessToken,
   isAuthenticated,
+  updateAccessToken,
   authorizeRoles("admin"),
   updateUserRole
 );
 
 userRouter.delete(
   "/delete-user/:id",
-  updateAccessToken,
   isAuthenticated,
+  updateAccessToken,
   authorizeRoles("admin"),
   deleteUser
 );

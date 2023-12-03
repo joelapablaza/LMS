@@ -318,9 +318,11 @@ export const addReview = CatchAsyncError(
       const userCourseList = req.user?.courses;
       const courseId = req.params.id;
 
+      console.log("users", req.user);
+
       // chech if courseId already exist in userCourseList based on _id
       const courseExist = userCourseList?.some(
-        (course: any) => course._id.toString() === courseId.toString()
+        (course: any) => course === courseId
       );
 
       if (!courseExist) {
@@ -382,14 +384,14 @@ export const addReview = CatchAsyncError(
 
 // add reply in review
 interface IAddReplyData {
-  comment: string;
+  reviewReply: string;
   courseId: string;
   reviewId: string;
 }
 export const addReplayToReview = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { comment, courseId, reviewId } = req.body as IAddReplyData;
+      const { reviewReply, courseId, reviewId } = req.body as IAddReplyData;
 
       const course = await CourseModel.findById(courseId);
 
@@ -407,7 +409,7 @@ export const addReplayToReview = CatchAsyncError(
 
       const replyData: any = {
         user: req.user,
-        comment,
+        reviewReply,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };

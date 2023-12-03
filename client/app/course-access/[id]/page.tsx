@@ -12,18 +12,20 @@ type Props = {
 const page = ({ params }: Props) => {
   const id = params.id;
 
-  const { isLoading, error, data } = useLoadUserQuery(true);
+  const { isLoading, data, isSuccess, error } = useLoadUserQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   useEffect(() => {
-    if (data) {
+    if (isSuccess) {
       const isPurchased = data.user.courses.find(
         (item: any) => item._id === id
       );
-      if (!isPurchased || error) {
+      if (!isPurchased) {
         redirect("/");
       }
     }
-  }, [data]);
+  }, [isSuccess, data, error]);
 
   return (
     <>

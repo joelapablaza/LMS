@@ -25,7 +25,7 @@ const CustomModal: FC<Props> = ({
     isLoading,
     refetch,
   } = useLoadUserQuery(undefined, {
-    skip: !loadUser ? true : false,
+    skip: !loadUser,
   });
 
   return (

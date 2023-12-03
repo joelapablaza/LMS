@@ -6,7 +6,6 @@ import ProfileInfo from "./ProfileInfo";
 import ChangePassword from "./ChangePassword";
 import EnrolledCourses from "./EnrolledCourses";
 import toast from "react-hot-toast";
-import Loader from "../Loader/Loader";
 import User from "@/app/interfaces/User";
 
 type Props = {
@@ -21,7 +20,7 @@ const Profile: FC<Props> = ({ user }) => {
   const [courses, setCourses] = useState<any>();
 
   const {} = useLogOutQuery(undefined, {
-    skip: !logout ? true : false,
+    skip: !logout,
   });
 
   const logOutHandler = async () => {

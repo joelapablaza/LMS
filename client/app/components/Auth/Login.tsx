@@ -34,7 +34,7 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
     isLoading,
     refetch,
   } = useLoadUserQuery(undefined, {
-    skip: !loadUser ? true : false,
+    skip: !loadUser,
   });
 
   const formik = useFormik({
