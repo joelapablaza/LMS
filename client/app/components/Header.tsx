@@ -51,6 +51,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
     }
   };
 
+  const handleCloseSidebarOnUserClick = () => {
+    setOpenSidebar(false);
+    setOpen(true);
+  };
+
   return (
     <>
       <div
@@ -86,7 +91,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 />
               </div>
               <div className="ml-5">
-                {userData ? (
+                {userData.isVerified ? (
                   <Link href={"/profile"}>
                     <Image
                       src={
@@ -107,7 +112,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   <HiOutlineUserCircle
                     size={25}
                     className="cursor-pointer dark:text-white text-black hidden 800px:block"
-                    onClick={() => setOpen(true)}
+                    onClick={handleCloseSidebarOnUserClick}
                   />
                 )}
               </div>
@@ -124,7 +129,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           >
             <div className="w-[70%] fixed z-[999999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 flex flex-col">
               <NavItems activeItem={activeItem} isMobile={true} />
-              {userData ? (
+              {userData.isVerified ? (
                 <Link href={"/profile"}>
                   <Image
                     src={
@@ -144,8 +149,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               ) : (
                 <HiOutlineUserCircle
                   size={25}
-                  className="cursor-pointer dark:text-white text-black hidden 800px:block"
-                  onClick={() => setOpen(true)}
+                  className="cursor-pointer dark:text-white text-black ml-7"
+                  onClick={handleCloseSidebarOnUserClick}
                 />
               )}
               <br />

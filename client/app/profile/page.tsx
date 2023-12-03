@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Profile from "../components/Profile/Profile";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
 
 type Props = {};
 
@@ -16,12 +17,6 @@ const Page: FC<Props> = (props) => {
   const { data, isLoading, refetch, isSuccess } = useLoadUserQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-
-  console.log("Esto es userMemo", data);
-
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
 
   return (
     <div>
@@ -42,6 +37,7 @@ const Page: FC<Props> = (props) => {
             setRoute={setRoute}
           />
           {isSuccess && <Profile user={data?.user} />}
+          <Footer />
         </Protected>
       )}
     </div>
