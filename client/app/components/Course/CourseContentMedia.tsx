@@ -80,10 +80,6 @@ const CourseContentMedia: FC<Props> = ({
     refetchOnMountOrArgChange: true,
   });
 
-  useEffect(() => {
-    console.log(reviewReply);
-  }, [reviewReply]);
-
   const course = courseData?.course;
 
   const [
@@ -131,7 +127,6 @@ const CourseContentMedia: FC<Props> = ({
         courseId: id,
         contentId: data?.[activeVideo]._id,
       });
-      toast.success("Tu pregunta se añadió correctamente");
     }
   };
 

@@ -8,7 +8,7 @@ const About = (props: Props) => {
     <div className="text-black dark:text-white !mb-20">
       <br />
       <h1 className={`${styles.title} 800px:!text-[45px]`}>
-        What is <span className="text_animation"> LearnIt®️ </span>?
+        What is <span className="text_animation"> LearnIt </span>?
       </h1>
       <br />
       <div className="w-[95%] 800px:w-[85%] m-auto">
