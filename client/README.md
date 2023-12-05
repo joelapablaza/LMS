@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LerarIt - Plataforma de Aprendizaje Online
 
-## Getting Started
+LerarIt es una plataforma de aprendizaje online diseñada para acercar contenido de excelente calidad a nivel nacional. Nuestro objetivo es proporcionar a instructores de temas relacionados con la tecnología la oportunidad de destacarse localmente. LerarIt está construido con tecnologías modernas como Next.js, TypeScript, Node.js, Express y MongoDB, brindando una experiencia robusta y eficiente.
 
-First, run the development server:
+## Características Destacadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Contenido de Calidad Nacional
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+LerarIt se compromete a ofrecer contenido educativo de alta calidad, priorizando la creación de material valioso a nivel nacional.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Panel de Control de Contenido
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Gestiona tu contenido de manera fácil y eficiente a través de nuestro panel de control. Actualiza la sección de héroe, modifica el FAQ y más, ¡todo sin necesidad de tocar código!
 
-## Learn More
+### Notificaciones en Tiempo Real
 
-To learn more about Next.js, take a look at the following resources:
+Mantente informado con nuestras notificaciones en tiempo real. Desde respuestas a preguntas hasta actualizaciones de contenido, te mantendremos al tanto de todo.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Registro Seguro y Conveniente
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Ofrecemos opciones de registro seguras mediante correo electrónico y códigos OTP (One-Time Password) para garantizar la seguridad de nuestros usuarios.
 
-## Deploy on Vercel
+### Sección de Preguntas y Respuestas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Participa en nuestra comunidad a través de la sección de preguntas y respuestas. Las respuestas de los administradores son resaltadas, y recibirás notificaciones cuando alguien responda a tus preguntas.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Reviews y Retroalimentación
+
+Valora y comenta sobre los cursos que has tomado. Además, interactúa con otros usuarios respondiendo a sus reviews.
+
+### Dashboard Administrativo
+
+Accede a un potente panel de estadísticas desde el dashboard del administrador. Crea, edita y gestiona cursos, envía correos electrónicos a usuarios, visualiza órdenes y más.
+
+## Tecnologías Utilizadas
+
+- Next.js
+- TypeScript
+- Node.js
+- Express
+- MongoDB
+
+## Contribuciones
+
+¡Contribuye al crecimiento de LerarIt! Si tienes sugerencias, problemas o mejoras, no dudes en abrir un problema o enviar una solicitud de extracción.
+
+## Licencia
+
+Este proyecto está bajo la licencia [MIT](LICENSE).
