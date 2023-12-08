@@ -3,7 +3,7 @@ require("dotenv").config();
 export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import ErrorMiddleware from "./midleware/error";
+import ErrorMiddleware from "./middlewares/error";
 import userRouter from "./routes/user.route";
 import courseRouter from "./routes/course.route";
 import orderRouter from "./routes/order.route";
@@ -12,7 +12,6 @@ import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
 import morgan from "morgan";
 import ErrorHandler from "./utils/ErrorHandler";
-import { rateLimit } from "express-rate-limit";
 
 // body parser
 app.use(express.json({ limit: "50mb" }));
@@ -20,26 +19,27 @@ app.use(express.json({ limit: "50mb" }));
 // cookie parser
 app.use(cookieParser());
 
-app.use(morgan("dev"));
+app.use(morgan("combined"));
 
 // cors
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: "https://lms-client-theta.vercel.app",
     credentials: true,
   })
 );
 
-// express request limit
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-  standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-});
+app.options("*", cors());
 
-// Apply the rate limiting middleware to all requests.
-app.use(limiter);
+// Ruta de prueba
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Tu código aquí
+    res.status(200).json({ success: true, message: "Funciona" });
+  } catch (error) {
+    next(error); // Pasa el error al siguiente middleware de manejo de errores
+  }
+});
 
 // routes
 app.use(

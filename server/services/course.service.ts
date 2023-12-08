@@ -1,6 +1,6 @@
 import { Response } from "express";
 import courseModel from "../models/course.model";
-import CatchAsyncError from "../midleware/catchAsyncErrors";
+import CatchAsyncError from "../middlewares/catchAsyncErrors";
 
 import { ICourse } from "../interfaces/ICourse";
 

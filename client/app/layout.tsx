@@ -1,27 +1,29 @@
-"use client";
-import "./globals.css";
-import { useEffect } from "react";
-import { Poppins } from "next/font/google";
-import { Josefin_Sans } from "next/font/google";
-import socketIO from "socket.io-client";
-import { Toaster } from "react-hot-toast";
-import { Providers } from "./provider";
-import Loader from "./components/Loader/Loader";
-import { ThemeProvider } from "./utils/theme-provider";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
-const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+'use client';
+import './globals.css';
+import 'normalize.css';
+import './fonts.css';
+import { useEffect } from 'react';
+import { Poppins } from 'next/font/google';
+import { Josefin_Sans } from 'next/font/google';
+import socketIO from 'socket.io-client';
+import { Toaster } from 'react-hot-toast';
+import { Providers } from './provider';
+import Loader from './components/Loader/Loader';
+import { ThemeProvider } from './utils/theme-provider';
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || '';
+const socketId = socketIO(ENDPOINT, { transports: ['websocket'] });
 
 const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-poppins',
 });
 
 const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-josefin",
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-josefin',
 });
 
 export default function RootLayout({
@@ -32,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        style={{ margin: 0, minHeight: "100vh" }}
+        style={{ margin: 0, minHeight: '100vh' }}
         className={`${poppins.variable} ${josefin.variable} !bg-[#f0f0f0] bg-no-repeat dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-950 duration-300`}
       >
         <Providers>
@@ -50,8 +52,8 @@ const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoading } = useLoadUserQuery({});
 
   useEffect(() => {
-    socketId.on("connection", () => {});
+    socketId.on('connection', () => {});
   }, []);
 
-  return <>{isLoading ? <Loader /> : <>{children}</>}</>;
+  return <>{children}</>;
 };

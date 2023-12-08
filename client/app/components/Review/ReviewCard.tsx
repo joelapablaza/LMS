@@ -1,6 +1,6 @@
-import Ratings from "@/app/utils/Ratings";
-import Image from "next/image";
-import React, { FC } from "react";
+import Ratings from '@/app/utils/Ratings';
+import Image from 'next/image';
+import React, { FC } from 'react';
 
 type Props = {
   item: any;
@@ -31,7 +31,7 @@ const ReviewCard: FC<Props> = ({ item }) => {
           <Ratings rating={item.ratings} />
         </div>
         {/* mobile */}
-        <div className="800px:hidden justify-between w-full flex flex-col">
+        <div className="800px:hidden justify-between w-full flex flex-col ml-2">
           <div className="pla-4">
             <h5 className="text-[20px] text-black dark:text-white">
               {item.name}

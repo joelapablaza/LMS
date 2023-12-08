@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ErrorHandler from "../utils/ErrorHandler";
-import CatchAsyncError from "../midleware/catchAsyncErrors";
+import CatchAsyncError from "../middlewares/catchAsyncErrors";
 import LayoutModel from "../models/layout.model";
 import cloudinary from "cloudinary";
 

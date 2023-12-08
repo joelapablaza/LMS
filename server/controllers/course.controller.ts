@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import CatchAsyncError from "../midleware/catchAsyncErrors";
+import CatchAsyncError from "../middlewares/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import cloudinary from "cloudinary";
 import { createCourse, getAllCoursesService } from "../services/course.service";

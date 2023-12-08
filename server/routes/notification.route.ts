@@ -3,7 +3,7 @@ import {
   getNotifications,
   updateNotification,
 } from "../controllers/notification.controller";
-import { authorizeRoles, isAuthenticated } from "../midleware/auth";
+import { authorizeRoles, isAuthenticated } from "../middlewares/auth";
 import { updateAccessToken } from "../controllers/user.controller";
 const notificationRoute = express.Router();
 

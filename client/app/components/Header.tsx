@@ -1,19 +1,17 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import React, { FC, useEffect, useState, MouseEvent } from "react";
-import NavItems from "../utils/NavItems";
-import { ThemeSwitcher } from "../utils/ThemeSwitcher";
-import CustomModal from "../utils/CustomModal";
-import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+import Link from 'next/link';
+import React, { FC, useEffect, useState, MouseEvent } from 'react';
+import NavItems from '../utils/NavItems';
+import { ThemeSwitcher } from '../utils/ThemeSwitcher';
+import CustomModal from '../utils/CustomModal';
+import { HiOutlineMenuAlt3, HiOutlineUserCircle } from 'react-icons/hi';
 
-import Login from "../components/Auth/Login";
-import SignUp from "../components/Auth/SignUp";
-import Verification from "../components/Auth/Verification";
-import Image from "next/image";
-import defaultAvatar from "../../public/assets/avatar.png";
-import { useSelector } from "react-redux";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import Login from '../components/Auth/Login';
+import SignUp from '../components/Auth/SignUp';
+import Verification from '../components/Auth/Verification';
+import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
 type Props = {
   open: boolean;
@@ -27,7 +25,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const userData = useSelector((state: any) => state.auth.user);
-  // const {} = useLoadUserQuery(undefined, { refetchOnMountOrArgChange: true });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,15 +35,15 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   const handleClose = (e: MouseEvent | MouseEvent) => {
-    if ((e.target as HTMLElement).id === "screen") {
+    if ((e.target as HTMLElement).id === 'screen') {
       setOpenSidebar(false);
     }
   };
@@ -59,19 +56,19 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   return (
     <>
       <div
-        className={`header-container ${active ? "sticky top-0 z-[999]" : ""}`}
+        className={`header-container ${active ? 'sticky top-0 z-[999]' : ''}`}
       >
         <div className="w-[100%] m-auto h-full">
           <div
             className={`w-full h-[80px] flex items-center justify-around p-3 ${
               active
-                ? "dark:bg-opacity-50 dark:bg-gradient-to-b border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 bg-[#f0f0f0]"
-                : "border-b dark:border-[#ffffff1c] dark:shadow"
+                ? 'dark:bg-opacity-50 dark:bg-gradient-to-b border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 bg-[#f0f0f0]'
+                : 'border-b dark:border-[#ffffff1c] dark:shadow'
             }`}
           >
             <div>
               <Link
-                href={"/"}
+                href={'/'}
                 className={`text-[25px] font-Poppins font-[500] text-black dark:text-white `}
               >
                 LearnIt
@@ -92,19 +89,19 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               </div>
               <div className="ml-5">
                 {userData.isVerified ? (
-                  <Link href={"/profile"}>
+                  <Link href={'/profile'}>
                     <Image
                       src={
                         userData?.avatar?.url
                           ? userData?.avatar?.url
-                          : "/assets/avatar.png"
+                          : '/assets/avatar.png'
                       }
                       alt=""
                       width={30}
                       height={30}
                       className="w-[30px] h-[30px] rounded-full cursor-pointer"
                       style={{
-                        border: activeItem === 6 ? " 2px solid #37a39a" : "",
+                        border: activeItem === 6 ? ' 2px solid #37a39a' : '',
                       }}
                     />
                   </Link>
@@ -130,26 +127,26 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
             <div className="w-[70%] fixed z-[999999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 flex flex-col">
               <NavItems activeItem={activeItem} isMobile={true} />
               {userData.isVerified ? (
-                <Link href={"/profile"}>
+                <Link href={'/profile'}>
                   <Image
                     src={
                       userData?.avatar?.url
                         ? userData?.avatar?.url
-                        : "/assets/avatar.png"
+                        : '/assets/avatar.png'
                     }
                     alt=""
                     width={30}
                     height={30}
                     className="w-[30px] h-[30px] ml-[20px] mt-[10px] rounded-full  cursor-pointer"
                     style={{
-                      border: activeItem === 6 ? " 2px solid #37a39a" : "",
+                      border: activeItem === 6 ? ' 2px solid #37a39a' : '',
                     }}
                   />
                 </Link>
               ) : (
                 <HiOutlineUserCircle
                   size={25}
-                  className="cursor-pointer dark:text-white text-black ml-7"
+                  className="cursor-pointer dark:text-white text-black ml-7 mb-3"
                   onClick={handleCloseSidebarOnUserClick}
                 />
               )}
@@ -163,7 +160,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           </div>
         )}
       </div>
-      {route === "Login" && (
+      {route === 'Login' && (
         <>
           {open && (
             <CustomModal
@@ -176,7 +173,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           )}
         </>
       )}
-      {route === "Signup" && (
+      {route === 'Signup' && (
         <>
           {open && (
             <CustomModal
@@ -189,7 +186,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
           )}
         </>
       )}
-      {route === "Verification" && (
+      {route === 'Verification' && (
         <>
           {open && (
             <CustomModal

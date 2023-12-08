@@ -4,7 +4,7 @@ import ejs from "ejs";
 import path from "path";
 import userModel, { IUser } from "../models/user.model";
 import ErrorHandler from "../utils/ErrorHandler";
-import CatchAsyncError from "../midleware/catchAsyncErrors";
+import CatchAsyncError from "../middlewares/catchAsyncErrors";
 import sendMail from "../utils/sendMail";
 import {
   accessTokenOptions,

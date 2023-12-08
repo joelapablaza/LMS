@@ -14,7 +14,7 @@ import {
   updateUserInfo,
   updateUserRole,
 } from "../controllers/user.controller";
-import { authorizeRoles, isAuthenticated } from "../midleware/auth";
+import { authorizeRoles, isAuthenticated } from "../middlewares/auth";
 const userRouter = express.Router();
 
 userRouter.post("/registration", registrationUser);

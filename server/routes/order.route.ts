@@ -1,5 +1,5 @@
 import express from "express";
-import { authorizeRoles, isAuthenticated } from "../midleware/auth";
+import { authorizeRoles, isAuthenticated } from "../middlewares/auth";
 import {
   createOrder,
   getAllOrders,

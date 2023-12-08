@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ErrorHandler from "../utils/ErrorHandler";
-import CatchAsyncError from "../midleware/catchAsyncErrors";
+import CatchAsyncError from "../middlewares/catchAsyncErrors";
 import userModel from "../models/user.model";
 import { generateLast12MonthsData } from "../utils/analytics.generator";
 import courseModel from "../models/course.model";

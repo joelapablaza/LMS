@@ -13,7 +13,7 @@ import {
   getSingleCourse,
   uploadCourse,
 } from "../controllers/course.controller";
-import { authorizeRoles, isAuthenticated } from "../midleware/auth";
+import { authorizeRoles, isAuthenticated } from "../middlewares/auth";
 import { updateAccessToken } from "../controllers/user.controller";
 const courseRouter = express.Router();
 
