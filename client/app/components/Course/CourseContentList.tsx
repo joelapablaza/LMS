@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
-import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-import { MdOutlineOndemandVideo } from "react-icons/md";
+import React, { FC, useState } from 'react';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import { MdOutlineOndemandVideo } from 'react-icons/md';
 
 type Props = {
   data: any;
@@ -38,7 +38,7 @@ const CourseContentList: FC<Props> = ({
   return (
     <div
       className={`mt-[15px] w-full ${
-        !isDemo && "ml-[-30px] sticky top-24 left-0 z-30"
+        !isDemo && 'ml-[-30px] sticky top-24 left-0 z-30'
       }`}
     >
       {videoSections.map((section: any, sectionIndex: number) => {
@@ -60,12 +60,10 @@ const CourseContentList: FC<Props> = ({
 
         return (
           <div
-            className={`${!isDemo && "border-b border-[#ffffff8e] pb-2"}`}
+            className={`${!isDemo && 'border-b border-[#ffffff8e] pb-2'}`}
             key={section}
           >
             <div className="w-full flex">
-              {/* Render Video Section */}
-
               <div
                 className="w-full flex justify-between items-center cursor-pointer "
                 onClick={() => toggleSection(section)}
@@ -83,8 +81,8 @@ const CourseContentList: FC<Props> = ({
               </div>
             </div>
             <h5 className="text-black dark:text-white">
-              {sectionVideoCount} Lessons . {sectinoVideoLength}{" "}
-              {sectionContentHours > 60 ? "horas" : "minutos"}
+              {sectionVideoCount} Lessons . {sectinoVideoLength}{' '}
+              {sectionContentHours > 60 ? 'horas' : 'minutos'}
             </h5>
             <br />
             {isSectionVisible && (
@@ -96,8 +94,8 @@ const CourseContentList: FC<Props> = ({
                     <div
                       className={`w-full ${
                         videoIndex === activeVideo
-                          ? "bg-[#dcdcdc] dark:bg-slate-800"
-                          : ""
+                          ? 'bg-[#dcdcdc] dark:bg-slate-800'
+                          : ''
                       } cursor-pointer transition-all p-2`}
                       key={item._id}
                       onClick={() =>
@@ -119,8 +117,8 @@ const CourseContentList: FC<Props> = ({
                       <h5 className="text-black dark:text-white">
                         {item.videoLength > 60
                           ? contentLength.toFixed(2)
-                          : item.videoLength}{" "}
-                        {item.videoLength > 60 ? "hours" : "minutes"}
+                          : item.videoLength}{' '}
+                        {item.videoLength > 60 ? 'hours' : 'minutes'}
                       </h5>
                     </div>
                   );

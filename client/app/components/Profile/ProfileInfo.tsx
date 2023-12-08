@@ -1,16 +1,16 @@
-import React, { FC, useState, useRef, useEffect } from "react";
-import { styles } from "../../../app/styles/style";
-import Image from "next/image";
-import { AiOutlineCamera } from "react-icons/ai";
-import avatarIcon from "../../../public/assets/avatar.png";
+import React, { FC, useState, useRef, useEffect } from 'react';
+import { styles } from '../../../app/styles/style';
+import Image from 'next/image';
+import { AiOutlineCamera } from 'react-icons/ai';
+import avatarIcon from '../../../public/assets/avatar.png';
 import {
   useEditProfileMutation,
   useUpdateAvatarMutation,
-} from "@/redux/features/user/userApi";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-import toast from "react-hot-toast";
-import User from "@/app/interfaces/User";
-import Loader from "../Loader/Loader";
+} from '@/redux/features/user/userApi';
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import toast from 'react-hot-toast';
+import User from '@/app/interfaces/User';
+import Loader from '../Loader/Loader';
 
 type Props = {
   avatar: string | null;
@@ -57,7 +57,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
       console.log(error);
     }
     if (isSuccessUpdateInfo) {
-      toast.success("Perfil actualizado exitosamente");
+      toast.success('Perfil actualizado exitosamente');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -71,7 +71,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (name !== "") {
+    if (name !== '') {
       await editProfile({ name: name });
     }
   };
@@ -94,7 +94,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                 src={
                   userData?.user?.avatar?.url
                     ? userData?.user?.avatar?.url
-                    : "/assets/avatar.png"
+                    : '/assets/avatar.png'
                 }
                 alt="avatar"
                 className="w-[120px] h-[120px] cursor-pointer border-[3px] border-[#37a39a] rounded-full"

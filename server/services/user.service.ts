@@ -1,14 +1,11 @@
-import { Response } from "express";
-import { redis } from "../utils/redis";
-import userModel, { IUser } from "../models/user.model";
+import { Response } from 'express';
+import userModel, { IUser } from '../models/user.model';
 
 // get user by id
 export const getUserById = async (id: string, res: Response) => {
-  // const userJson = await redis.get(id);
-  const user = await userModel.findById(id).populate("courses");
+  const user = await userModel.findById(id).populate('courses');
 
   if (user) {
-    // await redis.set(user._id, JSON.stringify(user));
     res.status(200).json({
       success: true,
       user,
@@ -40,7 +37,7 @@ export const updateUserRoleService = async (
   if (!user) {
     return res.status(404).json({
       success: false,
-      message: "User not found",
+      message: 'User not found',
     });
   }
   res.status(201).json({

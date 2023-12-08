@@ -1,9 +1,10 @@
 import Ratings from '@/app/utils/Ratings';
 import Image from 'next/image';
 import React, { FC } from 'react';
+import type { reviews } from '../../components/Route/Reviews';
 
 type Props = {
-  item: any;
+  item: (typeof reviews)[number];
 };
 
 const ReviewCard: FC<Props> = ({ item }) => {

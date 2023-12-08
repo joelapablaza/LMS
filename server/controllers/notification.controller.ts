@@ -1,8 +1,12 @@
-import { Request, Response, NextFunction } from "express";
-import NotificationModel from "../models/notification.model";
-import CatchAsyncError from "../middlewares/catchAsyncErrors";
-import ErrorHandler from "../utils/ErrorHandler";
-import cron from "node-cron";
+import { Request, Response, NextFunction } from 'express';
+import cron from 'node-cron';
+
+// utils
+import CatchAsyncError from '../middlewares/catchAsyncErrors';
+import ErrorHandler from '../utils/ErrorHandler';
+
+// models
+import NotificationModel from '../models/notification.model';
 
 // get all notifications --- only for admin
 export const getNotifications = CatchAsyncError(
@@ -29,10 +33,10 @@ export const updateNotification = CatchAsyncError(
       const notification = await NotificationModel.findById(req.params.id);
 
       if (!notification) {
-        return next(new ErrorHandler("Notficacion no encontrada", 404));
+        return next(new ErrorHandler('Notficacion no encontrada', 404));
       }
 
-      notification.status = "read";
+      notification.status = 'read';
 
       await notification.save();
 
@@ -51,17 +55,17 @@ export const updateNotification = CatchAsyncError(
 );
 
 // delete notification --- admin only
-cron.schedule("0 0 0 * * *", async () => {
+cron.schedule('0 0 0 * * *', async () => {
   try {
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
     await NotificationModel.deleteMany({
-      status: "read",
+      status: 'read',
       createdAt: { $lt: thirtyDaysAgo },
     });
 
     await NotificationModel.create({
-      user: "admin",
-      title: "Notificaciones eliminadas",
+      user: 'admin',
+      title: 'Notificaciones eliminadas',
       message: `Notificaciones antiguas borradas con éxito`,
     });
   } catch (error: any) {

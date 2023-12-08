@@ -1,17 +1,21 @@
-import { NextFunction, Request, Response } from "express";
-import CatchAsyncError from "../middlewares/catchAsyncErrors";
-import ErrorHandler from "../utils/ErrorHandler";
-import OrderModel, { IOrder } from "../models/order.model";
-import userModel from "../models/user.model";
-import courseModel from "../models/course.model";
-import path from "path";
-import ejs from "ejs";
-import { redis } from "../utils/redis";
-import sendMail from "../utils/sendMail";
-import NotificationModel from "../models/notification.model";
-import { getAllOrdersService, newOrder } from "../services/order.service";
-import { ObjectId } from "mongoose";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import { NextFunction, Request, Response } from 'express';
+import path from 'path';
+import ejs from 'ejs';
+
+// utils
+import CatchAsyncError from '../middlewares/catchAsyncErrors';
+import ErrorHandler from '../utils/ErrorHandler';
+import { redis } from '../utils/redis';
+import sendMail from '../utils/sendMail';
+import { getAllOrdersService, newOrder } from '../services/order.service';
+
+// models
+import { IOrder } from '../models/order.model';
+import userModel from '../models/user.model';
+import courseModel from '../models/course.model';
+import NotificationModel from '../models/notification.model';
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // create order
 export const createOrder = CatchAsyncError(
@@ -19,15 +23,15 @@ export const createOrder = CatchAsyncError(
     try {
       const { courseId, payment_info } = req.body as IOrder;
 
-      if (payment_info && "id" in payment_info) {
+      if (payment_info && 'id' in payment_info) {
         const paymentIntentId = payment_info.id;
         const paymentIntent = await stripe.paymentIntents.retrieve(
           paymentIntentId
         );
 
-        if (paymentIntent.status !== "succeeded") {
+        if (paymentIntent.status !== 'succeeded') {
           return next(
-            new ErrorHandler("La transacción de pago ha fallado", 400)
+            new ErrorHandler('La transacción de pago ha fallado', 400)
           );
         }
       }
@@ -39,13 +43,13 @@ export const createOrder = CatchAsyncError(
       );
 
       if (courseExistInUser) {
-        return next(new ErrorHandler("Ya has comprado este curso", 400));
+        return next(new ErrorHandler('Ya has comprado este curso', 400));
       }
 
       const course = await courseModel.findById(courseId);
 
       if (!course) {
-        return next(new ErrorHandler("Curso no encontrado", 404));
+        return next(new ErrorHandler('Curso no encontrado', 404));
       }
 
       const data: any = {
@@ -59,16 +63,16 @@ export const createOrder = CatchAsyncError(
           _id: course._id.toString().slice(0, 6),
           name: course.name,
           price: course.price,
-          date: new Date().toLocaleDateString("es-AR", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
+          date: new Date().toLocaleDateString('es-AR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
           }),
         },
       };
 
       const html = await ejs.renderFile(
-        path.join(__dirname, "../mails/order-confirmation.ejs"),
+        path.join(__dirname, '../mails/order-confirmation.ejs'),
         { order: mailData }
       );
 
@@ -76,29 +80,29 @@ export const createOrder = CatchAsyncError(
         if (user) {
           await sendMail({
             email: user.email,
-            subject: "Confirmación de pedido",
-            template: "order-confirmation.ejs",
+            subject: 'Confirmación de pedido',
+            template: 'order-confirmation.ejs',
             data: mailData,
           });
         }
       } catch (error: any) {
         return next(new ErrorHandler(error.message, 500));
       }
-      console.log("User antes del push", user);
+      console.log('User antes del push', user);
 
       user?.courses.push(course._id);
 
-      console.log("User despues del push", user);
+      console.log('User despues del push', user);
 
       await redis.set(req.user?._id, JSON.stringify(user));
 
-      console.log("user Stringuifado", JSON.stringify(user));
+      console.log('user Stringuifado', JSON.stringify(user));
 
       await user?.save();
 
       await NotificationModel.create({
         user: user?._id,
-        title: "Nuevo Pedido",
+        title: 'Nuevo Pedido',
         message: `Tienes un nuevo pedido de ${course?.name}`,
       });
 
@@ -139,9 +143,9 @@ export const newPayment = CatchAsyncError(
     try {
       const myPayment = await stripe.paymentIntents.create({
         amount: req.body.amount,
-        currency: "USD",
+        currency: 'USD',
         metadata: {
-          company: "E-Learning",
+          company: 'E-Learning',
         },
         automatic_payment_methods: { enabled: true },
       });

@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
-import SideBarProfile from "./SideBarProfile";
-import { useLogOutQuery } from "@/redux/features/auth/authApi";
-import { redirect } from "next/navigation";
-import ProfileInfo from "./ProfileInfo";
-import ChangePassword from "./ChangePassword";
-import EnrolledCourses from "./EnrolledCourses";
-import toast from "react-hot-toast";
-import User from "@/app/interfaces/User";
+import React, { FC, useEffect, useState } from 'react';
+import SideBarProfile from './SideBarProfile';
+import { useLogOutQuery } from '@/redux/features/auth/authApi';
+import { redirect } from 'next/navigation';
+import ProfileInfo from './ProfileInfo';
+import ChangePassword from './ChangePassword';
+import EnrolledCourses from './EnrolledCourses';
+import toast from 'react-hot-toast';
+import User from '@/app/interfaces/User';
 
 type Props = {
   user: User;
@@ -24,9 +24,9 @@ const Profile: FC<Props> = ({ user }) => {
   });
 
   const logOutHandler = async () => {
-    toast.success("Sesión Cerrada");
+    toast.success('Sesión Cerrada');
     setLogout(true);
-    redirect("/");
+    redirect('/');
   };
 
   useEffect(() => {
@@ -38,10 +38,10 @@ const Profile: FC<Props> = ({ user }) => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -62,7 +62,7 @@ const Profile: FC<Props> = ({ user }) => {
     <div className="w-[85%] flex mx-auto">
       <div
         className={`w-[60px] 800px:w-[310px] max-h-[400px] dark:bg-slate-900 bg-opacity-90 bg-[#fcfcfc] border dark:border-[#ffffff1d] border-[#00000014] rounded-[5px] shadow-sm dark:shadow-sm mt-[80px] mb-[80px] sticky ${
-          scroll ? "top-[120px]" : "top-[30px]"
+          scroll ? 'top-[120px]' : 'top-[30px]'
         } left-[30px]`}
       >
         <SideBarProfile

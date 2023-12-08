@@ -1,15 +1,15 @@
-import { styles } from "@/app/styles/style";
-import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
-import React, { FC, useState, useEffect } from "react";
+import { styles } from '@/app/styles/style';
+import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
+import React, { FC, useState, useEffect } from 'react';
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
+} from 'react-icons/md';
 
 type Props = {};
 
 const FAQ: FC<Props> = (props: Props) => {
-  const { data } = useGetHeroDataQuery("FAQ", {});
+  const { data } = useGetHeroDataQuery('FAQ', {});
   const [activeQuestion, setActiveQuestion] = useState(null);
   const [questions, setQuestions] = useState<any[]>([]);
 
@@ -35,7 +35,7 @@ const FAQ: FC<Props> = (props: Props) => {
               questions.map((q: any) => (
                 <div
                   className={`${
-                    q._id !== questions[0]?._id && "border-t"
+                    q._id !== questions[0]?._id && 'border-t'
                   } border-gray-200 pt-6`}
                   key={q._id}
                 >

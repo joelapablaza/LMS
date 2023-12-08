@@ -1,29 +1,30 @@
-import { useGetCourseDetailsQuery } from "@/redux/features/courses/coursesApi";
-import React, { FC, useState, useEffect } from "react";
-import Loader from "../Loader/Loader";
-import Heading from "@/app/utils/Heading";
-import Header from "../Header";
-import Footer from "../Footer";
-import CourseDetails from "./CourseDetails";
+import { useGetCourseDetailsQuery } from '@/redux/features/courses/coursesApi';
+import React, { FC, useState, useEffect } from 'react';
+import Loader from '../Loader/Loader';
+import Heading from '@/app/utils/Heading';
+import Header from '../Header';
+import Footer from '../Footer';
+import CourseDetails from './CourseDetails';
 import {
   useCreatePaymentIntentMutation,
   useGetStripePublishableKeyQuery,
-} from "@/redux/features/orders/ordersApi";
-import { loadStripe } from "@stripe/stripe-js";
+} from '@/redux/features/orders/ordersApi';
+import { loadStripe } from '@stripe/stripe-js';
 
 type Props = {
   id: string;
 };
 
 const CourseDetailsPage: FC<Props> = ({ id }) => {
-  const [route, setRoute] = useState("Login");
+  const [route, setRoute] = useState('Login');
   const [open, setOpen] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
+  const [stripePromise, setStripePromise] = useState<any>(null);
+
   const { data, isLoading } = useGetCourseDetailsQuery(id);
   const { data: config } = useGetStripePublishableKeyQuery({});
   const [createPaymentIntent, { data: paymentIntentData }] =
     useCreatePaymentIntentMutation();
-  const [stripePromise, setStripePromise] = useState<any>(null);
-  const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
     if (config) {
@@ -49,9 +50,9 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
       ) : (
         <div>
           <Heading
-            title={data.course.name + "- LearnIt"}
+            title={data.course.name + '- LearnIt'}
             description={
-              "LearnIt es una comunidad de programación desarrollada por..."
+              'LearnIt es una comunidad de programación desarrollada por...'
             }
             keywords={data?.course?.tags}
           />

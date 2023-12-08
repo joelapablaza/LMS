@@ -1,28 +1,31 @@
-import { Request, Response, NextFunction, request, response } from "express";
-import jwt, { JwtPayload, Secret } from "jsonwebtoken";
-import ejs from "ejs";
-import path from "path";
-import userModel, { IUser } from "../models/user.model";
-import ErrorHandler from "../utils/ErrorHandler";
-import CatchAsyncError from "../middlewares/catchAsyncErrors";
-import sendMail from "../utils/sendMail";
+import { Request, Response, NextFunction, request, response } from 'express';
+import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
+import ejs from 'ejs';
+import path from 'path';
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
+
+// utils
+import ErrorHandler from '../utils/ErrorHandler';
+import CatchAsyncError from '../middlewares/catchAsyncErrors';
+import sendMail from '../utils/sendMail';
 import {
   accessTokenOptions,
   refreshTokenOptions,
   sendToken,
-} from "../utils/jwt";
-import { redis } from "../utils/redis";
-import cloudinary from "cloudinary";
+} from '../utils/jwt';
+import { redis } from '../utils/redis';
 import {
   getAllUsersService,
   getUserById,
   updateUserRoleService,
-} from "../services/user.service";
-import { UserRole } from "../models/user.model";
-import dotenv from "dotenv";
+} from '../services/user.service';
+
+// models
+import { UserRole } from '../models/user.model';
+import userModel, { IUser } from '../models/user.model';
 
 dotenv.config();
-const ACTIVATION_SECRET = process.env.ACTIVATION_SECRET;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
@@ -41,7 +44,7 @@ export const registrationUser = CatchAsyncError(
 
       const isEmailExist = await userModel.findOne({ email });
       if (isEmailExist) {
-        return next(new ErrorHandler("Email ya registrado", 400));
+        return next(new ErrorHandler('Email ya registrado', 400));
       }
 
       const user: IRegistrationBody = {
@@ -56,15 +59,15 @@ export const registrationUser = CatchAsyncError(
 
       const data = { user: { name: user.name }, activationCode };
       const html = await ejs.renderFile(
-        path.join(__dirname, "../mails/activation-mail.ejs"),
+        path.join(__dirname, '../mails/activation-mail.ejs'),
         data
       );
 
       try {
         await sendMail({
           email: user.email,
-          subject: "Activa tu cuenta",
-          template: "activation-mail.ejs",
+          subject: 'Activa tu cuenta',
+          template: 'activation-mail.ejs',
           data,
         });
 
@@ -99,14 +102,12 @@ export const createActivationToken = (
     },
     process.env.ACTIVATION_SECRET as Secret,
     {
-      expiresIn: "5m",
+      expiresIn: '5m',
     }
   );
 
   return { token, activationCode };
 };
-
-// activate user
 
 interface IActivationRequest {
   activation_token: string;
@@ -125,7 +126,7 @@ export const activateUser = CatchAsyncError(
       ) as { user: IUser; activationCode: string };
 
       if (newUser.activationCode !== activation_code) {
-        return next(new ErrorHandler("Código de activación invalido", 400));
+        return next(new ErrorHandler('Código de activación invalido', 400));
       }
 
       const { name, email, password } = newUser.user;
@@ -133,7 +134,7 @@ export const activateUser = CatchAsyncError(
       const existUser = await userModel.findOne({ email });
 
       if (existUser) {
-        return next(new ErrorHandler("Email ya registrado", 400));
+        return next(new ErrorHandler('Email ya registrado', 400));
       }
 
       const user = await userModel.create({
@@ -164,22 +165,22 @@ export const loginUser = CatchAsyncError(
       if (!email || !password) {
         return next(
           new ErrorHandler(
-            "Por favor, ingresa tu correo electrónico y contraseña",
+            'Por favor, ingresa tu correo electrónico y contraseña',
             400
           )
         );
       }
 
-      const user = await userModel.findOne({ email }).select("+password");
+      const user = await userModel.findOne({ email }).select('+password');
 
       if (!user) {
-        return next(new ErrorHandler("Email o contraseña invalida", 400));
+        return next(new ErrorHandler('Email o contraseña invalida', 400));
       }
 
       const isPasswordMatch = await user.comparePassword(password);
 
       if (!isPasswordMatch) {
-        return next(new ErrorHandler("Email o contraseña invalida", 400));
+        return next(new ErrorHandler('Email o contraseña invalida', 400));
       }
 
       sendToken(user, 200, res);
@@ -193,14 +194,14 @@ export const loginUser = CatchAsyncError(
 export const logoutUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId = req.user?._id || "";
+      const userId = req.user?._id || '';
       redis.del(userId);
-      res.cookie("access_token", "", { maxAge: 1 });
-      res.cookie("refresh_token", "", { maxAge: 1 });
+      res.cookie('access_token', '', { maxAge: 1 });
+      res.cookie('refresh_token', '', { maxAge: 1 });
 
       res.status(200).json({
         success: true,
-        message: "Te has desconectado exitosamente",
+        message: 'Te has desconectado exitosamente',
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
@@ -216,7 +217,7 @@ export const updateAccessToken = CatchAsyncError(
         refresh_token,
         REFRESH_TOKEN as string
       ) as JwtPayload;
-      const message = "Unable to refresh token";
+      const message = 'Unable to refresh token';
 
       if (!decoded.id) {
         return next(new ErrorHandler(message, 400));
@@ -224,14 +225,14 @@ export const updateAccessToken = CatchAsyncError(
 
       const session = await userModel.findById(decoded.id);
       if (!session) {
-        return next(new ErrorHandler("Please login first", 400));
+        return next(new ErrorHandler('Please login first', 400));
       }
 
       const accessToken = jwt.sign(
         { id: session._id },
         ACCESS_TOKEN as string,
         {
-          expiresIn: "10h",
+          expiresIn: '10h',
         }
       );
 
@@ -239,16 +240,16 @@ export const updateAccessToken = CatchAsyncError(
         { id: session._id },
         REFRESH_TOKEN as string,
         {
-          expiresIn: "3d",
+          expiresIn: '3d',
         }
       );
 
       // req.user = session;
 
-      res.cookie("access_token", accessToken, accessTokenOptions);
-      res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+      res.cookie('access_token', accessToken, accessTokenOptions);
+      res.cookie('refresh_token', refreshToken, refreshTokenOptions);
 
-      await redis.set(session._id, JSON.stringify(session), "EX", 259200); //Expires in 3days
+      await redis.set(session._id, JSON.stringify(session), 'EX', 259200); //Expires in 3days
 
       next();
     } catch (error: any) {
@@ -333,24 +334,24 @@ export const updatePassword = CatchAsyncError(
     try {
       const { oldPassword, newPassword } = req.body as IUpdatePassword;
 
-      const user = await userModel.findById(req.user?._id).select("+password");
+      const user = await userModel.findById(req.user?._id).select('+password');
 
       if (!oldPassword || !newPassword) {
         return next(
           new ErrorHandler(
-            "Por favor, ingresa la contraseña antigua y la nueva",
+            'Por favor, ingresa la contraseña antigua y la nueva',
             400
           )
         );
       }
       if (user?.password === undefined) {
-        return next(new ErrorHandler("Usuario inexistente", 400));
+        return next(new ErrorHandler('Usuario inexistente', 400));
       }
 
       const isPasswordMatch = await user?.comparePassword(oldPassword);
 
       if (!isPasswordMatch) {
-        return next(new ErrorHandler("Contraseña antigua incorrecta", 400));
+        return next(new ErrorHandler('Contraseña antigua incorrecta', 400));
       }
 
       user.password = newPassword;
@@ -390,7 +391,7 @@ export const updateProfilePicture = CatchAsyncError(
           await cloudinary.v2.uploader.destroy(user?.avatar?.public_id);
 
           const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-            folder: "avatars",
+            folder: 'avatars',
             width: 150,
           });
           user.avatar = {
@@ -399,7 +400,7 @@ export const updateProfilePicture = CatchAsyncError(
           };
         } else {
           const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-            folder: "avatars",
+            folder: 'avatars',
             width: 150,
           });
           user.avatar = {
@@ -442,7 +443,7 @@ export const updateUserRole = CatchAsyncError(
       if (!Object.values(UserRole).includes(role)) {
         return res.status(400).json({
           success: false,
-          error: "Rol especificado no válido",
+          error: 'Rol especificado no válido',
         });
       }
       updateUserRoleService(res, email, role);
@@ -461,7 +462,7 @@ export const deleteUser = CatchAsyncError(
       const user = await userModel.findById(id);
 
       if (!user) {
-        return next(new ErrorHandler("Usuario no encontrado", 400));
+        return next(new ErrorHandler('Usuario no encontrado', 400));
       }
 
       await user.deleteOne({ id });
@@ -470,7 +471,7 @@ export const deleteUser = CatchAsyncError(
 
       res.status(204).json({
         success: true,
-        message: "Usuario eliminado exitosamente",
+        message: 'Usuario eliminado exitosamente',
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));

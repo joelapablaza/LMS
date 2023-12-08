@@ -1,10 +1,14 @@
-import { Request, Response, NextFunction } from "express";
-import ErrorHandler from "../utils/ErrorHandler";
-import CatchAsyncError from "../middlewares/catchAsyncErrors";
-import userModel from "../models/user.model";
-import { generateLast12MonthsData } from "../utils/analytics.generator";
-import courseModel from "../models/course.model";
-import OrderModel from "../models/order.model";
+import { Request, Response, NextFunction } from 'express';
+
+// utils
+import { generateLast12MonthsData } from '../utils/analytics.generator';
+import CatchAsyncError from '../middlewares/catchAsyncErrors';
+import ErrorHandler from '../utils/ErrorHandler';
+
+// models
+import userModel from '../models/user.model';
+import courseModel from '../models/course.model';
+import OrderModel from '../models/order.model';
 
 // get users analytics --- admin only
 export const getUsersAnalytics = CatchAsyncError(

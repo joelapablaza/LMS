@@ -1,15 +1,12 @@
-import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import Loader from '../Loader/Loader';
 import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 const Hero: FC<Props> = (props) => {
-  const { data, isLoading } = useGetHeroDataQuery('Banner');
   const [search, setSearch] = useState('');
   const router = useRouter();
 
@@ -21,17 +18,7 @@ const Hero: FC<Props> = (props) => {
     }
   };
 
-  const styles = {
-    left: '20%',
-    transform: 'translate(-50%, -50%)',
-    // Agrega otros estilos según sea necesario
-  };
-
   return (
-    // <>
-    //   {isLoading ? (
-    //     <Loader />
-    //   ) : (
     <div className="w-full flex items-center min-h-screen justify-center relativa">
       <div className="bg-[#fbe2e3] absolute top-[-1rem] -z-10 right-[0rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem] sm:w-[68.75rem] dark:bg-[#946263]"></div>
       <div className="bg-[#dbd7fb] absolute top-[-1rem] -z-10 left-[-35rem] h-[31.25rem] w-[50rem] rounded-full blur-[10rem] sm:w-[68.75rem] md:left-[-33rem] lg:left-[-28rem] xl:left-[-15rem] 2xl:left-[-5rem] dark:bg-[#676394]"></div>
@@ -101,8 +88,6 @@ const Hero: FC<Props> = (props) => {
         </div>
       </div>
     </div>
-    //   )}
-    // </>
   );
 };
 

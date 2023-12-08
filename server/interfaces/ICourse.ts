@@ -1,26 +1,3 @@
-// export interface ICourse {
-//   name: string;
-//   description: string;
-//   price: number;
-//   estimatedPrice: number;
-//   categories: string;
-//   tags: string;
-//   level: string;
-//   demoUrl: string;
-//   thumbnail?: { public_id: string; url: string } | string;
-//   benefits: { title: string }[];
-//   prerequisites: { title: string }[];
-//   totalVideos: number;
-//   courseData: {
-//     videoUrl: string;
-//     title: string;
-//     videoSection: string;
-//     description: string;
-//     videoLength: number;
-//     links: { title: string; url: string }[];
-//   }[];
-// }
-
 // Interfaz para la información básica del curso
 export interface ICourseBase {
   name: string;

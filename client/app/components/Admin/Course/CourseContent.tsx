@@ -1,10 +1,10 @@
-import { styles } from "@/app/styles/style";
-import React, { FC, useState, useEffect } from "react";
-import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
-import { BiPencil } from "react-icons/bi";
-import { MdOutlineKeyboardArrowUp } from "react-icons/md";
-import { BsLink45Deg } from "react-icons/bs";
-import toast from "react-hot-toast";
+import { styles } from '@/app/styles/style';
+import React, { FC, useState, useEffect } from 'react';
+import { AiOutlineDelete, AiOutlinePlusCircle } from 'react-icons/ai';
+import { BiPencil } from 'react-icons/bi';
+import { MdOutlineKeyboardArrowUp } from 'react-icons/md';
+import { BsLink45Deg } from 'react-icons/bs';
+import toast from 'react-hot-toast';
 
 type Props = {
   active: number;
@@ -55,7 +55,7 @@ const CourseContent: FC<Props> = ({
 
   const handleAddLink = (index: number) => {
     const updatedData = [...editableData];
-    updatedData[index].links.push({ title: "", url: "" });
+    updatedData[index].links.push({ title: '', url: '' });
     setEditableData(updatedData);
   };
 
@@ -81,15 +81,15 @@ const CourseContent: FC<Props> = ({
 
   const newContentHandler = (item: any) => {
     if (
-      item.title === "" ||
-      item.description === "" ||
-      item.videoUrl === "" ||
-      item.links[0].title === "" ||
-      item.links[0].url === ""
+      item.title === '' ||
+      item.description === '' ||
+      item.videoUrl === '' ||
+      item.links[0].title === '' ||
+      item.links[0].url === ''
     ) {
-      toast.error("Please fill all the fields first");
+      toast.error('Please fill all the fields first');
     } else {
-      let newVideoSection = "";
+      let newVideoSection = '';
       if (editableData.length > 0) {
         const lastVideoSection =
           editableData[editableData.length - 1].videoSection;
@@ -101,13 +101,13 @@ const CourseContent: FC<Props> = ({
       }
 
       const newContent = {
-        videoUrl: "",
-        title: "",
-        description: "",
+        videoUrl: '',
+        title: '',
+        description: '',
         videoLength: 0,
         videoSection: newVideoSection,
-        links: [{ title: "", url: "" }],
-        suggestion: "",
+        links: [{ title: '', url: '' }],
+        suggestion: '',
       };
 
       setEditableData([...editableData, newContent]);
@@ -116,23 +116,23 @@ const CourseContent: FC<Props> = ({
 
   const addNewSection = () => {
     if (
-      editableData[editableData.length - 1].title === "" ||
-      editableData[editableData.length - 1].description === "" ||
-      editableData[editableData.length - 1].videoUrl === "" ||
-      editableData[editableData.length - 1].links[0].title === "" ||
-      editableData[editableData.length - 1].links[0].url === ""
+      editableData[editableData.length - 1].title === '' ||
+      editableData[editableData.length - 1].description === '' ||
+      editableData[editableData.length - 1].videoUrl === '' ||
+      editableData[editableData.length - 1].links[0].title === '' ||
+      editableData[editableData.length - 1].links[0].url === ''
     ) {
-      toast.error("Please fill all the fields first");
+      toast.error('Please fill all the fields first');
     } else {
       setActiveSection(activeSection + 1);
       const newContent = {
-        videoUrl: "",
-        title: "",
-        description: "",
+        videoUrl: '',
+        title: '',
+        description: '',
         videoSection: `Untitled Section ${activeSection}`,
         videoLength: 0,
-        links: [{ title: "", url: "" }],
-        suggestion: "",
+        links: [{ title: '', url: '' }],
+        suggestion: '',
       };
       setEditableData([...editableData, newContent]);
     }
@@ -140,41 +140,16 @@ const CourseContent: FC<Props> = ({
 
   const handleOptions = () => {
     if (
-      editableData[editableData.length - 1].title === "" ||
-      editableData[editableData.length - 1].description === "" ||
-      editableData[editableData.length - 1].videoUrl === "" ||
-      editableData[editableData.length - 1].links[0].title === "" ||
-      editableData[editableData.length - 1].links[0].url === ""
+      editableData[editableData.length - 1].title === '' ||
+      editableData[editableData.length - 1].description === '' ||
+      editableData[editableData.length - 1].videoUrl === '' ||
+      editableData[editableData.length - 1].links[0].title === '' ||
+      editableData[editableData.length - 1].links[0].url === ''
     ) {
-      toast.error("Please fill all the fields first");
+      toast.error('Please fill all the fields first');
     } else {
       setActive(active + 1);
       handleCourseSubmit();
-    }
-  };
-
-  const updateData = () => {
-    if (
-      editableData[editableData.length - 1].title === "" ||
-      editableData[editableData.length - 1].description === "" ||
-      editableData[editableData.length - 1].videoUrl === "" ||
-      editableData[editableData.length - 1].links[0].title === "" ||
-      editableData[editableData.length - 1].links[0].url === ""
-    ) {
-      toast.error("Please fill all the fields first");
-    } else {
-      const editablecourseContentData = editableData.map((item: any) => {
-        return {
-          title: item.title,
-          description: item.description,
-          videoUrl: item.videoUrl,
-          videoSection: item.videoSection,
-          videoLength: item.videoLength.toString(),
-          links: item.links,
-          suggestion: item.suggestion,
-        };
-      });
-      setCourseContentData(editablecourseContentData);
     }
   };
 
@@ -196,7 +171,7 @@ const CourseContent: FC<Props> = ({
               <div
                 key={index}
                 className={`w-full bg-[#cdc8c817] p-4 ${
-                  showSectionInput ? "mt-10" : "mb-0"
+                  showSectionInput ? 'mt-10' : 'mb-0'
                 }`}
               >
                 {showSectionInput && (
@@ -205,9 +180,9 @@ const CourseContent: FC<Props> = ({
                       <input
                         type="text"
                         className={`text-[20px] ${
-                          item.videoSection === "Untitled Section"
-                            ? "w-[170px]"
-                            : "w-min"
+                          item.videoSection === 'Untitled Section'
+                            ? 'w-[170px]'
+                            : 'w-min'
                         } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none`}
                         value={item.videoSection}
                         onChange={(e) => {
@@ -241,7 +216,7 @@ const CourseContent: FC<Props> = ({
                   <div className="flex items-center">
                     <AiOutlineDelete
                       className={`dark:text-white text-[20px] mr-2 text-black ${
-                        index > 0 ? "cursor-pointer" : "cursor-no-drop"
+                        index > 0 ? 'cursor-pointer' : 'cursor-no-drop'
                       }`}
                       onClick={() => {
                         if (index > 0) {
@@ -256,8 +231,8 @@ const CourseContent: FC<Props> = ({
                       className="dark:text-white text-black"
                       style={{
                         transform: isCollapsed[index]
-                          ? "rotate(180deg)"
-                          : "rotate(0deg)",
+                          ? 'rotate(180deg)'
+                          : 'rotate(0deg)',
                       }}
                       onClick={() => handleCollapseToggle(index)}
                     />
@@ -269,7 +244,7 @@ const CourseContent: FC<Props> = ({
                     <div className="my-3">
                       <label
                         className={`${styles.label}`}
-                        style={{ fontWeight: "800" }}
+                        style={{ fontWeight: '800' }}
                       >
                         Video Title
                       </label>
@@ -350,8 +325,8 @@ const CourseContent: FC<Props> = ({
                           <AiOutlineDelete
                             className={`${
                               linkIndex === 0
-                                ? "cursor-no-drop"
-                                : "cursor-pointer"
+                                ? 'cursor-no-drop'
+                                : 'cursor-pointer'
                             } text-black dark:text-white text-[20px]`}
                             onClick={() => {
                               linkIndex === 0

@@ -1,18 +1,19 @@
-import { styles } from "@/app/styles/style";
-import { FC, useState, useEffect } from "react";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
+import { styles } from '@/app/styles/style';
+import { FC, useState, useEffect } from 'react';
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import { useCreateOrderMutation } from '@/redux/features/orders/ordersApi';
 import {
   useStripe,
   useElements,
   LinkAuthenticationElement,
   PaymentElement,
-} from "@stripe/react-stripe-js";
-import { redirect } from "next/navigation";
-import toast from "react-hot-toast";
-import socketIO from "socket.io-client";
-const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
-const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+} from '@stripe/react-stripe-js';
+import { redirect } from 'next/navigation';
+import toast from 'react-hot-toast';
+import socketIO from 'socket.io-client';
+
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || '';
+const socketId = socketIO(ENDPOINT, { transports: ['websocket'] });
 
 type Props = {
   setOpen: any;
@@ -23,7 +24,7 @@ type Props = {
 const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [message, setMessage] = useState<any>("");
+  const [message, setMessage] = useState<any>('');
   const [loadUser, setLoadUser] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,29 +39,29 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
     setIsLoading(true);
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      redirect: "if_required",
+      redirect: 'if_required',
     });
     if (error) {
       setMessage(error.message);
       setIsLoading(false);
-    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       setIsLoading(false);
       createOrder({ courseId: data._id, payment_info: paymentIntent });
-      setMessage("Payment Success");
+      setMessage('Payment Success');
     }
   };
 
   useEffect(() => {
     if (orderData) {
       setLoadUser(true);
-      socketId.emit("notification", {
-        title: "New Order",
+      socketId.emit('notification', {
+        title: 'New Order',
         message: `You have a new order from ${data.name}`,
         userId: user._id,
       });
       redirect(`/thank-you`);
     }
-    if (error && "data" in error) {
+    if (error && 'data' in error) {
       const errorMessage = error as any;
       toast.error(errorMessage.data.message);
     }
@@ -79,7 +80,7 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
       <div>
         <button disabled={isLoading || !stripe || !elements} id="submite">
           <span id="button-text" className={`${styles.button} mt-5 !h-[35px]`}>
-            {isLoading ? "Paying..." : "Pay now"}
+            {isLoading ? 'Paying...' : 'Pay now'}
           </span>
           {message && (
             <div
@@ -90,8 +91,6 @@ const CheckOutForm: FC<Props> = ({ data, setOpen, user }) => {
             </div>
           )}
         </button>
-
-        {/* Show any error or success messages */}
       </div>
     </form>
   );

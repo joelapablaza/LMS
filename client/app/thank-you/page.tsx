@@ -1,27 +1,20 @@
-"use client";
+'use client';
 
-import { FC, useState } from "react";
-import Image from "next/image";
-import Heading from "../utils/Heading";
-import Header from "../components/Header";
-import Link from "next/link";
-import { styles } from "../styles/style";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-import Loader from "../components/Loader/Loader";
-import Protected from "../hooks/useProtected";
+import { FC, useState } from 'react';
+import Image from 'next/image';
+import Heading from '../utils/Heading';
+import Header from '../components/Header';
+import Link from 'next/link';
+import { styles } from '../styles/style';
+import Protected from '../hooks/useProtected';
 
 interface Props {}
 
 const Page: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const [route, setRoute] = useState("Thank you");
-  // const { data: user, isLoading } = useLoadUserQuery(undefined, {});
+  const [route, setRoute] = useState('Thank you');
 
   return (
-    // <>
-    //   {isLoading ? (
-    //     <Loader />
-    //   ) : (
     <Protected>
       <div className="relative lg:min-h-full">
         <Heading
@@ -38,10 +31,9 @@ const Page: FC<Props> = (props) => {
         />
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 lg:pr-4">
-            {/* Aquí está la imagen, con estilos Tailwind para hacerla responsive */}
             <div className="hidden sm:block">
               <Image
-                src={"/assets/thankyou.jpeg"}
+                src={'/assets/thankyou.jpeg'}
                 alt="Thank you"
                 width={1024}
                 height={1024}
@@ -69,7 +61,7 @@ const Page: FC<Props> = (props) => {
             </div>
             <div className="w-full flex justify-center">
               <Link
-                href={"/profile"}
+                href={'/profile'}
                 className={`${styles.button} my-5 !w-[50%]`}
               >
                 Ir a mis cursos
@@ -79,8 +71,6 @@ const Page: FC<Props> = (props) => {
         </div>
       </div>
     </Protected>
-    // )}
-    // </>
   );
 };
 

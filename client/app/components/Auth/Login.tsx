@@ -1,12 +1,12 @@
-"use client";
-import React, { FC, useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { styles } from "../../../app/styles/style";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-import toast from "react-hot-toast";
+'use client';
+import React, { FC, useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { styles } from '../../../app/styles/style';
+import { useLoginMutation } from '@/redux/features/auth/authApi';
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import toast from 'react-hot-toast';
 
 type Props = {
   setRoute: (route: string) => void;
@@ -15,11 +15,11 @@ type Props = {
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email("Email Invalido")
-    .required("Por favor ingrese su email"),
+    .email('Email Invalido')
+    .required('Por favor ingrese su email'),
   password: Yup.string()
     .required(
-      "Por favor ingrese su contraseña, debe contener al menos 8 caracteres"
+      'Por favor ingrese su contraseña, debe contener al menos 8 caracteres'
     )
     .min(8),
 });
@@ -29,16 +29,12 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
   const [loadUser, setLoadUser] = useState(false);
   const [login, { isSuccess, error }] = useLoginMutation();
 
-  const {
-    data: userData,
-    isLoading,
-    refetch,
-  } = useLoadUserQuery(undefined, {
+  const {} = useLoadUserQuery(undefined, {
     skip: !loadUser,
   });
 
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: { email: '', password: '' },
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
       await login({ email, password });
@@ -47,18 +43,16 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Ingreso exitoso");
+      toast.success('Ingreso exitoso');
       setLoadUser(true);
       setOpen(false);
     }
     if (error) {
-      if ("data" in error) {
+      if ('data' in error) {
         const errorData = error as any;
         toast.error(errorData.data.message);
       }
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, error]);
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
@@ -77,7 +71,7 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
           onChange={handleChange}
           id="email"
           placeholder="suemail@email.com"
-          className={`${errors.email && touched.email && "border-red-500"} ${
+          className={`${errors.email && touched.email && 'border-red-500'} ${
             styles.input
           }`}
         />
@@ -89,14 +83,14 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
             Ingrese su contraseña
           </label>
           <input
-            type={!show ? "password" : "text"}
+            type={!show ? 'password' : 'text'}
             name="password"
             value={values.password}
             onChange={handleChange}
             id="password"
             placeholder="********"
             className={`${
-              errors.password && touched.password && "border-red-500"
+              errors.password && touched.password && 'border-red-500'
             } ${styles.input}`}
           />
           {!show ? (
@@ -121,10 +115,10 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
         </div>
         <br />
         <h5 className="text-center pt-4 font-Poppins text-[14px]">
-          ¿No tienes ninguna cuenta?{" "}
+          ¿No tienes ninguna cuenta?{' '}
           <span
             className="text-[#2190ff] pl-1 cursor-pointer"
-            onClick={() => setRoute("Signup")}
+            onClick={() => setRoute('Signup')}
           >
             Registrate
           </span>
