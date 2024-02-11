@@ -70,14 +70,6 @@ app.use(
   layoutRouter
 );
 
-// testing api
-app.get('/test', (req: Request, res: Response, _next: NextFunction) => {
-  res.status(200).json({
-    success: true,
-    message: 'API is working'
-  });
-});
-
 // unknown route
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const err = new ErrorHandler(`Route ${req.originalUrl} not found`, 404);
