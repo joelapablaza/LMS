@@ -1,8 +1,8 @@
-import { Response } from "express";
-import courseModel from "../models/course.model";
-import CatchAsyncError from "../middlewares/catchAsyncErrors";
+import { Response } from 'express';
+import courseModel from '../models/course.model';
+import CatchAsyncError from '../middlewares/catchAsyncErrors';
 
-import { ICourse } from "../interfaces/ICourse";
+import { ICourse } from '../interfaces/ICourse';
 
 // create course
 export const createCourse = CatchAsyncError(
