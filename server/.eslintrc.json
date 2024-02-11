@@ -19,7 +19,7 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": "./server/tsconfig.json"
   },
   "ignorePatterns": ["babel.config.js"],
   "settings": {
