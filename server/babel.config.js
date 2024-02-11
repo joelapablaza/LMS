@@ -4,11 +4,11 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          node: 'current',
-        },
-      },
+          node: 'current'
+        }
+      }
     ],
-    '@babel/preset-typescript',
+    '@babel/preset-typescript'
   ],
   plugins: [
     [
@@ -16,14 +16,15 @@ module.exports = {
       {
         alias: {
           src: './src',
+          '@src': './src',
           '@controllers': './src/controllers',
           '@models': './src/models',
           '@routes': './src/routes',
           '@utils': './src/utils',
           '@middlewares': './src/middlewares',
-          '@servicesd': './src/services',
-        },
-      },
-    ],
-  ],
+          '@servicesd': './src/services'
+        }
+      }
+    ]
+  ]
 };

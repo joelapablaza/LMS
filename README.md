@@ -34,11 +34,13 @@ Accede a un potente panel de estadísticas desde el dashboard del administrador.
 
 ## Tecnologías Utilizadas
 
+- Node.js
+- Socker.io
 - Next.js
 - TypeScript
-- Node.js
 - Express
 - MongoDB
+- Redis
 
 ## Contribuciones
 
