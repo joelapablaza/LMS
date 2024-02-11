@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
-  "main": "build/server.js",
+  "main": "dist/server.js",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
     "test": "rimraf coverage && jest --coverage",
-    "dev": "ts-node-dev --respawn --transpile-only server.ts",
-    "start": "node build/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "start": "node dist/server.js",
     "build": "rimraf ./dist && babel src --extensions \".ts, .js\" --out-dir dist --copy-files",
     "prepare": "husky install"
   },
