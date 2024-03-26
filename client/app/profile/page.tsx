@@ -1,20 +1,19 @@
-'use client';
-import React, { FC, useState } from 'react';
-import Protected from '../hooks/useProtected';
-import Heading from '../utils/Heading';
-import Header from '../components/Header';
-import Profile from '../components/Profile/Profile';
-import Loader from '../components/Loader/Loader';
-import Footer from '../components/Footer';
-
-import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+"use client";
+import React, { FC, useEffect, useState } from "react";
+import Protected from "../hooks/useProtected";
+import Heading from "../utils/Heading";
+import Header from "../components/Header";
+import Profile from "../components/Profile/Profile";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
 
 type Props = {};
 
 const Page: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(5);
-  const [route, setRoute] = useState('Login');
+  const [route, setRoute] = useState("Login");
   const { data, isLoading, refetch, isSuccess } = useLoadUserQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });

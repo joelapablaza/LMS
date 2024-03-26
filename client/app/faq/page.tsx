@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import FAQ from '../components/FAQ/FAQ';
-import Header from '../components/Header';
-import Heading from '../utils/Heading';
-import Footer from '../components/Footer';
+import React, { useState } from "react";
+import FAQ from "../components/FAQ/FAQ";
+import Header from "../components/Header";
+import Heading from "../utils/Heading";
+import Footer from "../components/Footer";
 
 type Props = {};
 
 const Page = (props: Props) => {
   const [open, setOpen] = useState(false);
-  const [route, setRoute] = useState('Login');
+  const [activeItem, setActiveItem] = useState();
+  const [route, setRoute] = useState("Login");
 
   return (
     <>

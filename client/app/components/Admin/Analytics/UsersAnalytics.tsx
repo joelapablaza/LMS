@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 import {
   AreaChart,
   Area,
@@ -6,11 +6,11 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-} from 'recharts';
-import Loader from '../../Loader/Loader';
-import { useGetUsersAnalyticsQuery } from '@/redux/features/analytics/analyticsApi';
-import { styles } from '@/app/styles/style';
-import { OneUserAnalytics } from '@/app/interfaces/CourseAnalitics';
+} from "recharts";
+import Loader from "../../Loader/Loader";
+import { useGetUsersAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
+import { styles } from "@/app/styles/style";
+import { OneUserAnalytics } from "@/app/interfaces/CourseAnalitics";
 
 type Props = {
   isDashboard?: boolean;
@@ -31,6 +31,8 @@ const UsersAnalytics: FC<Props> = ({ isDashboard }) => {
       analyticsData.push({ name: item.month, count: item.count });
     });
 
+  const minValue = 0;
+
   return (
     <>
       {isLoading ? (
@@ -39,33 +41,33 @@ const UsersAnalytics: FC<Props> = ({ isDashboard }) => {
         <div
           className={`${
             !isDashboard
-              ? 'mt-[50px]'
-              : 'mt-[50px] dark:bg-[#111c43] shadow-sm pb-5 rounded-sm'
+              ? "mt-[50px]"
+              : "mt-[50px] dark:bg-[#111c43] shadow-sm pb-5 rounded-sm"
           }`}
         >
-          <div className={`${isDashboard ? '!ml-8 mb-5' : ''}`}>
+          <div className={`${isDashboard ? "!ml-8 mb-5" : ""}`}>
             <h1
               className={`${styles.title} ${
-                isDashboard && '!text-[20px]'
+                isDashboard && "!text-[20px]"
               } px-5 !text-start`}
             >
               Análisis de usuarios
             </h1>
             {!isDashboard && (
               <p className={`${styles.label} px-5`}>
-                Datos analíticos de los últimos 12 meses{' '}
+                Datos analíticos de los últimos 12 meses{" "}
               </p>
             )}
           </div>
 
           <div
             className={`w-full ${
-              isDashboard ? 'h-[30vh]' : 'h-screen'
+              isDashboard ? "h-[30vh]" : "h-screen"
             } flex items-center justify-center`}
           >
             <ResponsiveContainer
-              width={isDashboard ? '100%' : '90%'}
-              height={!isDashboard ? '50%' : '100%'}
+              width={isDashboard ? "100%" : "90%"}
+              height={!isDashboard ? "50%" : "100%"}
             >
               <AreaChart
                 data={analyticsData}

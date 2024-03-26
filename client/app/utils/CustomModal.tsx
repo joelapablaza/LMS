@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
-import { Modal, Box } from '@mui/material';
-import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import React, { FC, useState } from "react";
+import { Modal, Box } from "@mui/material";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 type Props = {
   open: boolean;
@@ -20,7 +20,11 @@ const CustomModal: FC<Props> = ({
 }) => {
   const [loadUser, setLoadUser] = useState(false);
 
-  const {} = useLoadUserQuery(undefined, {
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useLoadUserQuery(undefined, {
     skip: !loadUser,
   });
 

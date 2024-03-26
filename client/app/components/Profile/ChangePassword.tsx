@@ -1,21 +1,20 @@
-import React, { FC, useState, useEffect } from "react";
-import { styles } from "@/app/styles/style";
-import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
-import toast from "react-hot-toast";
+import React, { useState, useEffect } from 'react';
+import { styles } from '@/app/styles/style';
+import { useUpdatePasswordMutation } from '@/redux/features/user/userApi';
+import toast from 'react-hot-toast';
 
-type Props = {};
+const ChangePassword = () => {
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-const ChangePassword: FC<Props> = (props) => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
 
   const handlePasswordChange = async (e: any) => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
     }
     await updatePassword({
       oldPassword,
@@ -25,10 +24,10 @@ const ChangePassword: FC<Props> = (props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Pasword changed successfully");
+      toast.success('Pasword changed successfully');
     }
     if (error) {
-      if ("data" in error) {
+      if ('data' in error) {
         const errorData = error as any;
         toast.error(errorData.data.message);
       }

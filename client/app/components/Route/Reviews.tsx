@@ -3,9 +3,15 @@ import Image from 'next/image';
 import React, { FC } from 'react';
 import ReviewCard from '../Review/ReviewCard';
 
-type Props = {};
+type Review = {
+  name: string;
+  avatar: string;
+  profession: string;
+  ratings: number;
+  comment: string;
+};
 
-export const reviews = [
+export const reviews: Review[] = [
   {
     name: 'Luis Ramirez',
     avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
@@ -54,9 +60,9 @@ export const reviews = [
     comment:
       'Para cualquiera en el campo del marketing, LearnIt es un tesoro. Los cursos sobre marketing digital y analítica están actualizados y han impulsado mi carrera.',
   },
-] as const;
+];
 
-const Reviews: FC<Props> = (props) => {
+const Reviews = () => {
   return (
     <div className="w-[90%] 800px:w-[85%] m-auto">
       <div className="w-full 800px:flex items-center">
@@ -89,7 +95,7 @@ const Reviews: FC<Props> = (props) => {
       </div>
       <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-2 lg:gap-[25px] xl:grid-cols-2 xl:gap-[35px] mb-12 border-0">
         {reviews &&
-          reviews.map((item: (typeof reviews)[number], index: number) => (
+          reviews.map((item: Review, index: number) => (
             <ReviewCard item={item} key={index} />
           ))}
       </div>

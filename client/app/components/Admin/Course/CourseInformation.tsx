@@ -1,6 +1,6 @@
-import { styles } from '@/app/styles/style';
-import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
-import React, { FC, useEffect, useState } from 'react';
+import { styles } from "@/app/styles/style";
+import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import React, { FC, useEffect, useState } from "react";
 
 type Props = {
   courseInfo: any;
@@ -19,7 +19,7 @@ const CourseInformation: FC<Props> = ({
   createThumbnail,
   setCreateThumbnail,
 }) => {
-  const { data, isLoading, refetch } = useGetHeroDataQuery('Categories', {
+  const { data, isLoading, refetch } = useGetHeroDataQuery("Categories", {
     refetchOnMountOrArgChange: true,
   });
   const [dragging, setDragging] = useState(false);
@@ -44,7 +44,7 @@ const CourseInformation: FC<Props> = ({
 
       reader.onload = (e: any) => {
         if (reader.readyState === 2) {
-          if (typeof reader.result === 'string') {
+          if (typeof reader.result === "string") {
             setCreateThumbnail(reader.result);
           }
           setImageLoaded(true);
@@ -73,7 +73,7 @@ const CourseInformation: FC<Props> = ({
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        if (typeof reader.result === 'string') {
+        if (typeof reader.result === "string") {
           setCreateThumbnail(reader.result);
         }
       };
@@ -82,7 +82,7 @@ const CourseInformation: FC<Props> = ({
   };
 
   const handleRemoveImage = () => {
-    setCourseInfo({ ...courseInfo, thumbnail: '' });
+    setCourseInfo({ ...courseInfo, thumbnail: "" });
     setImageLoaded(false);
   };
 
@@ -244,12 +244,29 @@ const CourseInformation: FC<Props> = ({
           <label
             htmlFor="file"
             className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
-              dragging ? 'bg-blue-500' : 'bg-transparent'
+              dragging ? "bg-blue-500" : "bg-transparent"
             }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handlreDrop}
           >
+            {/* {courseInfo.thumbnail?.url ? (
+              <img
+                src={courseInfo.thumbnail.url}
+                alt=""
+                className="max-h-full w-full object-cover"
+              />
+            ) : Object.keys(courseInfo.thumbnail).length !== 0 ? (
+              <img
+                src={courseInfo.thumbnail}
+                alt=""
+                className="max-h-full w-full object-cover"
+              />
+            ) : (
+              <span className="text-black dark:text-white">
+                Drag and drop your thumbnail here or click to browse
+              </span>
+            )} */}
             {createThumbnail ? (
               <img
                 src={createThumbnail}

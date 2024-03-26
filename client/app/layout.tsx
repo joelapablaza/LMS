@@ -2,16 +2,15 @@
 import './globals.css';
 import 'normalize.css';
 import './fonts.css';
-
 import { useEffect } from 'react';
 import { Poppins } from 'next/font/google';
 import { Josefin_Sans } from 'next/font/google';
 import socketIO from 'socket.io-client';
 import { Toaster } from 'react-hot-toast';
 import { Providers } from './provider';
+import Loader from './components/Loader/Loader';
 import { ThemeProvider } from './utils/theme-provider';
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
-
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || '';
 const socketId = socketIO(ENDPOINT, { transports: ['websocket'] });
 
@@ -50,7 +49,7 @@ export default function RootLayout({
 }
 
 const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const {} = useLoadUserQuery({});
+  const { isLoading } = useLoadUserQuery({});
 
   useEffect(() => {
     socketId.on('connection', () => {});

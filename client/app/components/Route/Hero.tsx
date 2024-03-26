@@ -1,12 +1,15 @@
+import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import Loader from '../Loader/Loader';
 import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 const Hero: FC<Props> = (props) => {
+  const { data, isLoading } = useGetHeroDataQuery('Banner');
   const [search, setSearch] = useState('');
   const router = useRouter();
 
@@ -18,11 +21,21 @@ const Hero: FC<Props> = (props) => {
     }
   };
 
+  const styles = {
+    left: '20%',
+    transform: 'translate(-50%, -50%)',
+    // Agrega otros estilos según sea necesario
+  };
+
   return (
+    // <>
+    //   {isLoading ? (
+    //     <Loader />
+    //   ) : (
     <div className="w-full flex items-center min-h-screen justify-center relativa">
       <div className="bg-[#fbe2e3] absolute top-[-1rem] -z-10 right-[0rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem] sm:w-[68.75rem] dark:bg-[#946263]"></div>
       <div className="bg-[#dbd7fb] absolute top-[-1rem] -z-10 left-[-35rem] h-[31.25rem] w-[50rem] rounded-full blur-[10rem] sm:w-[68.75rem] md:left-[-33rem] lg:left-[-28rem] xl:left-[-15rem] 2xl:left-[-5rem] dark:bg-[#676394]"></div>
-      <div className="1000px:w-[80%] flex flex-col gap-4 items-start 1000px:text-left 1000px:mt-[50px] 1300px:mt-[25px] 1300px:mb-[50px] mt-[50]">
+      <div className="1000px:w-[80%] flex flex-col gap-4 items-start 1000px:text-left 1000px:mt-[-50px] 1300px:mt-[-50px] 1300px:mb-[50px] mt-[-18rem]">
         <h2 className=" text-black dark:text-white font-semibold text-2xl md:text-3xl lg:text-4xl xl:text-5xl m-auto text-center px-2">
           <span className="text-gradient from-indigo-400 to-cyan-400">
             Mejora
@@ -88,6 +101,8 @@ const Hero: FC<Props> = (props) => {
         </div>
       </div>
     </div>
+    //   )}
+    // </>
   );
 };
 

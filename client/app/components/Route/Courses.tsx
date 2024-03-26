@@ -1,13 +1,12 @@
-import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi';
-import React, { FC, useState, useEffect } from 'react';
-import CourseCard from '../Course/CourseCard';
-import { Course } from '../../interfaces/Course';
+import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
+import React, { FC, useState, useEffect } from "react";
+import CourseCard from "../Course/CourseCard";
 
 type Props = {};
 
 const Courses: FC<Props> = (props) => {
   const { data, isLoading } = useGetAllCoursesQuery({});
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
 
   useEffect(() => {
     setCourses(data?.courses);
@@ -19,10 +18,10 @@ const Courses: FC<Props> = (props) => {
         <h1 className="text-center font-Poppins text-[25px] leading-[35px] sm:text-3xl lg:text-4xl dark:text-white 800px:!leading-[60px] text-black font-[700] tracking-tight">
           <span className="text-gradient from-indigo-400 to-cyan-400">
             Expande
-          </span>{' '}
-          los horizontes de tu{' '}
+          </span>{" "}
+          los horizontes de tu{" "}
           <span className="text-gradient from-indigo-400 to-cyan-400">
-            {' '}
+            {" "}
             carrera
           </span>
           <br />

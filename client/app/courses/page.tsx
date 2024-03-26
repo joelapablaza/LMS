@@ -1,26 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi';
 import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
 import { useSearchParams } from 'next/navigation';
-import { styles } from '../styles/style';
+import React, { useEffect, useState } from 'react';
 import Loader from '../components/Loader/Loader';
 import Header from '../components/Header';
 import Heading from '../utils/Heading';
+import { styles } from '../styles/style';
 import CourseCard from '../components/Course/CourseCard';
-import { Course } from '../interfaces/Course';
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   const searchParams = useSearchParams();
   const search = searchParams?.get('title');
   const { data, isLoading } = useGetAllCoursesQuery(undefined, {});
   const { data: categoriesData } = useGetHeroDataQuery('Categories', {});
   const [route, setRoute] = useState('Login');
   const [open, setOpen] = useState(false);
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState([]);
   const [category, setCategory] = useState('All');
 
   useEffect(() => {
@@ -103,7 +100,7 @@ const page = (props: Props) => {
             <br />
             <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] 1500px:grid-cols-4 1500px:gap-[35px] mb-12 border-0">
               {courses &&
-                courses.map((item: Course, index: number) => (
+                courses.map((item: any, index: number) => (
                   <CourseCard item={item} key={index} />
                 ))}
             </div>

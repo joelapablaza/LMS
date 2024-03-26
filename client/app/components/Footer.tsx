@@ -1,9 +1,7 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
-type Props = {};
-
-const Footer = (props: Props) => {
+const Footer = () => {
   return (
     <footer>
       <div className="border border-[#0000000e] dark:border-[#ffffff1e]" />
@@ -17,7 +15,7 @@ const Footer = (props: Props) => {
             <ul className="space-y-4">
               <li>
                 <Link
-                  href={"/about"}
+                  href={'/about'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Nuestra Historia
@@ -25,7 +23,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <Link
-                  href={"/privacy-policy"}
+                  href={'/privacy-policy'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Politica de Privacidad
@@ -33,7 +31,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <Link
-                  href={"/faq"}
+                  href={'/faq'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   FAQ
@@ -49,7 +47,7 @@ const Footer = (props: Props) => {
             <ul className="space-y-4">
               <li>
                 <Link
-                  href={"/courses"}
+                  href={'/courses'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Cursos
@@ -57,7 +55,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <Link
-                  href={"/profile"}
+                  href={'/profile'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Mi cuenta
@@ -65,7 +63,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <Link
-                  href={"/course-dashboard"}
+                  href={'/course-dashboard'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Panel del Curso
@@ -81,7 +79,7 @@ const Footer = (props: Props) => {
             <ul className="space-y-4">
               <li>
                 <Link
-                  href={"/#"}
+                  href={'/#'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   YouTube
@@ -89,7 +87,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <Link
-                  href={"/#"}
+                  href={'/#'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Instagram
@@ -97,7 +95,7 @@ const Footer = (props: Props) => {
               </li>
               <li>
                 <Link
-                  href={"https://github.com/joelapablaza"}
+                  href={'https://github.com/joelapablaza'}
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Github

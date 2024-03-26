@@ -1,26 +1,26 @@
-import Link from "next/link";
-import React, { FC } from "react";
+import Link from 'next/link';
+import React, { FC } from 'react';
 
 export const navItemsData = [
   {
-    name: "Inicio",
-    url: "/",
+    name: 'Inicio',
+    url: '/',
   },
   {
-    name: "Cursos",
-    url: "/courses",
+    name: 'Cursos',
+    url: '/courses',
   },
   {
-    name: "About",
-    url: "/about",
+    name: 'About',
+    url: '/about',
   },
   {
-    name: "Politicas",
-    url: "/policy",
+    name: 'Politicas',
+    url: '/policy',
   },
   {
-    name: "FAQ",
-    url: "/faq",
+    name: 'FAQ',
+    url: '/faq',
   },
 ];
 
@@ -39,8 +39,8 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
               <span
                 className={`${
                   activeItem === index
-                    ? "dark:text-[#39c1f3] text-[#39c1f3]"
-                    : "dark:text-white text-black"
+                    ? 'dark:text-[#39c1f3] text-[#39c1f3]'
+                    : 'dark:text-white text-black'
                 } text-[18px] px-6 font-Poppins font-[400]`}
               >
                 {i.name}
@@ -51,7 +51,7 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
       {isMobile && (
         <div className="800px:hidden mt-5">
           <div className="w-full text-center py-6">
-            <Link href={"/"} passHref>
+            <Link href={'/'} passHref>
               <span className="text-[25px] font-Poppins font-[500] text-black dark:text-white">
                 LearnIt
               </span>
@@ -59,12 +59,12 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
           </div>
           {navItemsData &&
             navItemsData.map((i, index) => (
-              <Link href={"/"} key={index} passHref>
+              <Link href={`${i.url}`} key={index} passHref>
                 <span
                   className={`${
                     activeItem === index
-                      ? "dark:text-[#37a39a] text-[#37a39a]"
-                      : "dark:text-white text-black"
+                      ? 'dark:text-[#37a39a] text-[#37a39a]'
+                      : 'dark:text-white text-black'
                   } block py-5 text-[18px] px-6 font-Poppins font-[400]`}
                 >
                   {i.name}
